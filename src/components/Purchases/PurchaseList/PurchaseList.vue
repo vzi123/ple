@@ -81,7 +81,7 @@
             </tr>
           </thead>
           
-         <tbody v-for="(purchaseItem, index) in purchaseListData" :key="index">
+         <tbody v-for="(purchaseItem, index) in filteredList" :key="index">
          
             
 
@@ -202,24 +202,22 @@
 <script lang="ts">
 
 import { ref, computed, onMounted, defineComponent } from 'vue';
-import { useEventBus } from '../../../events/searchEvent'; // Import the event bus
 import axios from "axios";
 import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
+import EventBus from '../../../events/event-bus';
 
 export default defineComponent({
   name: "PurchaseList",
   data() {
     return {
-      currncySymbol:"₹"
+      currncySymbol:"₹",
     };
   },
   setup() {
     const loading = ref(false);
-    const { on } = useEventBus();
     const searchTerm = ref('');
-    const purchaseListData = ref([
-    ]);
+    const purchaseListData = ref([]);
 
     // Function to fetch products using Axios
     const fetchPurchageOrders = async () => {
@@ -235,14 +233,31 @@ export default defineComponent({
       }
     };
 
+    const filteredList = computed({
+      // getter
+      get() {
+        return purchaseListData.value.filter((purchaseItem: any) => {
+          const userName = purchaseItem?.user.first_name + " " + purchaseItem?.user.last_name;
+          return userName.toLowerCase().includes(searchTerm.value.toLowerCase());
+        });
+      },
+      // setter
+      set(newValue: any) {
+        // Note: we are using destructuring assignment syntax here.
+        purchaseListData.value = newValue;
+      }
+    })
     // Call fetchProducts when the component is mounted
     onMounted(() => {
       fetchPurchageOrders();
+      EventBus.on('searchTermUpdated', (updatedSearchTerm: any) => {
+        searchTerm.value = updatedSearchTerm.trim();
+      });
     });
 
     return {
-      searchTerm,
-      purchaseListData
+      purchaseListData,
+      filteredList
     };
   },
   methods: {
@@ -255,7 +270,7 @@ export default defineComponent({
     },
     onViewPurchase(purchaseItem: any) {
       stateStore.purchaseDetails = purchaseItem;
-    }
+    },
   },
 });
 

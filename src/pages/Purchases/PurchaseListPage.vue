@@ -39,7 +39,6 @@ import FilterContent from "../../components/Common/FilterContent.vue";
 import PurchaseList from "../../components/Purchases/PurchaseList/PurchaseList.vue";
 import PurchaseDetails from "../../components/Purchases/PurchaseList/PurchaseDetails.vue";
 import MainFooter from "../../components/Layouts/MainFooter.vue";
-import { useEventBus } from "../../events/searchEvent";
 
 export default defineComponent({
   name: "PurchaseListPage",
@@ -52,13 +51,7 @@ export default defineComponent({
     PurchaseDetails,
     MainFooter,
   },
-   setup() {
-    const { provide } = useEventBus();
-    const eventBus = useEventBus();  // Obtain the event bus instance
 
-    // provide('emit','on'); // Provide the event bus to child components using the appropriate symbol
 
-    // ... rest of the setup code
-  }
 });
 </script>

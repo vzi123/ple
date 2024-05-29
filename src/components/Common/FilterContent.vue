@@ -1,280 +1,157 @@
 <template>
-  <div class="card border-0 shadow-none rounded-1 mb-25">
-    <div class="card-body p-xl-40">
-      <div class="table-responsive style-three">
-        <table class="table text-nowrap align-middle mb-0">
-          <thead>
-            <tr>
-              <!-- <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0">
-                <div class="form-check checkbox">
-                  <input class="form-check-input" type="checkbox" id="test_1" />
-                  <label class="form-check-label" for="test_1">
-                    DATE
-                    <img
-                      class="ms-2"
-                      src="../../../assets/img/icons/up-down-aroow.svg"
-                      alt="Image"
-                    />
-                  </label>
-                </div>
-              </th> -->
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                ID
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                NAME
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                PERSONA
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                STATUS
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                BUDGET
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                DATE
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                PROJECT
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
-              </th>
-
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 pe-0">
-                ACTION
-              </th>
-            </tr>
-          </thead>
-
-         <tbody v-for="(purchaseItem, index) in filteredList" :key="index">
-
-
-
-            <tr>
-              <!-- <td class="shadow-none fw-normal text-black title ps-0">
-                <div class="d-flex align-items-center">
-                  <div class="form-check checkbox style-three">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="test_7"
-                    />
-                    <label class="form-check-label text-optional" for="test_7">
-                    </label>
-                  </div>
-                  <span class="text-optional fs-14 ms-2">{{ purchaseItem.createdAt }}</span>
-                </div>
-              </td> -->
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ purchaseItem.id }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-               {{ getUserName(purchaseItem.user) }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ purchaseItem.userPersona }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                <span class="badge badge-success fs-14 fw-normal"
-                  >{{ purchaseItem.status }}</span
-                >
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ currncySymbol }} {{ purchaseItem.budget }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ formatDate(purchaseItem.createdAt) }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ getProjectName(purchaseItem.project) }}
-              </td>
-              <td class="shadow-none lh-1 text-end pe-0">
-                <div class="button-group d-flex flex-wrap align-items-center">
-                  <a
-                    href="javascript:void(0)"
-                    title="View"
-                    data-bs-toggle="modal"
-                    data-bs-target="#detailsModal"
-                    @click="onViewPurchase(purchaseItem)"
-                  >
-                    <img src="../../../assets/img/icons/eye.svg" alt="Image" />
-                  </a>
-                  <router-link to="/edit-purchase" title="Edit">
-                    <img src="../../../assets/img/icons/edit.svg" alt="Image" />
-                  </router-link>
-                  <a
-                    class="delete-btn"
-                    data-bs-toggle="offcanvas"
-                    href="#deletePopup"
-                    role="button"
-                    aria-controls="deletePopup"
-                  >
-                    <img
-                      src="../../../assets/img/icons/close.svg"
-                      alt="Image"
-                    />
-                  </a>
-                </div>
-              </td>
-            </tr>
-
-
-          </tbody>
-        </table>
+  <div class="row gx-0 mb-30">
+    <div class="col-md-6">
+      <div class="filter-left d-flex align-items-center flex-wrap">
+        <button
+          type="button"
+          class="btn style-two"
+          data-bs-toggle="modal"
+          data-bs-target="#filterModal"
+        >
+          Filter <img src="../../assets/img/icons/filter.svg" alt="Image" />
+        </button>
+        <form action="#" class="search-area position-relative w-sm-100">
+          <input
+            type="text"
+            placeholder="Search On This Table"
+            v-model="searchTerm"
+            @input="updateSearchTerm"
+            class="w-100 h-55 bg_ash border-0 rounded-1 fs-14 text-black bg-white"
+          />
+          <button
+            type="submit"
+            class="bg-transparent border-0 position-absolute top-0 end-0 h-100 pt-0 py-0 px-2"
+          >
+            <img src="../../assets/img/icons/search.svg" alt="Image" />
+          </button>
+        </form>
       </div>
     </div>
-  </div>
-
-  <div class="row pb-45 align-items-center">
-    <div class="col-sm-6">
+    <div class="col-md-6">
       <div
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-start page-unit"
+        class="filter-right d-flex align-items-center justify-content-md-end flex-wrap"
       >
-        <span class="fs-13">Showing product per page</span>
-        <select class="text-title border-0 fs-14 bg-transparent">
-          <option value="0">10</option>
-          <option value="1">20</option>
-          <option value="2">30</option>
-        </select>
+        <a href="#" class="btn style-three"> Excel </a>
+        <a href="#" class="btn style-four"> Pdf </a>
+        <div class="btn style-five upload-btn">
+          Import
+          <img src="../../assets/img/icons/download.svg" alt="Image" />
+          <input type="file" name="myfile" />
+        </div>
+        <!-- <router-link :to="btnLink" class="btn style-one">
+          Create {{ btnText }}
+          <img src="../../assets/img/icons/add-circle.svg" alt="Image" />
+        </router-link> -->
       </div>
     </div>
-    <div class="col-sm-6 text-sm-end text-center">
-      <ul class="page-nav list-style">
-        <li>
-          <a href="#">
-            <img
-              src="../../../assets/img/icons/left-arrow-purple.svg"
-              alt="Image"
-            />
-          </a>
-        </li>
-        <li><a href="#" class="active">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li>
-          <a href="#">
-            <img
-              src="../../../assets/img/icons/right-arrow-purple.svg"
-              alt="Image"
-            />
-          </a>
-        </li>
-      </ul>
-    </div>
   </div>
+
+  <FilterModal />
 </template>
 
 <script lang="ts">
+import { ref } from "vue";
+import FilterModal from "./FilterModal.vue";
+import EventBus from '../../events/event-bus';
 
-import { ref, computed, onMounted, defineComponent } from 'vue';
-import axios from "axios";
-import stateStore from "../../../utils/store";
-import { formatDate, BASE_URL } from '@/utils/utils';
-import EventBus from '../../../events/event-bus';
-
-export default defineComponent({
-  name: "PurchaseList",
-  data() {
-    return {
-      currncySymbol:"₹",
-    };
+export default {
+  components: {
+    FilterModal
   },
+
   setup() {
-    const loading = ref(false);
     const searchTerm = ref('');
-    const purchaseListData = ref([]);
 
-    // Function to fetch products using Axios
-    const fetchPurchageOrders = async () => {
-      try {
-        loading.value = true; // Set loading to true before request
-        const response = await axios.get(`${BASE_URL}/freezy/purchaseOrders/alls`);
-        purchaseListData.value = response.data; // Assuming your API returns an array of products
-
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        loading.value = false; // Set loading to false after request
-      }
-    };
-
-    const filteredList = computed({
-      // getter
-      get() {
-        return purchaseListData.value.filter((purchaseItem: any) => {
-          const userName = purchaseItem?.user.first_name + " " + purchaseItem?.user.last_name;
-          return userName.toLowerCase().includes(searchTerm.value.toLowerCase());
-        });
-      },
-      // setter
-      set(newValue: any) {
-        // Note: we are using destructuring assignment syntax here.
-        purchaseListData.value = newValue;
-      }
-    })
-
-    // Call fetchProducts when the component is mounted
-    onMounted(() => {
-      fetchPurchageOrders();
-      EventBus.on('searchTermUpdated', (updatedSearchTerm: any) => {
-        searchTerm.value = updatedSearchTerm.trim();
-      });
-    });
+    function updateSearchTerm() {
+      EventBus.emit('searchTermUpdated', searchTerm.value); // Emit the updated searchTerm using the event bus
+    }
 
     return {
-      purchaseListData,
-      filteredList
+      searchTerm,
+      updateSearchTerm
     };
   },
-  methods: {
-    formatDate,
-    getUserName(user: any) {
-      return user.first_name + " " + user.last_name;
-    },
-    getProjectName(project: any) {
-      return project.name;
-    },
-    onViewPurchase(purchaseItem: any) {
-      stateStore.purchaseDetails = purchaseItem;
-    },
-  },
-});
-
-
-
+}
 </script>
+
+<style lang="scss" scoped>
+.filter-left {
+  button {
+    margin-right: 10px;
+  }
+  .search-area {
+    input {
+      padding-left: 20px;
+      &::placeholder {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+.filter-right {
+  a {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  div,
+  button {
+    margin-right: 10px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .filter-left {
+    .btn {
+      margin-bottom: 15px;
+    }
+  }
+  .filter-right {
+    a,
+    div,
+    button {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .filter-right {
+    width: calc(100% + 20px);
+    margin-left: -20px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .filter-left {
+    margin-bottom: 20px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .filter-left {
+    .search-area {
+      width: 320px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .filter-left {
+    button {
+      margin-right: 15px;
+    }
+    .search-area {
+      width: 320px;
+    }
+  }
+  .filter-right {
+    a,
+    div,
+    button {
+      margin-right: 15px;
+    }
+  }
+}
+</style>

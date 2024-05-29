@@ -70,7 +70,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in allProducts" :key="product.id">
+            <tr v-for="product in filteredList" :key="product.id">
               <!-- <td class="shadow-none fw-normal text-black title ps-0">
                 <div class="d-flex align-items-center product-item">
                   <div class="form-check checkbox style-three me-25">
@@ -190,9 +190,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { formatDate, BASE_URL } from "@/utils/utils"; 
+import EventBus from '../../../events/event-bus';
 
 export default defineComponent({
   name: "ProductsList",
@@ -204,6 +205,7 @@ export default defineComponent({
   setup() {
     const allProducts = ref([]); // Use ref to make it reactive
     const loading = ref(false);
+    const searchTerm = ref('');
 
     // Function to fetch products using Axios
     const fetchProducts = async () => {
@@ -211,7 +213,6 @@ export default defineComponent({
         loading.value = true; // Set loading to true before request
         const response = await axios.get(`${BASE_URL}/freezy/purchaseOrders/all`);
         allProducts.value = response.data; // Assuming your API returns an array of products
-        console.log("Products fetched:", allProducts.value);
         
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -220,15 +221,34 @@ export default defineComponent({
       }
     };
 
+    const filteredList = computed({
+      // getter
+      get() {
+        return allProducts.value.filter((productItem: any) => {
+          const userName = productItem?.user.first_name + " " + productItem?.user.last_name;
+          return userName.toLowerCase().includes(searchTerm.value.toLowerCase());
+        });
+      },
+      // setter
+      set(newValue: any) {
+        // Note: we are using destructuring assignment syntax here.
+        allProducts.value = newValue;
+      }
+    })
+
     // Call fetchProducts when the component is mounted
     onMounted(() => {
       fetchProducts();
+      EventBus.on('searchTermUpdated', (updatedSearchTerm: any) => {
+        searchTerm.value = updatedSearchTerm.trim();
+      });
     });
 
     // Return reactive variables and function
     return {
       allProducts,
       loading,
+      filteredList
     };
   },
   methods: {
