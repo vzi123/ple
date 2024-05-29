@@ -1,0 +1,42 @@
+// event-bus.ts
+import { reactive, provide, inject, InjectionKey } from 'vue';
+
+interface EventBus {
+  emit(event: string, payload?: any): void;
+  on(event: string, callback: (payload?: any) => void): void;
+}
+
+const eventBusSymbol: InjectionKey<EventBus> = Symbol('eventBus');
+
+export function useEventBus() {
+  const eventBus = reactive({
+    listeners: {} as Record<string, Array<(payload?: any) => void>>
+  });
+
+  function emit(event: string, payload?: any) {
+    if (eventBus.listeners[event]) {
+      eventBus.listeners[event].forEach(listener => listener(payload));
+    }
+  }
+
+  function on(event: string, callback: (payload?: any) => void) {
+    if (!eventBus.listeners[event]) {
+      eventBus.listeners[event] = [];
+    }
+    eventBus.listeners[event].push(callback);
+  }
+
+  provide(eventBusSymbol, {
+    emit,
+    on
+  });
+
+  return {
+    emit,
+    on
+  };
+}
+
+export function injectEventBus() {
+  return inject(eventBusSymbol) as EventBus;
+}
