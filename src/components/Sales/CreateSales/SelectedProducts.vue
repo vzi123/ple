@@ -41,7 +41,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in products" :key="product.id">
+            <tr v-for="product in filteredList" :key="product.id">
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
                 {{ product.product }}
               </td>
@@ -78,6 +78,7 @@
                     href="#deletePopup"
                     role="button"
                     aria-controls="deletePopup"
+                    @click.prevent="$emit('remove-product', index)"
                   >
                     <img
                       src="../../../assets/img/icons/close.svg"
@@ -89,14 +90,17 @@
             </tr>
           </tbody>
         </table>
+
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, computed, onMounted } from "vue";
+import axios from "axios";
 import QuantityCounter from "./QuantityCounter.vue";
+import EventBus from '@/events/event-bus';
 
 export default defineComponent({
   name: "SelectedProducts",
@@ -106,8 +110,12 @@ export default defineComponent({
   data() {
     return {
       currncySymbol:"₹",
-
-      products: [
+      selectedProduct: "",
+    };
+  },
+  
+  setup() {
+    const allProducts = ref([
         {
           id: 1,
           product: "Smartphone",
@@ -148,7 +156,47 @@ export default defineComponent({
           tax: "00.00",
           subTotal: "900.00",
         },
-      ],
+      ]);
+    const searchTerm = ref([]);
+
+    const submitFilteredList = async () => {
+          try {
+            const response = await axios.post("http://localhost:8080/freezy/quotations/save", {
+              products: filteredList.value,
+            }, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            console.log("Response:", response.data);
+          } catch (error) {
+            console.error("Error submitting the list:", error);
+          }
+        };
+
+    const filteredList = computed({
+      // getter
+      get() {
+        return searchTerm.value?.length ? allProducts.value.filter((item: any) => {
+          return searchTerm.value?.some((sItem: string) => item.product.toLowerCase().includes(sItem.toLowerCase()))
+        }) : [];
+      },
+      // setter
+      set(newValue: any) {
+        allProducts.value = newValue;
+      }
+    })
+
+    onMounted(() => {
+      EventBus.on('onUpdateProducts', (products: any) => {
+        searchTerm.value = products;
+      });
+    });
+    return {
+
+            allProducts,
+            filteredList,
+            submitFilteredList,
     };
   },
 });

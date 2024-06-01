@@ -115,7 +115,7 @@
     <div class="col-xl-4">
       <button
         class="btn style-one d-inline-block transition border-0 fw-medium text-white rounded-1 fs-md-15 fs-lg-16 mb-20"
-        type="submit"
+        type="submit" @click="$emit('submit')"
       >
         Submit Sales
       </button>

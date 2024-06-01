@@ -9,7 +9,7 @@
       <div class="col-lg-4">
         <div class="form-group mb-25">
           <label class="d-block fs-14 text-black mb-2">Date</label>
-          <input
+          <input v-model="form.date"
             type="date"
             class="w-100 h-55 bg_ash border-0 rounded-1 fs-14 text-black bg-white"
           />
@@ -18,7 +18,7 @@
       <div class="col-lg-4">
         <div class="form-group mb-25">
           <label class="d-block fs-14 text-black mb-2">Customer</label>
-          <select class="bg-white border-0 rounded-1 fs-14 text-optional">
+          <select v-model="form.customer" class="bg-white border-0 rounded-1 fs-14 text-optional">
             <option value="0">Jhon Victim</option>
             <option value="1">Tony Stark</option>
           </select>
@@ -27,7 +27,7 @@
       <div class="col-lg-4">
         <div class="form-group mb-25">
           <label class="d-block fs-14 text-black mb-2">Branch</label>
-          <select class="bg-white border-0 rounded-1 fs-14 text-optional">
+          <select v-model="form.branch" class="bg-white border-0 rounded-1 fs-14 text-optional">
             <option value="0">Select Branch</option>
             <option value="1">Branch 1</option>
             <option value="2">Branch 1 2</option>
@@ -38,23 +38,45 @@
         <div class="form-group">
           <label class="d-block fs-14 text-black mb-2">Choose Product</label>
           <div class="search-area style-two position-relative w-100">
-            <input
-              type="text"
-              placeholder="Scan / Search product by code"
-              class="w-100 h-55 bg_ash border-0 rounded-1 fs-14 text-black bg-white"
-            />
-            <button
+
+            <Typeahead
+              @update:modelValue="onUpdateProducts"
+              :minInputLength="0"
+              :requestDelay="0"
+              placeholder="Search by product"
+              :items="productItems">
+            </Typeahead>
+            <!-- <button
               type="submit"
               class="bg-transparent border-0 position-absolute top-0 end-0 h-100 pt-0 py-0 px-2"
             >
               <img src="../../assets/img/icons/search.svg" alt="Image" />
-            </button>
+            </button> -->
+            <div class="mt-2" v-show="products.length > 0">
+              <span
+                :class="{
+                  badge: true,
+                  'rounded-pill': true,
+                  'bg-dark': true,
+                  'ms-2': index > 0
+                }"
+                style="font-size:inherit"
+                v-for="(planet, index) in products" :key="index"
+                >{{ planet }}<button type="button" class="btn-close btn-close-white p-0 ms-2" @click="products.splice(index, 1)"></button>
+              </span>
+            </div>
+
+            <!-- <input
+              type="text"
+              placeholder="Scan / Search product by code"
+              class="w-100 h-55 bg_ash border-0 rounded-1 fs-14 text-black bg-white"
+            /> -->
           </div>
         </div>
       </div>
     </div>
-    <SelectedProducts />
-    <SubmitPurchase />
+    <SelectedProducts @remove-product="removeProduct" />
+    <SubmitPurchase @submit="submitFilteredList" />
 
     <div class="flex-grow-1"></div>
     <MainFooter />
@@ -78,13 +100,15 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
+import axios from "axios";
 import MainHeader from "../../components/Layouts/MainHeader.vue";
 import MainSidebar from "../../components/Layouts/MainSidebar.vue";
 import BreadcrumbMenu from "../../components/Common/BreadcrumbMenu.vue";
 import SelectedProducts from "../../components/Sales/CreateSales/SelectedProducts.vue";
 import SubmitPurchase from "../../components/Sales/CreateSales/SubmitPurchase.vue";
 import MainFooter from "../../components/Layouts/MainFooter.vue";
+import Typeahead from "../../components/Common/TypeAhead.vue";
+import EventBus from '@/events/event-bus';
 
 export default defineComponent({
   name: "CreateSalesPage",
@@ -95,6 +119,52 @@ export default defineComponent({
     SelectedProducts,
     SubmitPurchase,
     MainFooter,
+    Typeahead
   },
+  data() {
+    return {
+    form: {
+            date: "",
+            customer: "",
+            branch: "",
+          },
+      products: [],
+      productItems: ['Laptop','Smartphone','Smart Watch','Headphone']
+    }
+  },
+  methods: {
+  onUpdateProducts(product: string) {
+        this.products.push(product as never);
+        EventBus.emit('onUpdateProducts', this.products);
+      },
+      removeProduct(index: number) {
+        this.products.splice(index, 1);
+        EventBus.emit('onUpdateProducts', this.products);
+      },
+
+     async submitFilteredList() {
+           const requestData = {
+             ...this.form,
+             products: this.products,
+           };
+           try {
+             const response = await axios.post("https://your-api-endpoint.com/submit", requestData, {
+               headers: {
+                 "Content-Type": "application/json",
+               },
+             });
+             console.log("Response:", response.data);
+           } catch (error) {
+             console.error("Error submitting the list:", error);
+           }
+         },
+
+  }
+
 });
 </script>
+<style lang="scss">
+.search-area.style-two input {
+  padding-left: 20px !important;
+}
+</style>
