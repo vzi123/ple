@@ -74,7 +74,7 @@ export default {
         link: "/"
       },
       {
-        name: "Stock",
+        name: "Inventory",
         icon: "products.svg",
         subMenu: [
           { name: "Create Product", icon: "create-item.svg", link: "/create-product" },
@@ -83,86 +83,29 @@ export default {
         ]
       },
       {
-        name: "Sales",
-        icon: "sale.svg",
+        name: "Customers",
+        icon: "people.svg",
         subMenu: [
-          { name: "Create Sale", icon: "create-item.svg", link: "/create-sales" },
-          { name: "Sales List", icon: "item-list.svg", link: "/sales-list" },
-        //  { name: "POS", icon: "../../assets/img/icons/item-list.svg", link: "/pos" },
-        //  { name: "Shipment", icon: "../../assets/img/icons/item-list.svg", link: "/shipment-list" }
+          { name: "Purchase Orders", icon: "item-list.svg", link: "/purchase-list" },
+          { name: "Create Purchases", icon: "create-item.svg", link: "/create-purchase" },
+          { name: "Purchases List", icon: "item-list.svg", link: "/purchase-list" }
         ]
       },
-      {
-        name: "Endorsement",
-        icon: "adjustments.svg",
-        subMenu: [
-          { name: "Create Adjustments", icon: "create-item.svg", link: "/create-adjustment" },
-          { name: "Adjustment List", icon: "item-list.svg", link: "/adjustment-list" }
-        ]
-      },
-      {
-        name: "Orders",
-        icon: "purchase.svg",
-        subMenu: [
-          {name: "Customers",icon: "products.svg",link:"",subMenu: [
-              { name: "Purchase Orders", icon: "item-list.svg", link: "/purchase-list" },
-              { name: "Sales Orders", icon: "item-list.svg", link: "/product-list" }
-         ]}
-         ,
-          {name: "Suppliers",icon: "products.svg",link:"",subMenu: [
-              { name: "Purchase Orders", icon: "item-list.svg", link: "/purchase-list" },
-              { name: "Sales Orders", icon: "item-list.svg", link: "/product-list" }
-          ]},
-        ]
-      },
-      {
-        name: "Transfer",
-        icon: "transfer.svg",
-        subMenu: [
-          { name: "Create Transfer", icon: "create-item.svg", link: "/create-transfer" },
-          { name: "Transfer List", icon: "item-list.svg", link: "/transfer-list" }
-        ]
-      },
-      {
-        name: "Expenses",
-        icon: "expenses.svg",
-        subMenu: [
-          { name: "Create Expenses", icon: "create-item.svg", link: "/create-expense" },
-          { name: "Expenses List", icon: "item-list.svg", link: "/expense-list" },
-          { name: "Expenses Category", icon: "expense-category.svg", link: "/expense-category" }
-        ]
-      },
+       {
+         name: "Suppliers",
+         icon: "people.svg",
+         subMenu: [
+           { name: "Purchase Orders", icon: "item-list.svg", link: "/purchase-list" },
+           { name: "Create Purchases", icon: "create-item.svg", link: "/create-purchase" },
+           { name: "Purchases List", icon: "item-list.svg", link: "/purchase-list" }
+         ]
+       },
       {
         name: "Quotations",
         icon: "quotation.svg",
         subMenu: [
           { name: "Create Quotation", icon: "create-item.svg", link: "/create-quotation" },
           { name: "Quotation List", icon: "item-list.svg", link: "/quotation-list" }
-        ]
-      },
-      {
-        name: "Purchases",
-        icon: "purchase.svg",
-        subMenu: [
-          { name: "Create Purchases", icon: "create-item.svg", link: "/create-purchase" },
-          { name: "Purchases List", icon: "item-list.svg", link: "/purchase-list" }
-        ]
-      },
-      
-      {
-        name: "Sales Return",
-        icon: "sales-return.svg",
-        subMenu: [
-          { name: "Create Sales Return", icon: "create-item.svg", link: "/create-sales-return" },
-          { name: "Sales Return List", icon: "item-list.svg", link: "/sales-return-list" }
-        ]
-      },
-      {
-        name: "Purchase Return",
-        icon: "purchase-return.svg",
-        subMenu: [
-          { name: "Create Purchase Return", icon: "create-item.svg", link: "/create-purchase-return" },
-          { name: "Purchase Return List", icon: "item-list.svg", link: "/purchase-return-list" }
         ]
       },
       {

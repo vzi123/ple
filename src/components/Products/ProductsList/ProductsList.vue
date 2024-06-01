@@ -211,7 +211,7 @@ export default defineComponent({
     const fetchProducts = async () => {
       try {
         loading.value = true; // Set loading to true before request
-        const response = await axios.get(`${BASE_URL}/freezy/purchaseOrders/all`);
+        const response = await axios.get(`${BASE_URL}/freezy/products/all`);
         allProducts.value = response.data; // Assuming your API returns an array of products
         
       } catch (error) {

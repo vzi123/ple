@@ -191,9 +191,9 @@
 <script lang="ts">
 
 import { ref, computed, onMounted, defineComponent } from 'vue';
-import { useEventBus } from '../../../events/searchEvent'; // Import the event bus
+
 import axios from "axios";
-import stateStore from "../../../utils/store";
+//import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
 
 export default defineComponent({
@@ -205,7 +205,6 @@ export default defineComponent({
   },
   setup() {
     const loading = ref(false);
-    const { on } = useEventBus();
     const searchTerm = ref('');
     const purchaseListData = ref([
     ]);
@@ -243,7 +242,7 @@ export default defineComponent({
       return project.name;
     },
     onViewPurchase(purchaseItem: any) {
-      stateStore.purchaseDetails = purchaseItem;
+    //  stateStore.purchaseDetails = purchaseItem;
     }
   },
 });
