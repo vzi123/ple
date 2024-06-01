@@ -14,12 +14,14 @@ export function useEventBus() {
   });
 
   function emit(event: string, payload?: any) {
+    console.log('eventBus.listeners', eventBus.listeners, event);
     if (eventBus.listeners[event]) {
       eventBus.listeners[event].forEach(listener => listener(payload));
     }
   }
 
   function on(event: string, callback: (payload?: any) => void) {
+    console.log('on', event);
     if (!eventBus.listeners[event]) {
       eventBus.listeners[event] = [];
     }
