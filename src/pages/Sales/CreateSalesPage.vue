@@ -118,7 +118,7 @@ export default defineComponent({
         branch: "",
       },
       products: [],
-
+      detailedProducts: [],
       allProducts:[]
     }
   },
@@ -133,7 +133,7 @@ export default defineComponent({
     },
     async submitFilteredList() {
       const requestData = {
-        products: this.products,
+        products: this.detailedProducts,
       };
       try {
         const response = await axios.post("https://your-api-endpoint.com/submit", requestData, {
@@ -148,9 +148,12 @@ export default defineComponent({
     }
   },
   mounted() {
-    EventBus.on('onAllProducts', (products: any) => {
-      this.allProducts = products; // Update allProducts with the emitted value
-    });
+     EventBus.on('onAllProducts', (products: any) => {
+          this.allProducts = products; // Update allProducts with the emitted value
+        });
+        EventBus.on('onFilteredProducts', (products: any) => {
+          this.detailedProducts = products; // Capture detailed product data
+        });
     EventBus.emit('requestAllProducts');
   }
 });

@@ -41,7 +41,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in filteredList" :key="product.id">
+            <tr v-for="(product, index) in filteredList" :key="product.id">
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
                 {{ product.product }}
               </td>
@@ -57,7 +57,8 @@
                 </span>
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                <QuantityCounter />
+               <QuantityCounter :initialQuantity="product.quantity ?? 1" :index="index" @quantity-change="updateQuantity" />
+
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ currncySymbol }} {{ product.discount }}
@@ -187,24 +188,35 @@ export default defineComponent({
       }
     })
 
+    const updateQuantity = ({ index, quantity }: { index: number, quantity: number }) => {
+          console.log(index, 'Finished successfully!');
+          if (index >= 0 && index < filteredList.value.length) {
+            filteredList.value[index].quantity = quantity;
+            EventBus.emit('onFilteredProducts', filteredList.value); // Emit the updated product data
+          }
+        };
+
     onMounted(() => {
       EventBus.on('onUpdateProducts', (products: any) => {
-        searchTerm.value = products;
-      });
+              searchTerm.value = products;
+              EventBus.emit('onFilteredProducts', filteredList.value); // Emit the detailed product data
+            });
 
-      // Emit the allProducts list when the component is mounted
-      EventBus.emit('onAllProducts', allProducts.value);
+            // Emit the allProducts list when the component is mounted
+            EventBus.emit('onAllProducts', allProducts.value);
     });
 EventBus.on('requestAllProducts', () => {
       // Emit the allProducts list when a request is received
       EventBus.emit('onAllProducts', allProducts.value);
     });
 
+
     return {
 
             allProducts,
             filteredList,
             submitFilteredList,
+            updateQuantity
     };
   },
 });
