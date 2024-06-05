@@ -99,7 +99,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 import axios from "axios";
 import MainHeader from "../../components/Layouts/MainHeader.vue";
 import MainSidebar from "../../components/Layouts/MainSidebar.vue";
@@ -123,46 +123,49 @@ export default defineComponent({
   },
   data() {
     return {
-    form: {
-            date: "",
-            customer: "",
-            branch: "",
-          },
+      form: {
+        date: "",
+        customer: "",
+        branch: "",
+      },
       products: [],
-      productItems: ['Laptop','Smartphone','Smart Watch','Headphone']
+      productItems: ['Laptop','Smartphone','Smart Watch','Headphone'],
+      allProducts:[]
     }
   },
   methods: {
-  onUpdateProducts(product: string) {
-        this.products.push(product as never);
-        EventBus.emit('onUpdateProducts', this.products);
-      },
-      removeProduct(index: number) {
-        this.products.splice(index, 1);
-        EventBus.emit('onUpdateProducts', this.products);
-      },
-
-     async submitFilteredList() {
-           const requestData = {
-             ...this.form,
-             products: this.products,
-           };
-           try {
-             const response = await axios.post("https://your-api-endpoint.com/submit", requestData, {
-               headers: {
-                 "Content-Type": "application/json",
-               },
-             });
-             console.log("Response:", response.data);
-           } catch (error) {
-             console.error("Error submitting the list:", error);
-           }
-         },
-
+    onUpdateProducts(product: string) {
+      this.products.push(product as never);
+      EventBus.emit('onUpdateProducts', this.products);
+    },
+    removeProduct(index: number) {
+      this.products.splice(index, 1);
+      EventBus.emit('onUpdateProducts', this.products);
+    },
+    async submitFilteredList() {
+      const requestData = {
+        products: this.products,
+      };
+      try {
+        const response = await axios.post("https://your-api-endpoint.com/submit", requestData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.error("Error submitting the list:", error);
+      }
+    }
+  },
+  mounted() {
+    EventBus.on('onAllProducts', (products: any) => {
+      this.allProducts = products; // Update allProducts with the emitted value
+    });
   }
-
 });
 </script>
+
 <style lang="scss">
 .search-area.style-two input {
   padding-left: 20px !important;

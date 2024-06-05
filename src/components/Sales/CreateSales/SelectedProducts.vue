@@ -113,7 +113,7 @@ export default defineComponent({
       selectedProduct: "",
     };
   },
-  
+
   setup() {
     const allProducts = ref([
         {
@@ -191,6 +191,9 @@ export default defineComponent({
       EventBus.on('onUpdateProducts', (products: any) => {
         searchTerm.value = products;
       });
+
+      // Emit the allProducts list when the component is mounted
+      EventBus.emit('onAllProducts', allProducts.value);
     });
     return {
 
