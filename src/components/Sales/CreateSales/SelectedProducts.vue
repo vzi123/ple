@@ -116,48 +116,24 @@ export default defineComponent({
   },
 
   setup() {
-    const allProducts = ref([
-        {
-          id: 1,
-          product: "Smartphone",
-          code: "87305928",
-          stock: "200",
-          cost: "200.00",
-          discount: "00.00",
-          tax: "00.00",
-          subTotal: "200.00",
-        },
-        {
-          id: 2,
-          product: "Smart Watch",
-          code: "56305954",
-          stock: "151",
-          cost: "100.00",
-          discount: "00.00",
-          tax: "00.00",
-          subTotal: "100.00",
-        },
-        {
-          id: 3,
-          product: "Laptop",
-          code: "32305954",
-          stock: "100",
-          cost: "600.00",
-          discount: "00.00",
-          tax: "00.00",
-          subTotal: "600.00",
-        },
-        {
-          id: 4,
-          product: "Headphone",
-          code: "56305945",
-          stock: "250",
-          cost: "900.00",
-          discount: "00.00",
-          tax: "00.00",
-          subTotal: "900.00",
-        },
-      ]);
+    const allProducts = ref([]);
+
+
+        const fetchProducts = async () => {
+              try {
+                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/products/all");
+                // Transform the response data
+                allProducts.value = response.data.map((product: any) => ({
+                  id: product.id,
+                  product: product.name, // Change 'name' to 'product'
+                  description: product.description,
+                  quantity: 1, // Default quantity
+                }));
+                EventBus.emit('onAllProducts', allProducts.value);
+              } catch (error) {
+                console.error("Error fetching products:", error);
+              }
+            };
     const searchTerm = ref([]);
 
     const submitFilteredList = async () => {
@@ -196,7 +172,8 @@ export default defineComponent({
           }
         };
 
-    onMounted(() => {
+    onMounted(async () => {
+                    await fetchProducts();
       EventBus.on('onUpdateProducts', (products: any) => {
               searchTerm.value = products;
               EventBus.emit('onFilteredProducts', filteredList.value); // Emit the detailed product data
