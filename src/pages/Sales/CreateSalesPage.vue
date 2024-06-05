@@ -38,20 +38,7 @@
         <div class="form-group">
           <label class="d-block fs-14 text-black mb-2">Choose Product</label>
           <div class="search-area style-two position-relative w-100">
-
-            <Typeahead
-              @update:modelValue="onUpdateProducts"
-              :minInputLength="0"
-              :requestDelay="0"
-              placeholder="Search by product"
-              :items="productItems">
-            </Typeahead>
-            <!-- <button
-              type="submit"
-              class="bg-transparent border-0 position-absolute top-0 end-0 h-100 pt-0 py-0 px-2"
-            >
-              <img src="../../assets/img/icons/search.svg" alt="Image" />
-            </button> -->
+            <Typeahead @update:modelValue="onUpdateProducts" :minInputLength="0" :requestDelay="0" placeholder="Search by product" :items="allProducts.map(product => product.product)" />
             <div class="mt-2" v-show="products.length > 0">
               <span
                 :class="{
@@ -61,8 +48,10 @@
                   'ms-2': index > 0
                 }"
                 style="font-size:inherit"
-                v-for="(planet, index) in products" :key="index"
-                >{{ planet }}<button type="button" class="btn-close btn-close-white p-0 ms-2" @click="products.splice(index, 1)"></button>
+                v-for="(product, index) in products"
+                :key="index"
+              >
+                {{ product.product }}
               </span>
             </div>
 
@@ -129,7 +118,7 @@ export default defineComponent({
         branch: "",
       },
       products: [],
-      productItems: ['Laptop','Smartphone','Smart Watch','Headphone'],
+
       allProducts:[]
     }
   },
@@ -162,6 +151,7 @@ export default defineComponent({
     EventBus.on('onAllProducts', (products: any) => {
       this.allProducts = products; // Update allProducts with the emitted value
     });
+    EventBus.emit('requestAllProducts');
   }
 });
 </script>

@@ -195,6 +195,11 @@ export default defineComponent({
       // Emit the allProducts list when the component is mounted
       EventBus.emit('onAllProducts', allProducts.value);
     });
+EventBus.on('requestAllProducts', () => {
+      // Emit the allProducts list when a request is received
+      EventBus.emit('onAllProducts', allProducts.value);
+    });
+
     return {
 
             allProducts,
