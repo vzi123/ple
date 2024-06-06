@@ -124,7 +124,7 @@ export default defineComponent({
                 const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/products/all");
                 // Transform the response data
                 allProducts.value = response.data.map((product: any) => ({
-                  id: product.id,
+                  code: product.id,
                   product: product.name, // Change 'name' to 'product'
                   description: product.description,
                   quantity: 1, // Default quantity

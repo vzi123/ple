@@ -18,10 +18,14 @@
       <div class="col-lg-4">
         <div class="form-group mb-25">
           <label class="d-block fs-14 text-black mb-2">Customer</label>
-          <select v-model="form.customer" class="bg-white border-0 rounded-1 fs-14 text-optional">
-            <option value="0">Jhon Victim</option>
-            <option value="1">Tony Stark</option>
-          </select>
+          <v-select
+                     v-model="form.customer"
+                     :options="customers"
+                     :reduce="customer => customer.code"
+                     label="name"
+                     class="bg-white border-0 rounded-1 fs-14 text-optional"
+                     placeholder="Select Customer"
+              />
         </div>
       </div>
       <div class="col-lg-4">
@@ -98,6 +102,8 @@ import SubmitPurchase from "../../components/Sales/CreateSales/SubmitPurchase.vu
 import MainFooter from "../../components/Layouts/MainFooter.vue";
 import Typeahead from "../../components/Common/TypeAhead.vue";
 import EventBus from '@/events/event-bus';
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 
 export default defineComponent({
   name: "CreateSalesPage",
@@ -108,7 +114,8 @@ export default defineComponent({
     SelectedProducts,
     SubmitPurchase,
     MainFooter,
-    Typeahead
+    Typeahead,
+    vSelect
   },
   data() {
     return {
@@ -119,7 +126,8 @@ export default defineComponent({
       },
       products: [],
       detailedProducts: [],
-      allProducts:[]
+      allProducts:[],
+      customers: [],
     }
   },
   methods: {
@@ -131,8 +139,23 @@ export default defineComponent({
       this.products.splice(index, 1);
       EventBus.emit('onUpdateProducts', this.products);
     },
+    async fetchCustomers() {
+          try {
+            const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/users/all");
+
+            this.customers = response.data.map((customer: any) => ({
+                              code: customer.id,
+                              name: `${customer.first_name} ${customer.last_name}`, // Change 'name' to 'product'
+                              email: customer.email,
+                              phone_number: customer.phone_number, // Default quantity
+                            }));
+          } catch (error) {
+            console.error("Error fetching customers:", error);
+          }
+        },
     async submitFilteredList() {
       const requestData = {
+        customer: this.form.customer ,
         products: this.detailedProducts,
       };
       try {
@@ -155,6 +178,7 @@ export default defineComponent({
           this.detailedProducts = products; // Capture detailed product data
         });
     EventBus.emit('requestAllProducts');
+    this.fetchCustomers();
   }
 });
 </script>
