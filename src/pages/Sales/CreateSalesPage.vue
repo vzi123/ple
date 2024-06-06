@@ -31,11 +31,14 @@
       <div class="col-lg-4">
         <div class="form-group mb-25">
           <label class="d-block fs-14 text-black mb-2">Branch</label>
-          <select v-model="form.branch" class="bg-white border-0 rounded-1 fs-14 text-optional">
-            <option value="0">Select Branch</option>
-            <option value="1">Branch 1</option>
-            <option value="2">Branch 1 2</option>
-          </select>
+           <v-select
+                               v-model="form.project"
+                               :options="projects"
+                               :reduce="project => project.code"
+                               label="name"
+                               class="bg-white border-0 rounded-1 fs-14 text-optional"
+                               placeholder="Select Project"
+                        />
         </div>
       </div>
       <div class="col-12">
@@ -123,11 +126,16 @@ export default defineComponent({
         date: "",
         customer: "",
         branch: "",
+        project: "",
       },
       products: [],
       detailedProducts: [],
       allProducts:[],
       customers: [],
+      projects:[],
+      discount: 0,
+            status: "Packed",
+            notes: "",
     }
   },
   methods: {
@@ -153,10 +161,30 @@ export default defineComponent({
             console.error("Error fetching customers:", error);
           }
         },
-    async submitFilteredList() {
+    async fetchProjects() {
+              try {
+                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/projects/all");
+
+                this.projects = response.data.map((project: any) => ({
+                                  code: project.id,
+                                  name: project.name,
+                                  status: project.status,
+
+                                }));
+              } catch (error) {
+                console.error("Error fetching projects:", error);
+              }
+            },
+
+
+    async submitFilteredList(submitData: any) {
       const requestData = {
         customer: this.form.customer ,
+        project: this.form.project,
         products: this.detailedProducts,
+        discount: submitData.discount,
+                status: submitData.status,
+                notes: submitData.notes,
       };
       try {
         const response = await axios.post("https://your-api-endpoint.com/submit", requestData, {
@@ -179,6 +207,7 @@ export default defineComponent({
         });
     EventBus.emit('requestAllProducts');
     this.fetchCustomers();
+    this.fetchProjects();
   }
 });
 </script>
