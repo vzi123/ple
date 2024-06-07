@@ -135,6 +135,7 @@ export default defineComponent({
       projects:[],
        filteredList: [],
       discount: 0,
+      total: 0,
             status: "Packed",
             notes: "",
     }
@@ -185,8 +186,9 @@ export default defineComponent({
         userPersona: 'customer',
         quotationItems: this.detailedProducts,
         discount: submitData.discount,
-        // status: submitData.status,
-        // notes: submitData.notes,
+         status: submitData.status,
+         notes: submitData.notes,
+        total: submitData.total,
       };
       try {
         const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/quotations/save", requestData, {

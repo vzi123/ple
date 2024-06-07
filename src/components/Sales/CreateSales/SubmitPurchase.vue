@@ -88,6 +88,7 @@ export default {
   data() {
     return {
       discount: 0,
+      total:0,
       status: "Packed",
       notes: "",
       currncySymbol: "₹",
@@ -106,8 +107,8 @@ export default {
               return acc + (product.subTotal || 0);
 
             }, 0);
-
-            return total - this.discount;
+            this.total = total - this.discount;
+            return this.total;
 
         },
   },
@@ -117,6 +118,7 @@ export default {
         discount: this.discount,
         status: this.status,
         notes: this.notes,
+        total: this.total,
       });
     },
   },
