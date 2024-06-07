@@ -179,15 +179,16 @@ export default defineComponent({
 
     async submitFilteredList(submitData: any) {
       const requestData = {
-        customer: this.form.customer ,
-        project: this.form.project,
-        products: this.detailedProducts,
+        userId: this.form.customer ,
+        projectId: this.form.project,
+        userPersona: 'customer',
+        quotationItems: this.detailedProducts,
         discount: submitData.discount,
-                status: submitData.status,
-                notes: submitData.notes,
+        // status: submitData.status,
+        // notes: submitData.notes,
       };
       try {
-        const response = await axios.post("https://your-api-endpoint.com/submit", requestData, {
+        const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/quotations/save", requestData, {
           headers: {
             "Content-Type": "application/json",
           },

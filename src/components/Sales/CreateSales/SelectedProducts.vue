@@ -46,7 +46,7 @@
                 {{ product.product }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ product.code }}
+                {{ product.productId }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 $ {{ product.cost }}
@@ -124,7 +124,7 @@ export default defineComponent({
                 const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/products/all");
                 // Transform the response data
                 allProducts.value = response.data.map((product: any) => ({
-                  code: product.id,
+                  productId: product.id,
                   product: product.name, // Change 'name' to 'product'
                   description: product.description,
                   quantity: 1, // Default quantity
