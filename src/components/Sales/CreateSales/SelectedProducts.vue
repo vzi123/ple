@@ -17,18 +17,14 @@
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 UNIT COST
               </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                STOCK
-              </th>
+
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 QUANTITY
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 DISCOUNT
               </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                TAX
-              </th>
+
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 SUBTOTAL
               </th>
@@ -48,24 +44,26 @@
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ product.productId }}
               </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                $ {{ product.cost }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                <span class="badge badge-success fw-semibold fs-14">
-                  {{ product.stock }}
-                </span>
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-               <QuantityCounter :initialQuantity="product.quantity ?? 1" :index="index" @quantity-change="updateQuantity" />
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                            <input
+                              type="number"
+                              v-model.number="product.cost"
+                              @input="calculateSubtotal(index)"
+                              class="form-control"
+                            />
+                          </td>
+                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                            <QuantityCounter :initialQuantity="product.quantity ?? 1" :index="index" @quantity-change="updateQuantity" @input="calculateSubtotal(index)" />
+                          </td>
+                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                            <input
+                              type="number"
+                              v-model.number="product.discount"
+                              @input="calculateSubtotal(index)"
+                              class="form-control"
+                            />
+                          </td>
 
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ currncySymbol }} {{ product.discount }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ currncySymbol }} {{ product.tax }}
-              </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ currncySymbol }} {{ product.subTotal }}
               </td>
@@ -128,6 +126,9 @@ export default defineComponent({
                   product: product.name, // Change 'name' to 'product'
                   description: product.description,
                   quantity: 1, // Default quantity
+                  cost: product.cost,
+                  discount: 0,
+                  subTotal: (product.cost - 0) * 1,
                 }));
                 EventBus.emit('onAllProducts', allProducts.value);
               } catch (error) {
@@ -167,10 +168,37 @@ export default defineComponent({
     const updateQuantity = ({ index, quantity }: { index: number, quantity: number }) => {
           console.log(index, 'Finished successfully!');
           if (index >= 0 && index < filteredList.value.length) {
+
+          console.log(index , 'Finished successfully inside!');
             filteredList.value[index].quantity = quantity;
+            calculateSubtotal(index);
             EventBus.emit('onFilteredProducts', filteredList.value); // Emit the updated product data
           }
         };
+
+     const updateCost = (index: number, cost: number) => {
+          if (index >= 0 && index < filteredList.value.length) {
+            filteredList.value[index].cost = cost;
+            calculateSubtotal(index);
+            EventBus.emit('onFilteredProducts', filteredList.value); // Emit the updated product data
+          }
+        };
+
+     const updateDiscount = (index: number, discount: number) => {
+               if (index >= 0 && index < filteredList.value.length) {
+                 filteredList.value[index].discount = discount;
+                 calculateSubtotal(index);
+                 EventBus.emit('onFilteredProducts', filteredList.value); // Emit the updated product data
+               }
+             };
+
+      const calculateSubtotal =  (index: number) => {
+       console.log(index, 'calculateSubtotal successfully!');
+                    if (index >= 0 && index < filteredList.value.length) {
+                           const product = filteredList.value[index];
+                           product.subTotal = (product.cost - product.discount) * product.quantity;
+                         }
+                };
 
     onMounted(async () => {
                     await fetchProducts();
@@ -193,7 +221,11 @@ EventBus.on('requestAllProducts', () => {
             allProducts,
             filteredList,
             submitFilteredList,
-            updateQuantity
+            updateQuantity,
+            updateCost,
+            updateDiscount,
+            calculateSubtotal,
+
     };
   },
 });

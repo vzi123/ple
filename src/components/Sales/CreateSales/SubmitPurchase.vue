@@ -78,6 +78,13 @@
 <script>
 export default {
   name: "SubmitPurchase",
+  props: {
+      filteredList: {
+        type: Array,
+        required: true,
+         default: () => [],
+      },
+    },
   data() {
     return {
       discount: 0,
@@ -87,11 +94,22 @@ export default {
     };
   },
   computed: {
-    calculateGrandTotal() {
-      // Compute the grand total here based on discount and other factors
-      // This is a placeholder; you should implement the actual calculation logic
-      return 200 - this.discount;
-    },
+     calculateGrandTotal() {
+      console.log("calculateGrandTotal:");
+       if (!this.filteredList || !Array.isArray(this.filteredList)) {
+       console.log("calculateGrandTotal: 00");
+              return 0;
+            }
+
+            const total = this.filteredList.reduce((acc, product) => {
+              console.log("calculateGrandTotal:value" );
+              return acc + (product.subTotal || 0);
+
+            }, 0);
+
+            return total - this.discount;
+
+        },
   },
   methods: {
     submit() {

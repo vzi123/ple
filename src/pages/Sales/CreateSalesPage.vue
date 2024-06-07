@@ -72,7 +72,7 @@
       </div>
     </div>
     <SelectedProducts @remove-product="removeProduct" />
-    <SubmitPurchase @submit="submitFilteredList" />
+    <SubmitPurchase :filteredList="filteredList" @submit="submitFilteredList" />
 
     <div class="flex-grow-1"></div>
     <MainFooter />
@@ -133,6 +133,7 @@ export default defineComponent({
       allProducts:[],
       customers: [],
       projects:[],
+       filteredList: [],
       discount: 0,
             status: "Packed",
             notes: "",
@@ -205,6 +206,7 @@ export default defineComponent({
         });
         EventBus.on('onFilteredProducts', (products: any) => {
           this.detailedProducts = products; // Capture detailed product data
+          this.filteredList =products;
         });
     EventBus.emit('requestAllProducts');
     this.fetchCustomers();

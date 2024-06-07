@@ -2,7 +2,7 @@
   <div class="row mb-40">
     <div class="col-xxl-10 col-lg-8 pe-xxl-8">
       <div class="row">
-      <!-- 
+      <!--
         <div class="col-md-6">
           <div class="form-group mb-25">
             <label class="d-block fs-14 text-black mb-2">Order Tax</label>
