@@ -58,7 +58,7 @@
                           <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                             <input
                               type="number"
-                              v-model.number="product.discount"
+                              v-model.number="product.discountAmount"
                               @input="calculateSubtotal(index)"
                               class="form-control"
                             />
@@ -127,8 +127,10 @@ export default defineComponent({
                   description: product.description,
                   quantity: 1, // Default quantity
                   cost: product.cost,
-                  discount: 0,
+                  unitPrice:product.cost,
+                  discountAmount: 0,
                   subTotal: (product.cost - 0) * 1,
+                  effectivePrice: (product.cost - 0) * 1,
                 }));
                 EventBus.emit('onAllProducts', allProducts.value);
               } catch (error) {
@@ -196,7 +198,8 @@ export default defineComponent({
        console.log(index, 'calculateSubtotal successfully!');
                     if (index >= 0 && index < filteredList.value.length) {
                            const product = filteredList.value[index];
-                           product.subTotal = (product.cost - product.discount) * product.quantity;
+                           product.subTotal = (product.cost - product.discountAmount) * product.quantity;
+                           product.effectivePrice = product.cost - product.discountAmount;
                          }
                 };
 
