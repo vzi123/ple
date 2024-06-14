@@ -84,14 +84,11 @@ export default defineComponent({
       loading,
     };
   },
-  methods: {
-    formatDate,
-    getProductName(product: any) {
-      return product.name;
-    },
-    getProjectName(project: any) {
-      return project.name;
-    },
-  },
+  // methods: {
+  //   formatDate,
+  //   getProductName(product: any) {
+  //     return productName;
+  //   },
+  // },
 });
 </script>

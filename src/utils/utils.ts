@@ -7,4 +7,5 @@ export const formatDate = (inputDate: string) => {
     return `${day} ${month} ${year}`;
 }
 
-export const BASE_URL = "https://freezy-small-dew-912.fly.dev";
+// export const BASE_URL = "https://freezy-small-dew-912.fly.dev";
+export const BASE_URL = "http://localhost:8080";

@@ -38,6 +38,9 @@
                                           {{ purchaseItem.projectName }}
                                         </td>
                     <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                      {{ purchaseItem.budget }}
+                    </td>
+                    <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                       {{ purchaseItem.quotationId }}
                     </td>
                     <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">

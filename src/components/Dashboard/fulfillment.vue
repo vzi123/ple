@@ -8,21 +8,16 @@
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
               PO ID
             </th>
-            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-              PROJECT ID
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
+              PRODUCT ID
             </th>
-            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-              AMOUNT
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
+              PRODUCT NAME
             </th>
-            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-              STATUS
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
+              QUANTITY
             </th>
-            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-              COMMENTS
-            </th>
-            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                          SALES ORDER ID
-                        </th>
+
           </tr>
         </thead>
         <tbody v-for="(purchaseItem, index) in allProducts" :key="index">
@@ -31,10 +26,13 @@
                       <span class="text-optional fs-14">{{ purchaseItem.poId }}</span>
                     </td>
                     <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                      {{ purchaseItem.fulfillmentItemsDTOs.productName }}
+                      {{ purchaseItem.fulfillmentItemsDTOs[0]?.productId }}
                     </td>
                     <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                      {{ purchaseItem.fulfillmentItemsDTOs.quantity }}
+                      {{ purchaseItem.fulfillmentItemsDTOs[0]?.productName }}
+                    </td>
+                    <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                      {{ purchaseItem.fulfillmentItemsDTOs[0]?.quantity }}
                     </td>
 
                   </tr>

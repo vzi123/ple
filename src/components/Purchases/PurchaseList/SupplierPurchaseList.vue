@@ -4,83 +4,136 @@
       <div class="table-responsive style-three">
         <table class="table text-nowrap align-middle mb-0">
           <thead>
-            <tr>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                User Id
-                <img
+          <tr>
+            <!-- <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0">
+              <div class="form-check checkbox">
+                <input class="form-check-input" type="checkbox" id="test_1" />
+                <label class="form-check-label" for="test_1">
+                  DATE
+                  <img
                     class="ms-2"
                     src="../../../assets/img/icons/up-down-aroow.svg"
                     alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Name
-                <img
+                  />
+                </label>
+              </div>
+            </th> -->
+            <th scope="col" class="text-title fw-normal fs-14 pt-0">
+              PO ID
+              <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
                   alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Email
-                <img
+              />
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0">
+              Name
+              <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
                   alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Phone
-                <img
+              />
+            </th>
+            <!--              <th scope="col" class="text-title fw-normal fs-14 pt-0">-->
+            <!--                PERSONA-->
+            <!--                <img-->
+            <!--                  class="ms-2"-->
+            <!--                  src="../../../assets/img/icons/up-down-aroow.svg"-->
+            <!--                  alt="Image"-->
+            <!--                />-->
+            <!--              </th>-->
+            <th scope="col" class="text-title fw-normal fs-14 pt-0">
+              Project
+              <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
                   alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Address
-                <img
+              />
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0">
+              Budget
+              <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
                   alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 pe-0">
-                Action
-              </th>
-            </tr>
+              />
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0">
+              Created Date
+              <img
+                  class="ms-2"
+                  src="../../../assets/img/icons/up-down-aroow.svg"
+                  alt="Image"
+              />
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0">
+              Status
+              <img
+                  class="ms-2"
+                  src="../../../assets/img/icons/up-down-aroow.svg"
+                  alt="Image"
+              />
+            </th>
+
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 pe-0">
+              Actions
+            </th>
+          </tr>
           </thead>
 
-          <tbody v-for="(userItem, index) in purchaseListData" :key="index">
+          <tbody v-for="(purchaseItem, index) in filteredList" :key="index">
+
+
+
           <tr>
+            <!-- <td class="shadow-none fw-normal text-black title ps-0">
+              <div class="d-flex align-items-center">
+                <div class="form-check checkbox style-three">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="test_7"
+                  />
+                  <label class="form-check-label text-optional" for="test_7">
+                  </label>
+                </div>
+                <span class="text-optional fs-14 ms-2">{{ purchaseItem.createdAt }}</span>
+              </div>
+            </td> -->
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{ userItem.id }}
+              {{ purchaseItem.id }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{ userItem.first_name + ' ' + userItem.last_name }}
+              {{ getUserName(purchaseItem.user) }}
             </td>
+            <!--              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">-->
+            <!--                {{ purchaseItem.userPersona }}-->
+            <!--              </td>-->
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 <span class="badge badge-success fs-14 fw-normal"
-                > {{ userItem.email }}</span
+                > {{ getProjectName(purchaseItem.project) }}</span
                 >
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{userItem.phone_number }}
+              {{ currncySymbol }} {{ purchaseItem.budget }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{userItem.address }}
+              {{ formatDate(purchaseItem.createdAt) }}
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ purchaseItem.status }}
             </td>
             <td class="shadow-none lh-1 text-end pe-0">
               <div class="button-group d-flex flex-wrap align-items-center">
-<!--                <a-->
-<!--                    href="javascript:void(0)"-->
-<!--                    title="View"-->
-<!--                    data-bs-toggle="modal"-->
-<!--                    data-bs-target="#detailsModal"-->
-<!--                    @click="onViewPurchase(purchaseItem)"-->
-<!--                >-->
-<!--                  <img src="../../../assets/img/icons/eye.svg" alt="Image" />-->
-<!--                </a>-->
+                <a
+                    href="javascript:void(0)"
+                    title="View"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailsModal"
+                    @click="onViewPurchase(purchaseItem)"
+                >
+                  <img src="../../../assets/img/icons/eye.svg" alt="Image" />
+                </a>
                 <router-link to="/edit-purchase" title="Edit">
                   <img src="../../../assets/img/icons/edit.svg" alt="Image" />
                 </router-link>
@@ -99,6 +152,8 @@
               </div>
             </td>
           </tr>
+
+
           </tbody>
         </table>
       </div>
@@ -108,7 +163,7 @@
   <div class="row pb-45 align-items-center">
     <div class="col-sm-6">
       <div
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-start page-unit"
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-start page-unit"
       >
         <span class="fs-13">Showing product per page</span>
         <select class="text-title border-0 fs-14 bg-transparent">
@@ -123,8 +178,8 @@
         <li>
           <a href="#">
             <img
-              src="../../../assets/img/icons/left-arrow-purple.svg"
-              alt="Image"
+                src="../../../assets/img/icons/left-arrow-purple.svg"
+                alt="Image"
             />
           </a>
         </li>
@@ -134,8 +189,8 @@
         <li>
           <a href="#">
             <img
-              src="../../../assets/img/icons/right-arrow-purple.svg"
-              alt="Image"
+                src="../../../assets/img/icons/right-arrow-purple.svg"
+                alt="Image"
             />
           </a>
         </li>
@@ -153,7 +208,7 @@ import { formatDate, BASE_URL } from '@/utils/utils';
 import EventBus from '../../../events/event-bus';
 
 export default defineComponent({
-  name: "CustomerList",
+  name: "SupplierPurchaseList",
   data() {
     return {
       currncySymbol:"₹",
@@ -168,7 +223,7 @@ export default defineComponent({
     const fetchPurchageOrders = async () => {
       try {
         loading.value = true; // Set loading to true before request
-        const response = await axios.get(`${BASE_URL}/freezy/users/filter?type=customer`);
+        const response = await axios.get(`${BASE_URL}/freezy/purchaseOrders/all/supplier`);
         purchaseListData.value = response.data; // Assuming your API returns an array of products
 
       } catch (error) {
@@ -214,6 +269,7 @@ export default defineComponent({
       return project.name;
     },
     onViewPurchase(purchaseItem: any) {
+      stateStore.salesOrderDetails = purchaseItem?.salesOrders;
       stateStore.purchaseDetails = purchaseItem;
     },
   },

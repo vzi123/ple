@@ -74,30 +74,27 @@ export default {
         link: "/"
       },
       {
-        name: "Inventory",
+        name: "Stock",
         icon: "products.svg",
         subMenu: [
-          { name: "Create Product", icon: "create-item.svg", link: "/create-product" },
-          { name: "Product List", icon: "item-list.svg", link: "/product-list" },
-          { name: "Print Barcode", icon: "barcode.svg", link: "/print-barcode" }
+          // { name: "Create Product", icon: "create-item.svg", link: "/create-product" },
+          { name: "Stock Details", icon: "item-list.svg", link: "/product-list" }
         ]
       },
       {
         name: "Customers",
         icon: "people.svg",
         subMenu: [
-          { name: "Purchase Orders", icon: "item-list.svg", link: "/purchase-list" },
-          { name: "Create Purchases", icon: "create-item.svg", link: "/create-purchase" },
-          { name: "Purchases List", icon: "item-list.svg", link: "/purchase-list" }
+          { name: "Purchase Orders", icon: "item-list.svg", link: "/customer-purchase-list" },
+          { name: "Create Purchases", icon: "create-item.svg", link: "/create-purchase" }
         ]
       },
        {
          name: "Suppliers",
          icon: "people.svg",
          subMenu: [
-           { name: "Purchase Orders", icon: "item-list.svg", link: "/purchase-list" },
-           { name: "Create Purchases", icon: "create-item.svg", link: "/create-purchase" },
-           { name: "Purchases List", icon: "item-list.svg", link: "/purchase-list" }
+           { name: "Purchase Orders", icon: "item-list.svg", link: "/supplier-purchase-list" },
+           { name: "Create Purchases", icon: "create-item.svg", link: "/create-purchase" }
          ]
        },
       {
@@ -114,25 +111,25 @@ export default {
         subMenu: [
           { name: "Customer List", icon: "user-square.svg", link: "/customer-list" },
           { name: "Supplier List", icon: "item-list.svg", link: "/supplier-list" },
-          { name: "Contractor List", icon: "profile-circle.svg", link: "/user-list" }
+          // { name: "Contractor List", icon: "profile-circle.svg", link: "/user-list" }
         ]
       },
       {
         name: "Settings",
         icon: "setting-2.svg",
         subMenu: [
-          { name: "System Settings", icon: "setting-3.svg", link: "/system-settings" },
-          { name: "Group Permission", icon: "group.svg", link: "/group-permission" },
+          // { name: "System Settings", icon: "setting-3.svg", link: "/system-settings" },
+          // { name: "Group Permission", icon: "group.svg", link: "/group-permission" },
           { name: "Branch", icon: "warehouse.svg", link: "/warehouse-list" },
           { name: "Category", icon: "category.svg", link: "/category-list" },
-          { name: "Brand", icon: "brand.svg", link: "/brand-list" },
-          { name: "Currency", icon: "currency.svg", link: "/currency-list" },
+          // { name: "Brand", icon: "brand.svg", link: "/brand-list" },
+          // { name: "Currency", icon: "currency.svg", link: "/currency-list" },
           { name: "Unit", icon: "unit.svg", link: "/unit-list" },
-          { name: "Backup", icon: "backup.svg", link: "/backup" },
-          {name: "Products",icon: "products.svg",link:"",subMenu: [
-              { name: "Create Product", icon: "create-item.svg", link: "/create-product" },
-              { name: "Product List", icon: "item-list.svg", link: "/product-list" },
-              { name: "Print Barcode", icon: "barcode.svg", link: "/print-barcode" }
+          // { name: "Backup", icon: "backup.svg", link: "/backup" },
+          {name: "Products",icon: "setting-3.svg",link:"",subMenu: [
+              { name: "Create Product", icon: "brand.svg", link: "/create-product" },
+              { name: "Product List", icon: "currency.svg", link: "/product-list" },
+              // { name: "Print Barcode", icon: "barcode.svg", link: "/print-barcode" }
         ]},
         ]
       },

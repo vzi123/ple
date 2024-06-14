@@ -6,7 +6,7 @@
         <thead>
           <tr>
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
-              REF. CODE
+              PRODUCT. CODE
             </th>
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
               PRODUCT NAME
@@ -14,15 +14,12 @@
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
               INVENTORY
             </th>
-            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-              COMMENTS
-            </th>
           </tr>
         </thead>
         <tbody v-for="(purchaseItem, index) in allProducts" :key="index">
                   <tr>
                     <td class="shadow-none fw-normal text-black title ps-0">
-                      <span class="text-optional fs-14">{{ purchaseItem.id }}</span>
+                      <span class="text-optional fs-14">{{ purchaseItem.product.id }}</span>
                     </td>
                     <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                       {{ purchaseItem.product.name }}

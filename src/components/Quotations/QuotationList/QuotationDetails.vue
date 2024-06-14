@@ -32,58 +32,72 @@
               <h6 class="fs-16 fw-bold text-title mb-20">Quotation info:</h6>
               <ul class="details-title list-style mb-40">
                 <li class="fs-14 fw-medium text-title lh-1">
-                  DATE :<span class="fw-semibold ms-1">26/01/2022</span>
+                  DATE :<span class="fw-semibold ms-1">{{formatDate(stateStore.quotationDetails.createdAt)}}</span>
                 </li>
-                <li class="fs-14 fw-medium text-title lh-1">
+                <!-- <li class="fs-14 fw-medium text-title lh-1">
                   TIME :<span class="fw-semibold ms-1">20:31</span>
+                </li> -->
+                <li class="fs-14 fw-medium text-title lh-1">
+                  STATUS :<span
+                    class="badge badge-outline-purple fw-semibold ms-1 fs-14"
+                >{{stateStore.quotationDetails.status}}</span
+                >
                 </li>
                 <li class="fs-14 fw-medium text-title lh-1">
-                  REFERENCE :<span class="fw-semibold ms-1">5389607</span>
+                  ID :<span class="fw-semibold ms-1">{{stateStore.quotationDetails.id}}</span>
                 </li>
                 <li class="fs-14 fw-medium text-title lh-1">
-                  WAREHOUSE :<span class="fw-semibold ms-1">Warehouse 01</span>
+                  PERSONA :<span class="fw-semibold ms-1">{{stateStore.quotationDetails.userPersona}}</span>
                 </li>
+                <li class="fs-14 fw-medium text-title lh-1">
+                  BUDGET :<span class="fw-semibold ms-1">{{ currncySymbol }} {{stateStore.quotationDetails.budget}}</span>
+                </li>
+                <!-- <li class="fs-14 fw-medium text-title lh-1">
+                  PAYMENT STATUS :<span
+                    class="badge badge-outline-green fw-semibold ms-1 fs-14"
+                    >Paid</span
+                  >
+                </li> -->
               </ul>
             </div>
             <div class="col-lg-4 ps-xxl-6">
               <h6 class="fs-16 fw-bold text-title mb-20">Customer info:</h6>
               <ul class="details-title list-style mb-40">
                 <li class="fs-14 fw-semibold text-title lh-1">
-                  NAME :<span class="ms-1 text-optional">Jhon Smith</span>
+                  NAME :<span class="ms-1 text-optional">{{getCustomerName}}</span>
                 </li>
                 <li class="fs-14 fw-semibold text-title lh-1">
-                  MAIL :
-                  <span class="text-optional ms-1"> Smith123@gmail.com </span>
+                  MAIL :<span class="text-optional ms-1"
+                >{{stateStore.quotationDetails.user.email}}</span
+                >
                 </li>
                 <li class="fs-14 fw-semibold text-title lh-1">
-                  PHONE :<span class="text-optional ms-1">+00 983 234 396</span>
+                  PHONE :<span class="text-optional ms-1">{{stateStore.quotationDetails.user.phone_number}}</span>
                 </li>
-                <li class="fs-14 fw-semibold text-title lh-1">
-                  ADDRESS :
-                  <span class="text-optional ms-1">
-                    2750 Quadra Street, Canada
-                  </span>
-                </li>
+                <!-- <li class="fs-14 fw-semibold text-title lh-1">
+                  ADDRESS :<span class="text-optional ms-1"
+                    >2750 Quadra Street, Canada</span
+                  >
+                </li> -->
               </ul>
             </div>
             <div class="col-lg-4 ps-xxl-6">
-              <h6 class="fs-16 fw-bold text-title mb-20">Company info:</h6>
+              <h6 class="fs-16 fw-bold text-title mb-20">Quotation Created By:</h6>
               <ul class="details-title list-style mb-40">
                 <li class="fs-14 fw-semibold text-title lh-1">
-                  NAME :<span class="ms-1 text-optional">Pyle Corporati</span>
+                  NAME :<span class="ms-1 text-optional">{{getCreatedByName}}</span>
                 </li>
                 <li class="fs-14 fw-semibold text-title lh-1">
-                  MAIL :<span class="text-optional ms-1">hello@pyle.com</span>
+                  MAIL :<span class="text-optional ms-1">{{stateStore.quotationDetails.createdBy.email}}</span>
                 </li>
                 <li class="fs-14 fw-semibold text-title lh-1">
-                  PHONE :<span class="text-optional ms-1">+00 793 234 609</span>
+                  PHONE :<span class="text-optional ms-1">{{stateStore.quotationDetails.createdBy.phone_number}}</span>
                 </li>
-                <li class="fs-14 fw-semibold text-title lh-1">
-                  ADDRESS :
-                  <span class="text-optional ms-1">
-                    413 North Las Vegas, NV 89032
-                  </span>
-                </li>
+                <!-- <li class="fs-14 fw-semibold text-title lh-1">
+                  ADDRESS :<span class="text-optional ms-1"
+                    >413 North Las Vegas, NV 89032</span
+                  >
+                </li> -->
               </ul>
             </div>
           </div>
@@ -91,258 +105,159 @@
           <div class="table-responsive style-two">
             <table class="table text-nowrap align-middle mb-0 border-0">
               <thead>
-                <tr class="bg_mild">
-                  <th
+              <tr class="bg_mild">
+                <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
-                  >
-                    NO.
-                  </th>
-                  <th
+                >
+                  ID
+                </th>
+                <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
-                  >
-                    PRODUCT
-                  </th>
-                  <th
+                >
+                  Product ID
+                </th>
+                <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
-                  >
-                    CODE
-                  </th>
-                  <th
+                >
+                  Product Name
+                </th>
+                <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
-                  >
-                    UNIT PRICE
-                  </th>
-                  <th
+                >
+                  Unit Price
+                </th>
+                <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
-                  >
-                    QUANTITY
-                  </th>
-                  <th
+                >
+                  Quantity
+                </th>
+                <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
-                  >
-                    DISCOUNT
-                  </th>
-                  <th
+                >
+                  Discount
+                </th>
+                <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
-                  >
-                    TAX
-                  </th>
-                  <th
+                >
+                  Effective Price
+                </th>
+                <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
-                  >
-                    SUBTOTAL
-                  </th>
-                </tr>
+                >
+                  Sub Total
+                </th>
+              </tr>
               </thead>
               <tbody>
-                <tr class="br-s-1">
-                  <td
+              <tr v-for="(quotationItem, index) in stateStore.quotationDetails.quotationItems" :key="index" class="br-s-1">
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1"
-                  >
-                    01.
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    Headphone
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    9860532
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    $ 50.00
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    100pc
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    $ 0.00
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    $ 0.00
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    $5000.00
-                  </td>
-                </tr>
+                >
+                  {{quotationItem.id}}
+                </td>
+                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                  {{quotationItem.product.id}}
+                </td>
+                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                  {{quotationItem.product.name}}
+                </td>
+                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                  {{quotationItem.unitPrice || 0 }}
+                </td>
+                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                  {{quotationItem.quantity }}
+                </td>
+                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                  {{quotationItem.discountAmount || 0 }}
+                </td>
+                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                  {{quotationItem.effectivePrice || 0 }}
+                </td>
+                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                  {{quotationItem.effectivePrice * quotationItem.quantity || 0 }}
+                </td>
+              </tr>
+              <div>
                 <tr>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-normal text-title float-right br-s-1"
+                  <th
+                      scope="col"
+                      class="text-title fw-normal fs-14 lh-1 bg_mild text-right"
+                      colspan="4"
                   >
-                    ORDER TAX
-                  </td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph float-right"
-                  >
-                    $00.00
+                    Total
+                  </th>
+                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph" colspan="4">
+                    {{stateStore.quotationDetails.budget}}
                   </td>
                 </tr>
-                <tr>
-                  <td
+              </div>
+
+              <tr>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-normal text-title float-right br-s-1"
-                  >
-                    DISCOUNT
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    $ 150.00
-                  </td>
-                </tr>
-                <tr>
-                  <td
+                ></td>
+                <!-- <td
+                  class="shadow-none lh-1 fs-14 fw-normal text-title float-right br-s-1"
+                >
+                  PAID
+                </td>
+                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                  {{currncySymbol}} 200.00
+                </td> -->
+              </tr>
+              <tr>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
+                ></td>
+                <td
                     class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-normal text-title float-right br-s-1"
-                  >
-                    Shipping
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    $ 50.00
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-title br-s-1"
-                  >
-                    GRAND TOTAL
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-black text-purple">
-                    $ 200.00
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-normal text-title float-right br-s-1"
-                  >
-                    PAID
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    $ 200.00
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
-                  ></td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-normal text-title float-right br-s-1 br-1"
-                  >
-                    DUE
-                  </td>
-                  <td
-                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-1"
-                  >
-                    $ 0.00
-                  </td>
-                </tr>
+                ></td>
+                <!-- <td
+                  class="shadow-none lh-1 fs-14 fw-normal text-title float-right br-s-1 br-1"
+                >
+                  DUE
+                </td>
+                <td
+                  class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-1"
+                >
+                  {{currncySymbol}} 0.00
+                </td> -->
+              </tr>
               </tbody>
             </table>
           </div>
@@ -367,12 +282,26 @@
 </template>
 
 <script>
+import stateStore from "../../../utils/store";
+import { formatDate, BASE_URL } from '@/utils/utils';
 export default {
   name: "QuotationDetails",
-    data() {
+  data() {
     return {
       currncySymbol:"₹",
+      stateStore
+    };
+  },
+  computed: {
+    getCustomerName() {
+      return this.stateStore.quotationDetails.user?.first_name + " " + this.stateStore.quotationDetails.user?.last_name;
+    },
+    getCreatedByName() {
+      return this.stateStore.quotationDetails.createdBy?.first_name + " " + this.stateStore.quotationDetails.createdBy?.last_name;
     }
+  },
+  methods: {
+    formatDate
   }
 };
 </script>

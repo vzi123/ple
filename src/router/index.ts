@@ -20,6 +20,8 @@ import QuotationListPage from "../pages/Quotations/QuotationListPage.vue";
 import EditQuotationPage from "../pages/Quotations/EditQuotationPage.vue";
 import CreatePurchasePage from "../pages/Purchases/CreatePurchasePage.vue";
 import PurchaseListPage from "../pages/Purchases/PurchaseListPage.vue";
+import CustomerPurchaseListPage from "../pages/Purchases/CustomerPurchaseListPage.vue";
+import SupplierPurchaseListPage from "../pages/Purchases/SupplierPurchaseListPage.vue";
 import EditPurchasePage from "../pages/Purchases/EditPurchasePage.vue";
 import CreateSalesPage from "../pages/Sales/CreateSalesPage.vue";
 import SalesListPage from "../pages/Sales/SalesListPage.vue";
@@ -180,6 +182,16 @@ const routes: Array<RouteRecordRaw> = [
     path: "/purchase-list",
     name: "PurchaseListPage",
     component: PurchaseListPage,
+  },
+  {
+    path: "/customer-purchase-list",
+    name: "CustomerPurchaseListPage",
+    component: CustomerPurchaseListPage,
+  },
+  {
+    path: "/supplier-purchase-list",
+    name: "SupplierPurchaseListPage",
+    component: SupplierPurchaseListPage,
   },
   {
     path: "/edit-purchase",

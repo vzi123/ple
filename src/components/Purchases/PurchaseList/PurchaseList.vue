@@ -19,7 +19,7 @@
                 </div>
               </th> -->
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                ID
+                PO ID
                 <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
@@ -27,7 +27,23 @@
                 />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                NAME
+                Name
+                <img
+                  class="ms-2"
+                  src="../../../assets/img/icons/up-down-aroow.svg"
+                  alt="Image"
+                />
+              </th>
+<!--              <th scope="col" class="text-title fw-normal fs-14 pt-0">-->
+<!--                PERSONA-->
+<!--                <img-->
+<!--                  class="ms-2"-->
+<!--                  src="../../../assets/img/icons/up-down-aroow.svg"-->
+<!--                  alt="Image"-->
+<!--                />-->
+<!--              </th>-->
+              <th scope="col" class="text-title fw-normal fs-14 pt-0">
+                Project
                 <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
@@ -35,7 +51,7 @@
                 />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                PERSONA
+                Budget
                 <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
@@ -43,7 +59,7 @@
                 />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                STATUS
+                Created Date
                 <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
@@ -51,23 +67,7 @@
                 />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                BUDGET
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                DATE
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                PROJECT
+                Status
                 <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
@@ -76,7 +76,7 @@
               </th>
              
               <th scope="col" class="text-title fw-normal fs-14 pt-0 pe-0">
-                ACTION
+                Actions
               </th>
             </tr>
           </thead>
@@ -106,12 +106,12 @@
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                {{ getUserName(purchaseItem.user) }}
               </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ purchaseItem.userPersona }}
-              </td>
+<!--              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">-->
+<!--                {{ purchaseItem.userPersona }}-->
+<!--              </td>-->
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 <span class="badge badge-success fs-14 fw-normal"
-                  >{{ purchaseItem.status }}</span
+                  > {{ getProjectName(purchaseItem.project) }}</span
                 >
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
@@ -121,7 +121,7 @@
                 {{ formatDate(purchaseItem.createdAt) }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ getProjectName(purchaseItem.project) }}
+                {{ purchaseItem.status }}
               </td>
               <td class="shadow-none lh-1 text-end pe-0">
                 <div class="button-group d-flex flex-wrap align-items-center">
@@ -223,7 +223,7 @@ export default defineComponent({
     const fetchPurchageOrders = async () => {
       try {
         loading.value = true; // Set loading to true before request
-        const response = await axios.get(`${BASE_URL}/freezy/purchaseOrders/all`);
+        const response = await axios.get(`${BASE_URL}/freezy/purchaseOrders/all/customer`);
         purchaseListData.value = response.data; // Assuming your API returns an array of products
         
       } catch (error) {

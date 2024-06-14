@@ -9,7 +9,7 @@
     <div
       class="modal-dialog modal-lg modal-xxl modal-dialog-centered modal-dialog-scrollable"
     >
-      <div class="modal-content">
+      <div class="modal-content modal-dialog-scrollable">
         <div class="modal-header">
           <h5 class="modal-title text-title" id="detailsModalLabel">
             Purchase Details
@@ -32,7 +32,7 @@
               <h6 class="fs-16 fw-bold text-title mb-20">Purchase info:</h6>
               <ul class="details-title list-style mb-40">
                 <li class="fs-14 fw-medium text-title lh-1">
-                  DATE :<span class="fw-semibold ms-1">{{stateStore.purchaseDetails.createdAt}}</span>
+                  DATE :<span class="fw-semibold ms-1">{{formatDate(stateStore.purchaseDetails.createdAt)}}</span>
                 </li>
                 <!-- <li class="fs-14 fw-medium text-title lh-1">
                   TIME :<span class="fw-semibold ms-1">20:31</span>
@@ -68,11 +68,11 @@
                 </li>
                 <li class="fs-14 fw-semibold text-title lh-1">
                   MAIL :<span class="text-optional ms-1"
-                    >{{stateStore.purchaseDetails.project.customer.email}}</span
+                    >{{stateStore.purchaseDetails.user.email}}</span
                   >
                 </li>
                 <li class="fs-14 fw-semibold text-title lh-1">
-                  PHONE :<span class="text-optional ms-1">{{stateStore.purchaseDetails.project.customer.phone_number}}</span>
+                  PHONE :<span class="text-optional ms-1">{{stateStore.purchaseDetails.user.phone_number}}</span>
                 </li>
                 <!-- <li class="fs-14 fw-semibold text-title lh-1">
                   ADDRESS :<span class="text-optional ms-1"
@@ -102,6 +102,7 @@
             </div>
           </div>
 
+
           <div class="table-responsive style-two">
             <table class="table text-nowrap align-middle mb-0 border-0">
               <thead>
@@ -116,43 +117,37 @@
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
                   >
-                    PRODUCT ID
+                    Product ID
                   </th>
                   <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
                   >
-                    PRODUCT NAME
+                    Product Name
                   </th>
                   <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
                   >
-                    UNIT PRICE
+                    Unit Price
                   </th>
                   <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
                   >
-                    QUANTITY
+                    Quantity
                   </th>
                   <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
                   >
-                    DISCOUNT
+                    Discount
                   </th>
                   <th
                     scope="col"
                     class="text-title fw-normal fs-14 lh-1 bg_mild"
                   >
-                    TAX
-                  </th>
-                  <th
-                    scope="col"
-                    class="text-title fw-normal fs-14 lh-1 bg_mild"
-                  >
-                    SUBTOTAL
+                    Sub Total
                   </th>
                 </tr>
               </thead>
@@ -170,7 +165,7 @@
                     {{orderItems.product.name}}
                   </td>
                   <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    {{orderItems.product.price || 0 }}
+                    {{orderItems.price || 0 }}
                   </td>
                   <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                     {{orderItems.quantity }}
@@ -179,10 +174,7 @@
                     {{orderItems.discount || 0 }}
                   </td>
                   <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    {{orderItems.tax || 0 }}
-                  </td>
-                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                    {{orderItems.subtotal || 0 }}
+                    {{orderItems.price * orderItems.quantity || 0 }}
                   </td>
                 </tr>
 
@@ -247,7 +239,164 @@
               </tbody>
             </table>
           </div>
+
+
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-title" id="detailsModalSales">
+                Sales Order Details
+              </h5>
+            </div>
+          </div>
+          <div class="modal-body pb-40">
+
+            <div class="table-responsive style-two">
+<!--                <tbody>-->
+                <tr v-for="(soItems, index) in stateStore.salesOrderDetails" :key="index" class="bg-mild">
+
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <h6 class="fs-16 fw-bold text-title mb-20">Sales info:</h6>
+                      <ul class="details-title list-style mb-40">
+                        <li class="fs-14 fw-medium text-title lh-1">
+                          DATE :<span class="fw-semibold ms-1">{{formatDate(soItems.createdAt)}}</span>
+                        </li>
+                        <li class="fs-14 fw-medium text-title lh-1">
+                          STATUS :<span
+                            class="badge badge-outline-purple fw-semibold ms-1 fs-14"
+                        >{{soItems.status}}</span
+                        >
+                        </li>
+                        <li class="fs-14 fw-medium text-title lh-1">
+                          ID :<span class="fw-semibold ms-1">{{soItems.id}}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="bg-mild">
+                    <table class="table text-nowrap align-middle mb-0 border-0">
+                  <thead>
+                  <tr class="bg_mild">
+                    <th
+                        scope="col"
+                        class="text-title fw-normal fs-14 lh-1 bg_mild"
+                    >
+                      Sales Order ID
+                    </th>
+                    <th
+                        scope="col"
+                        class="text-title fw-normal fs-14 lh-1 bg_mild"
+                    >
+                      Product ID
+                    </th>
+                    <th
+                        scope="col"
+                        class="text-title fw-normal fs-14 lh-1 bg_mild"
+                    >
+                      Product Name
+                    </th>
+                    <th
+                        scope="col"
+                        class="text-title fw-normal fs-14 lh-1 bg_mild"
+                    >
+                      Unit Price
+                    </th>
+                    <th
+                        scope="col"
+                        class="text-title fw-normal fs-14 lh-1 bg_mild"
+                    >
+                      Quantity
+                    </th>
+                    <th
+                        scope="col"
+                        class="text-title fw-normal fs-14 lh-1 bg_mild"
+                    >
+                      Discount
+                    </th>
+                    <th
+                        scope="col"
+                        class="text-title fw-normal fs-14 lh-1 bg_mild"
+                    >
+                      Sub Total
+                    </th>
+                  </tr>
+                  </thead>
+                  <tr v-for="(soiItem, subIndex) in soItems.salesOrderItems" :key="subIndex">
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1"
+                  >
+                    {{soiItem?.id || NA}}
+                  </td>
+                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                    {{soiItem?.product?.id || NA}}
+                  </td>
+                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                    {{soiItem?.product?.name || NA}}
+                  </td>
+                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                    {{soiItem?.price || 0 }}
+                  </td>
+                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                    {{soiItem?.quantity || 0 }}
+                  </td>
+                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                    {{soiItem.discount || 0 }}
+                  </td>
+                  <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                    {{soiItem.price * soiItem.quantity || 0 }}
+                  </td>
+
+                </tr>
+                    </table>
+                  </div>
+                </tr>
+
+                <tr>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                </tr>
+                <tr>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                  <td
+                      class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"
+                  ></td>
+                </tr>
+<!--                </tbody>-->
+            </div>
+          </div>
         </div>
+
         <div
           class="modal-footer pt-25 pb-35 d-flex flex-wrap justify-content-end me-xxl-3"
         >
@@ -271,6 +420,7 @@
 
 <script>
 import stateStore from "../../../utils/store";
+import { formatDate, BASE_URL } from '@/utils/utils';
 export default {
   name: "PurchaseDetails",
   data() {
@@ -281,11 +431,14 @@ export default {
   },
   computed: {
     getCustomerName() {
-      return this.stateStore.purchaseDetails.project?.customer?.first_name + " " + this.stateStore.purchaseDetails.project?.customer?.last_name;
+      return this.stateStore.purchaseDetails.user?.first_name + " " + this.stateStore.purchaseDetails.user?.last_name;
     },
    getCreatedByName() {
-      return this.stateStore.purchaseDetails.createdBy.first_name + " " + this.stateStore.purchaseDetails.createdBy.last_name;
+      return this.stateStore.purchaseDetails.createdBy?.first_name + " " + this.stateStore.purchaseDetails.createdBy?.last_name;
     }
+  },
+  methods: {
+    formatDate
   }
 };
 </script>

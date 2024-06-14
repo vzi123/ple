@@ -5,12 +5,25 @@
         <table class="table text-nowrap align-middle mb-0">
           <thead>
             <tr>
+              <!-- <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0">
+                <div class="form-check checkbox">
+                  <input class="form-check-input" type="checkbox" id="test_1" />
+                  <label class="form-check-label" for="test_1">
+                    DATE
+                    <img
+                      class="ms-2"
+                      src="../../../assets/img/icons/up-down-aroow.svg"
+                      alt="Image"
+                    />
+                  </label>
+                </div>
+              </th> -->
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                User Id
+                PO ID
                 <img
-                    class="ms-2"
-                    src="../../../assets/img/icons/up-down-aroow.svg"
-                    alt="Image"
+                  class="ms-2"
+                  src="../../../assets/img/icons/up-down-aroow.svg"
+                  alt="Image"
                 />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
@@ -21,8 +34,16 @@
                   alt="Image"
                 />
               </th>
+<!--              <th scope="col" class="text-title fw-normal fs-14 pt-0">-->
+<!--                PERSONA-->
+<!--                <img-->
+<!--                  class="ms-2"-->
+<!--                  src="../../../assets/img/icons/up-down-aroow.svg"-->
+<!--                  alt="Image"-->
+<!--                />-->
+<!--              </th>-->
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Email
+                Project
                 <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
@@ -30,7 +51,7 @@
                 />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Phone
+                Budget
                 <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
@@ -38,67 +59,101 @@
                 />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Address
+                Created Date
                 <img
                   class="ms-2"
                   src="../../../assets/img/icons/up-down-aroow.svg"
                   alt="Image"
                 />
               </th>
+              <th scope="col" class="text-title fw-normal fs-14 pt-0">
+                Status
+                <img
+                  class="ms-2"
+                  src="../../../assets/img/icons/up-down-aroow.svg"
+                  alt="Image"
+                />
+              </th>
+             
               <th scope="col" class="text-title fw-normal fs-14 pt-0 pe-0">
-                Action
+                Actions
               </th>
             </tr>
           </thead>
+          
+         <tbody v-for="(purchaseItem, index) in filteredList" :key="index">
+         
+            
 
-          <tbody v-for="(userItem, index) in purchaseListData" :key="index">
-          <tr>
-            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{ userItem.id }}
-            </td>
-            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{ userItem.first_name + ' ' + userItem.last_name }}
-            </td>
-            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+            <tr>
+              <!-- <td class="shadow-none fw-normal text-black title ps-0">
+                <div class="d-flex align-items-center">
+                  <div class="form-check checkbox style-three">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="test_7"
+                    />
+                    <label class="form-check-label text-optional" for="test_7">
+                    </label>
+                  </div>
+                  <span class="text-optional fs-14 ms-2">{{ purchaseItem.createdAt }}</span>
+                </div>
+              </td> -->
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ purchaseItem.id }}
+              </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+               {{ getUserName(purchaseItem.user) }}
+              </td>
+<!--              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">-->
+<!--                {{ purchaseItem.userPersona }}-->
+<!--              </td>-->
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 <span class="badge badge-success fs-14 fw-normal"
-                > {{ userItem.email }}</span
+                  > {{ getProjectName(purchaseItem.project) }}</span
                 >
-            </td>
-            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{userItem.phone_number }}
-            </td>
-            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{userItem.address }}
-            </td>
-            <td class="shadow-none lh-1 text-end pe-0">
-              <div class="button-group d-flex flex-wrap align-items-center">
-<!--                <a-->
-<!--                    href="javascript:void(0)"-->
-<!--                    title="View"-->
-<!--                    data-bs-toggle="modal"-->
-<!--                    data-bs-target="#detailsModal"-->
-<!--                    @click="onViewPurchase(purchaseItem)"-->
-<!--                >-->
-<!--                  <img src="../../../assets/img/icons/eye.svg" alt="Image" />-->
-<!--                </a>-->
-                <router-link to="/edit-purchase" title="Edit">
-                  <img src="../../../assets/img/icons/edit.svg" alt="Image" />
-                </router-link>
-                <a
+              </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ currncySymbol }} {{ purchaseItem.budget }}
+              </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ formatDate(purchaseItem.createdAt) }}
+              </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ purchaseItem.status }}
+              </td>
+              <td class="shadow-none lh-1 text-end pe-0">
+                <div class="button-group d-flex flex-wrap align-items-center">
+                  <a
+                    href="javascript:void(0)"
+                    title="View"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailsModal"
+                    @click="onViewPurchase(purchaseItem)"
+                  >
+                    <img src="../../../assets/img/icons/eye.svg" alt="Image" />
+                  </a>
+                  <router-link to="/edit-purchase" title="Edit">
+                    <img src="../../../assets/img/icons/edit.svg" alt="Image" />
+                  </router-link>
+                  <a
                     class="delete-btn"
                     data-bs-toggle="offcanvas"
                     href="#deletePopup"
                     role="button"
                     aria-controls="deletePopup"
-                >
-                  <img
+                  >
+                    <img
                       src="../../../assets/img/icons/close.svg"
                       alt="Image"
-                  />
-                </a>
-              </div>
-            </td>
-          </tr>
+                    />
+                  </a>
+                </div>
+              </td>
+            </tr>
+
+      
           </tbody>
         </table>
       </div>
@@ -153,7 +208,7 @@ import { formatDate, BASE_URL } from '@/utils/utils';
 import EventBus from '../../../events/event-bus';
 
 export default defineComponent({
-  name: "CustomerList",
+  name: "CustomerPurchaseList",
   data() {
     return {
       currncySymbol:"₹",
@@ -168,9 +223,9 @@ export default defineComponent({
     const fetchPurchageOrders = async () => {
       try {
         loading.value = true; // Set loading to true before request
-        const response = await axios.get(`${BASE_URL}/freezy/users/filter?type=customer`);
+        const response = await axios.get(`${BASE_URL}/freezy/purchaseOrders/all/customer`);
         purchaseListData.value = response.data; // Assuming your API returns an array of products
-
+        
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -214,6 +269,7 @@ export default defineComponent({
       return project.name;
     },
     onViewPurchase(purchaseItem: any) {
+      stateStore.salesOrderDetails = purchaseItem?.salesOrders;
       stateStore.purchaseDetails = purchaseItem;
     },
   },

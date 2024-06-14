@@ -3,21 +3,21 @@
     <div class="row align-items-center">
       <div class="col-md-6">
         <div class="copyright-text">
-          <span class="text-white text-bold">&copy; Pyle</span> is proudly owned
+          <span class="text-white text-bold">&copy; Freazy</span> is proudly owned
           by
           <a
             href="https://hibootstrap.com/"
             target="_blank"
             class="text-white text-bold"
           >
-            HiBootstrap
+            Tripor
           </a>
         </div>
       </div>
       <div class="col-md-6">
         <p class="text-offwhite mb-0 text-md-end">
-          <span class="text-white text-bold">PYLE</span> - Ultimate Inventory
-          With <span class="text-white text-bold">POS</span>
+          <span class="text-white text-bold">Freazy</span> - Ultimate Inventory
+          Management Software
         </p>
       </div>
     </div>

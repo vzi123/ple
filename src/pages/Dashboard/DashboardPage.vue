@@ -38,9 +38,9 @@
     </div>
     -->
 
-      <div class="card border-0 rounded-1 mb-40">
-        <StockAlert />
-      </div>
+<!--      <div class="card border-0 rounded-1 mb-40">-->
+<!--        <StockAlert />-->
+<!--      </div>-->
 
       <div class="card border-0 rounded-1 mb-40">
         <InventoryLog />
@@ -117,7 +117,7 @@ export default defineComponent({
     StatusContent,
     //TopSellingProductsChart,
    // ThisWeeksSalesPurchasesChart,
-    StockAlert,
+   //  StockAlert,
     InventoryLog,
     payables,
     receivables,

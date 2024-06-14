@@ -4,7 +4,7 @@
   <div
     class="main-content bg_gray d-flex flex-column transition overflow-hidden"
   >
-    <BreadcrumbMenu pageTitle="Sales Order" />
+    <BreadcrumbMenu pageTitle="Product & Stock Details" />
     <FilterContent btnText="Product" btnLink="/create-product" />
     <ProductsList />
 
