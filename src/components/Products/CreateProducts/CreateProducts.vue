@@ -1,5 +1,5 @@
 <template>
-  <form action="#" class="pb-60">
+  <form action="#" class="pb-60" @submit.prevent="submitFilteredList">
     <div class="row">
       <div class="col-xxl-9 col-xl-8 col-lg-8 pe-xxl-6 mb-md-25">
         <div class="row gx-xxl-6">
@@ -7,7 +7,7 @@
             <div class="form-group mb-25">
               <label class="d-block fs-14 text-black mb-2">Product Name</label>
               <input
-                type="text"
+                type="text"  v-model="form.name"
                 class="w-100 d-block shadow-none fs-14 bg-white rounded-1 text-title"
                 placeholder="Enter Product Name"
                 required
@@ -20,13 +20,13 @@
             <div class="form-group mb-25">
               <label class="d-block fs-14 text-black mb-2">Code Product</label>
               <input
-                type="text"
+                type="text" v-model="form.hsnNo"
                 class="w-100 d-block shadow-none fs-14 bg-white rounded-1 text-title"
-                placeholder="Scan Code"
+                placeholder="Product Code"
                 required
               />
               <span class="text-parageaph d-block w-100 fs-12 mt-1 d-none">
-                Scan your barcode and select the correct symbology below.
+                Enter Product Code.
               </span>
             </div>
           </div>
@@ -34,190 +34,154 @@
           <div class="col-lg-6">
             <div class="form-group mb-25">
               <label class="d-block fs-14 text-black mb-2">Category</label>
-              <select class="bg-white border-0 rounded-1 fs-14 text-optional">
-                <option value="0">Choose Category</option>
-                <option value="1">Choose Category</option>
-                <option value="2">Choose Category</option>
-              </select>
+              <v-select
+                                   v-model="form.categoryId"
+                                   :options="categories"
+                                   :reduce="category => category.categoryId"
+                                   label="name"
+                                   class="bg-white border-0 rounded-1 fs-14 text-optional"
+                                   placeholder="Select Category"
+                            />
             </div>
           </div>
 
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Brand</label>
-              <select class="bg-white border-0 rounded-1 fs-14 text-optional">
-                <option value="0">Choose Brand</option>
-                <option value="1">Choose Category</option>
-                <option value="2">Choose Category</option>
-              </select>
-            </div>
-          </div>
 
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">
-                Barcode Symbology
-              </label>
-              <select class="bg-white border-0 rounded-1 fs-14 text-optional">
-                <option value="0">Choose Symbology</option>
-                <option value="1">Choose Category</option>
-                <option value="2">Choose Category</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Product Cost</label>
-              <input
-                type="number"
-                class="w-100 d-block shadow-none fs-14 bg-white rounded-1 text-title"
-                placeholder="Enter Product Cost"
-                required
-              />
-              <span class="text-red fs-12 d-none">This field is required!</span>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Product Price</label>
-              <input
-                type="number"
-                class="w-100 d-block shadow-none fs-14 bg-white rounded-1 text-title"
-                placeholder="Enter Product Price"
-                required
-              />
-              <span class="text-red fs-12 d-none">This field is required!</span>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Product Unit</label>
-              <select class="bg-white border-0 rounded-1 fs-14 text-optional">
-                <option value="0">Choose Product unit</option>
-                <option value="1">5</option>
-                <option value="2">10</option>
-                <option value="3">15</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Sales Unit</label>
-              <select class="bg-white border-0 rounded-1 fs-14 text-optional">
-                <option value="0">Choose Sales unit</option>
-                <option value="1">5</option>
-                <option value="2">10</option>
-                <option value="3">15</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Purchase Unit</label>
-              <select class="bg-white border-0 rounded-1 fs-14 text-optional">
-                <option value="0">Choose Purchase unit</option>
-                <option value="1">5</option>
-                <option value="2">10</option>
-                <option value="3">15</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">
-                Product Quantity
-              </label>
-              <input
-                type="number"
-                class="w-100 d-block shadow-none fs-14 bg-white rounded-1 text-title"
-                placeholder="01"
-                required
-              />
-              <span class="text-red fs-12 d-none">This field is required!</span>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Stock Alert</label>
-              <input
-                type="number"
-                class="w-100 d-block shadow-none fs-14 bg-white rounded-1 text-title"
-                placeholder="0"
-              />
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Order Tax</label>
-              <input
-                type="number"
-                class="w-100 d-block shadow-none fs-14 bg-white rounded-1 text-title"
-                placeholder="0"
-              />
-              <span
-                class="percent-sign position-absolute rounded-1 text-center d-flex flex-column justify-content-center"
-              >
-                %
-              </span>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Tax Type</label>
-              <select class="bg-white border-0 rounded-1 fs-14 text-optional">
-                <option value="1">Inclusive</option>
-                <option value="2">Exclusive</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-lg-12">
-            <div class="form-group mb-25">
-              <label class="d-block fs-14 text-black mb-2">Notes</label>
-              <textarea
-                cols="30"
-                rows="10"
-                placeholder="Add a note"
-                class="d-block w-100 bg-white border-0 rounded-1 resize-none fs-14 text-title"
-              ></textarea>
-            </div>
-          </div>
 
           <div class="col-12">
             <button
               class="btn style-one transition border-0 fw-medium text-white rounded-1 fs-md-15 fs-lg-16"
-              type="submit"
+              type="submit" id="submitButton"
+
             >
               Submit Products
             </button>
           </div>
         </div>
+        <a
+                                class="delete-btn"
+                                data-bs-toggle="offcanvas"
+                                href="#loadingPopup"
+                                role="button"
+                                aria-controls="loadingPopup"
+                                ref="myBtn"
+                              >
+                                <img
+                                  src="../../../assets/img/icons/close.svg"
+                                  alt="Image"
+                                />
+                              </a>
       </div>
+       <div
+            class="created-popup offcanvas offcanvas-end border-0"
+            tabindex="-1"
+            id="loadingPopup"
+          >
+            <div class="offcanvas-body p-0">
+              <div class="delete-success">
+                <img src="../../../assets/img/icons/tick-circle.svg" alt="Image" />
+                <span class="text-white fw-medium">
+                  Your product is saved.
+                </span>
+              </div>
+            </div>
+          </div>
 
-      <div class="col-xxl-3 col-xl-4 col-lg-4">
-        <AddImages />
-      </div>
+
     </div>
   </form>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, computed, onMounted } from "vue";
 import AddImages from "./AddImages.vue";
+
+import axios from "axios";
+
+import EventBus from '@/events/event-bus';
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+
 
 export default defineComponent({
   name: "CreateProducts",
   components: {
     AddImages,
+    vSelect,
   },
+  data() {
+      return {
+        form: {
+          name: "",
+          hsnNo: "",
+        categoryId: "",
+        },
+
+        categories: [],
+
+              loading: false,
+      }
+    },
+    methods: {
+        async fetchCategories() {
+              try {
+                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/categories/all");
+
+                this.categories = response.data.map((category: any) => ({
+                                  categoryId: category.id,
+                                  name: category.name, // Change 'name' to 'product'
+                                  description: category.description,
+
+                                }));
+              } catch (error) {
+                console.error("Error fetching customers:", error);
+              }
+            },
+
+
+
+        async submitFilteredList(submitData: any) {
+
+         const submitButtonElement = document.getElementById('submitButton');
+                               if (submitButtonElement) {
+                                 (submitButtonElement as any).disabled = true;
+                                 }
+          const requestData = {
+            name: this.form.name ,
+            hsnNo: this.form.hsnNo,
+            categoryId: this.form.categoryId,
+           description: this.form.name ,
+          };
+          try {
+            const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/products/save", requestData, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            console.log("Response:", response.data);
+          } catch (error) {
+            console.error("Error submitting the list:", error);
+          } finally {
+
+          const loadingPopupElement = document.getElementById('loadingPopup');
+                       if (loadingPopupElement) {
+                         (loadingPopupElement as any).press = true;
+                         const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+                         if (elem) {
+                           elem.click();
+                         }
+                         setTimeout(() => {
+                           this.$router.push({ name: 'ProductsListPage' });
+                         }, 3000);
+                       }
+
+                 }
+        },
+
+      },
+      mounted() {
+
+
+        this.fetchCategories();
+      }
 });
 </script>

@@ -21,8 +21,8 @@
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 QUANTITY
               </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                <th v-if="showDiscounts">DISCOUNT</th>
+              <th v-if="showDiscounts" scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+                <th >DISCOUNT</th>
               </th>
 
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">

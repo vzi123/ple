@@ -17,6 +17,8 @@
             class="btn-close p-0"
             data-bs-dismiss="modal"
             aria-label="Close"
+            id="closeBtn"
+            ref="myBtn"
           >
             <img
               src="../../../assets/img/icons/close-circle-2.svg"
@@ -25,7 +27,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="#">
+          <form action="#" @submit.prevent="submitFilteredList">
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group mb-15">
@@ -33,7 +35,7 @@
                     >Supplier Name</label
                   >
                   <input
-                    type="text"
+                    type="text" v-model="form.name"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
                     placeholder="Enter Supplier Name"
                   />
@@ -43,7 +45,7 @@
                 <div class="form-group mb-15">
                   <label class="d-block fs-14 text-black mb-10">Email</label>
                   <input
-                    type="email"
+                    type="email" v-model="form.email"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
                     placeholder="Enter Email"
                   />
@@ -55,48 +57,28 @@
                     >Phone Number</label
                   >
                   <input
-                    type="number"
+                    type="number" v-model="form.phoneNumber"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
                     placeholder="Enter Phone Number"
                   />
                 </div>
               </div>
-              <div class="col-lg-6">
-                <div class="form-group mb-15">
-                  <label class="d-block fs-14 text-black mb-10">Country</label>
-                  <select class="bg_ash border-0 rounded-1 fs-14 text-optional">
-                    <option value="0">USA</option>
-                    <option value="1">UK</option>
-                    <option value="2">Canada</option>
-                  </select>
-                </div>
-              </div>
+
               <div class="col-lg-6">
                 <div class="form-group mb-15">
                   <label class="d-block fs-14 text-black mb-10">City</label>
                   <input
-                    type="number"
+                    type="text" v-model="form.city"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
                     placeholder="Enter City"
                   />
                 </div>
               </div>
-              <div class="col-lg-6">
-                <div class="form-group mb-15">
-                  <label class="d-block fs-14 text-black mb-10"
-                    >Taz Number</label
-                  >
-                  <input
-                    type="number"
-                    class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
-                    placeholder="Enter Tax Number"
-                  />
-                </div>
-              </div>
+
               <div class="col-12">
                 <div class="form-group mb-15">
                   <label class="d-block fs-14 text-black mb-10">Address</label>
-                  <textarea
+                  <textarea v-model="form.address"
                     name=""
                     id=""
                     cols="30"
@@ -107,7 +89,7 @@
                 </div>
               </div>
               <div class="col-12">
-                <button type="button" class="btn style-five w-100 d-block">
+                <button  class="btn style-five w-100 d-block" id="submitButton" type="submit">
                   Create
                 </button>
               </div>
@@ -119,8 +101,81 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, ref, computed, onMounted } from "vue";
+
+
+import axios from "axios";
+
+import EventBus from '@/events/event-bus';
+export default defineComponent({
   name: "CreateSupplierForm",
-};
+   components: {
+
+
+    },
+    data() {
+        return {
+          form: {
+                   name:"",
+                   email: "",
+                   phoneNumber: "",
+                   address:"",
+                   city:""
+          },
+
+
+
+                loading: false,
+        }
+      },
+      methods: {
+
+             async submitFilteredList(submitData: any) {
+
+                 const submitButtonElement = document.getElementById('submitButton');
+                                       if (submitButtonElement) {
+                                         (submitButtonElement as any).disabled = true;
+                                         }
+                  const requestData = {
+                    name:this.form.name,
+                                       email: this.form.email,
+                                       phoneNumber: this.form.phoneNumber,
+                                       address:this.form.address,
+                                       city:this.form.city
+                  };
+                  try {
+                    const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/users/saveSupplier", requestData, {
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    });
+                    console.log("Response:", response.data);
+                  } catch (error) {
+                    console.error("Error submitting the list:", error);
+                  } finally {
+                    EventBus.emit('supplierCreated');
+                           setTimeout(() => {
+
+                             const loadingPopupElement = document.getElementById('closeBtn');
+                                                  if (loadingPopupElement) {
+                                                    (loadingPopupElement as any).clicked = true;
+                                                    }
+                                                     const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+                                                                             if (elem) {
+                                                                               elem.click();
+                                                                             }
+
+
+                                 }, 3000);
+                               }
+
+
+                },
+
+        },
+        mounted() {
+
+        }
+});
 </script>

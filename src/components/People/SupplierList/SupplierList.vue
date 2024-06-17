@@ -198,6 +198,7 @@ export default defineComponent({
       EventBus.on('searchTermUpdated', (updatedSearchTerm: any) => {
         searchTerm.value = updatedSearchTerm.trim();
       });
+      EventBus.on('supplierCreated', fetchPurchageOrders);
     });
 
     return {

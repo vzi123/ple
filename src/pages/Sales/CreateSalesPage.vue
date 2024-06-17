@@ -230,20 +230,19 @@ export default defineComponent({
       } catch (error) {
         console.error("Error submitting the list:", error);
       } finally {
-                console.log("Response finally:", this.loading);
-               this.loading = false;
-                document.getElementById('submitButton').disabled = false;
-                document.getElementById('submitButton').text = 'Submit Sales';
-             EventBus.emit('loadingCompleted');
-             document.getElementById('loadingPopup').press = true;
-            const elem = this.$refs.myBtn;
-            elem.click();
-              this.loading = true;
 
-                       setTimeout(() => {
-                            this.$router.push({name:'SalesListPage'});
-                           this.loading = false;
-                       }, 3000);
+
+          const loadingPopupElement = document.getElementById('loadingPopup');
+                       if (loadingPopupElement) {
+                         (loadingPopupElement as any).press = true;
+                         const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+                         if (elem) {
+                           elem.click();
+                         }
+                         setTimeout(() => {
+                           this.$router.push({ name: 'SalesListPage' });
+                         }, 3000);
+                       }
 
 
              }
