@@ -259,185 +259,162 @@
               <div class="modal-body pb-40 border-0">
 <!--                <div class="table-responsive style-two">-->
                   <div class="table-responsive style-two">
-               <ol v-for="(soItems, index) in stateStore.salesOrderDetails" :key="index" class="table text-nowrap align-middle mb-0 border-0">
+                   <ol v-for="(soItems, index) in stateStore.salesOrderDetails" :key="index" class="table text-nowrap align-middle mb-0 border-0">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <h6 class="fs-16 fw-bold text-title mb-20">Sales info:</h6>
+                                <ul class="details-title list-style mb-40">
+                                  <li class="fs-14 fw-medium text-title lh-1">
+                                    DATE :<span class="fw-semibold ms-1">{{formatDate(soItems.createdAt)}}</span>
+                                  </li>
+                                  <li class="fs-14 fw-medium text-title lh-1">
+                                    STATUS :<span
+                                      class="badge badge-outline-purple fw-semibold ms-1 fs-14"
+                                  >{{soItems.status}}</span
+                                  >
+                                  </li>
+                                  <li class="fs-14 fw-medium text-title lh-1">
+                                    ID :<span class="fw-semibold ms-1">{{soItems.id}}</span>
+                                  </li>
+                              </ul>
+                            </div>
+                            <div class="col-lg-4 ps-xxl-6">
+                              <h6 class="fs-16 fw-bold text-title mb-20">Customer info:</h6>
+                              <ul class="details-title list-style mb-40">
+                                <li class="fs-14 fw-semibold text-title lh-1">
+                                  NAME :<span class="ms-1 text-optional">{{getCustomerName}}</span>
+                                </li>
+                                <li class="fs-14 fw-semibold text-title lh-1">
+                                  MAIL :<span class="text-optional ms-1"
+                                >{{stateStore.purchaseDetails.user.email}}</span
+                                >
+                                </li>
+                                <li class="fs-14 fw-semibold text-title lh-1">
+                                  PHONE :<span class="text-optional ms-1">{{stateStore.purchaseDetails.user.phone_number}}</span>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="col-lg-4 ps-xxl-6">
+                              <h6 class="fs-16 fw-bold text-title mb-20">Order Created By:</h6>
+                              <ul class="details-title list-style mb-40">
+                                <li class="fs-14 fw-semibold text-title lh-1">
+                                  NAME :<span class="ms-1 text-optional">{{getCreatedByName}}</span>
+                                </li>
+                                <li class="fs-14 fw-semibold text-title lh-1">
+                                  MAIL :<span class="text-optional ms-1">{{stateStore.purchaseDetails.createdBy.email}}</span>
+                                </li>
+                                <li class="fs-14 fw-semibold text-title lh-1">
+                                  PHONE :<span class="text-optional ms-1">{{stateStore.purchaseDetails.createdBy.phone_number}}</span>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
 
+                          <div class="bg-mild">
+                            <table class="table text-nowrap align-middle mb-0 border-0">
+                              <thead>
+                              <tr class="bg_mild">
+                                <th
+                                    scope="col"
+                                    class="text-title fw-normal fs-14 lh-1 bg_mild"
+                                >
+                                  Sales Order ID
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="text-title fw-normal fs-14 lh-1 bg_mild"
+                                >
+                                  Product ID
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="text-title fw-normal fs-14 lh-1 bg_mild"
+                                >
+                                  Product Name
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="text-title fw-normal fs-14 lh-1 bg_mild"
+                                >
+                                  Unit Price
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="text-title fw-normal fs-14 lh-1 bg_mild"
+                                >
+                                  Quantity
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="text-title fw-normal fs-14 lh-1 bg_mild"
+                                >
+                                  Discount
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="text-title fw-normal fs-14 lh-1 bg_mild"
+                                >
+                                  Sub Total
+                                </th>
+                              </tr>
+                              </thead>
+                              <tr v-for="(soiItem, subIndex) in soItems.salesOrderItems" :key="subIndex">
+                                <td
+                                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1"
+                                >
+                                  {{soiItem?.id || NA}}
+                                </td>
+                                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
+                                  {{soiItem?.product?.id || NA}}
+                                </td>
+                                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
+                                  {{soiItem?.product?.name || NA}}
+                                </td>
+                                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
+                                  {{soiItem?.price || 0 }}
+                                </td>
+                                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
+                                  {{soiItem?.quantity || 0 }}
+                                </td>
+                                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
+                                  {{soiItem.discount || 0 }}
+                                </td>
+                                <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
+                                  {{soiItem.price * soiItem.quantity || 0 }}
+                                </td>
 
-                      <div class="row">
+                              </tr>
+    <!--                          <tr>-->
+    <!--                            <td-->
+    <!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
+    <!--                            ></td>-->
+    <!--                            <td-->
+    <!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
+    <!--                            ></td>-->
+    <!--                            <td-->
+    <!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
+    <!--                            ></td>-->
+    <!--                            <td-->
+    <!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
+    <!--                            ></td>-->
+    <!--                            <td-->
+    <!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
+    <!--                            ></td>-->
+    <!--                            <td-->
+    <!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
+    <!--                            ></td>-->
+    <!--                            <td-->
+    <!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
+    <!--                            ></td>-->
 
-                        <div class="col-lg-4">
-                       <h6 class="fs-16 fw-bold text-title mb-20">Sales info:</h6>
-<!--                          <h6 class="fs-16 fw-bold text-title mb-20">Purchase info:</h6>-->
+    <!--                          </tr>-->
+                            </table>
+                          </div>
+    <!--                    </table>-->
 
-
-                          <ul class="details-title list-style mb-40">
-                            <li class="fs-14 fw-medium text-title lh-1">
-                              DATE :<span class="fw-semibold ms-1">{{formatDate(soItems.createdAt)}}</span>
-                            </li>
-                            <li class="fs-14 fw-medium text-title lh-1">
-                              STATUS :<span
-                                class="badge badge-outline-purple fw-semibold ms-1 fs-14"
-                            >{{soItems.status}}</span
-                            >
-                            </li>
-                            <li class="fs-14 fw-medium text-title lh-1">
-                              ID :<span class="fw-semibold ms-1">{{soItems.id}}</span>
-                            </li>
-
-                          </ul>
-
-
-<!--                          <ul class="details-title list-style mb-0">-->
-<!--                            <li class="fs-14 fw-semibold text-title lh-1">-->
-<!--                              DATE :<span class="fw-semibold ms-1">{{formatDate(soItems.createdAt)}}</span>-->
-<!--                            </li>-->
-<!--                            <li class="fs-14 fw-semibold text-title lh-1">-->
-<!--                              STATUS :<span-->
-<!--                                class="badge badge-outline-purple fw-semibold ms-1 fs-14"-->
-<!--                            >{{soItems.status}}</span-->
-<!--                            >-->
-<!--                            </li>-->
-<!--                            <li class="fs-14 fw-semibold text-title lh-1">-->
-<!--                              ID :<span class="fw-semibold ms-1">{{soItems.id}}</span>-->
-<!--                            </li>-->
-<!--                          </ul>-->
-                        </div>
-<!--                        <div class="col-lg-4 ps-xxl-6">-->
-<!--                          <h6 class="fs-16 fw-bold text-title mb-20">Customer info:</h6>-->
-<!--                          <ul class="details-title list-style mb-40">-->
-<!--                            <li class="fs-14 fw-semibold text-title lh-1">-->
-<!--                              NAME :<span class="ms-1 text-optional">{{getCustomerName}}</span>-->
-<!--                            </li>-->
-<!--                            <li class="fs-14 fw-semibold text-title lh-1">-->
-<!--                              MAIL :<span class="text-optional ms-1"-->
-<!--                            >{{stateStore.purchaseDetails.user.email}}</span-->
-<!--                            >-->
-<!--                            </li>-->
-<!--                            <li class="fs-14 fw-semibold text-title lh-1">-->
-<!--                              PHONE :<span class="text-optional ms-1">{{stateStore.purchaseDetails.user.phone_number}}</span>-->
-<!--                            </li>-->
-<!--                          </ul>-->
-<!--                        </div>-->
-<!--                        <div class="col-lg-4 ps-xxl-6">-->
-<!--                          <h6 class="fs-16 fw-bold text-title mb-20">Order Created By:</h6>-->
-<!--                          <ul class="details-title list-style mb-40">-->
-<!--                            <li class="fs-14 fw-semibold text-title lh-1">-->
-<!--                              NAME :<span class="ms-1 text-optional">{{getCreatedByName}}</span>-->
-<!--                            </li>-->
-<!--                            <li class="fs-14 fw-semibold text-title lh-1">-->
-<!--                              MAIL :<span class="text-optional ms-1">{{stateStore.purchaseDetails.createdBy.email}}</span>-->
-<!--                            </li>-->
-<!--                            <li class="fs-14 fw-semibold text-title lh-1">-->
-<!--                              PHONE :<span class="text-optional ms-1">{{stateStore.purchaseDetails.createdBy.phone_number}}</span>-->
-<!--                            </li>-->
-<!--                          </ul>-->
-<!--                        </div>-->
-                      </div>
-
-                      <div class="bg-mild">
-                        <table class="table text-nowrap align-middle mb-0 border-0">
-                          <thead>
-                          <tr class="bg_mild">
-                            <th
-                                scope="col"
-                                class="text-title fw-normal fs-14 lh-1 bg_mild"
-                            >
-                              Sales Order ID
-                            </th>
-                            <th
-                                scope="col"
-                                class="text-title fw-normal fs-14 lh-1 bg_mild"
-                            >
-                              Product ID
-                            </th>
-                            <th
-                                scope="col"
-                                class="text-title fw-normal fs-14 lh-1 bg_mild"
-                            >
-                              Product Name
-                            </th>
-                            <th
-                                scope="col"
-                                class="text-title fw-normal fs-14 lh-1 bg_mild"
-                            >
-                              Unit Price
-                            </th>
-                            <th
-                                scope="col"
-                                class="text-title fw-normal fs-14 lh-1 bg_mild"
-                            >
-                              Quantity
-                            </th>
-                            <th
-                                scope="col"
-                                class="text-title fw-normal fs-14 lh-1 bg_mild"
-                            >
-                              Discount
-                            </th>
-                            <th
-                                scope="col"
-                                class="text-title fw-normal fs-14 lh-1 bg_mild"
-                            >
-                              Sub Total
-                            </th>
-                          </tr>
-                          </thead>
-                          <tr v-for="(soiItem, subIndex) in soItems.salesOrderItems" :key="subIndex">
-                            <td
-                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1"
-                            >
-                              {{soiItem?.id || NA}}
-                            </td>
-                            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
-                              {{soiItem?.product?.id || NA}}
-                            </td>
-                            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
-                              {{soiItem?.product?.name || NA}}
-                            </td>
-                            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
-                              {{soiItem?.price || 0 }}
-                            </td>
-                            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
-                              {{soiItem?.quantity || 0 }}
-                            </td>
-                            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
-                              {{soiItem.discount || 0 }}
-                            </td>
-                            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph border-bottom">
-                              {{soiItem.price * soiItem.quantity || 0 }}
-                            </td>
-
-                          </tr>
-<!--                          <tr>-->
-<!--                            <td-->
-<!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
-<!--                            ></td>-->
-<!--                            <td-->
-<!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
-<!--                            ></td>-->
-<!--                            <td-->
-<!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
-<!--                            ></td>-->
-<!--                            <td-->
-<!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
-<!--                            ></td>-->
-<!--                            <td-->
-<!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
-<!--                            ></td>-->
-<!--                            <td-->
-<!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
-<!--                            ></td>-->
-<!--                            <td-->
-<!--                                class="shadow-none lh-1 fs-14 fw-semibold text-paragraph border-0"-->
-<!--                            ></td>-->
-
-<!--                          </tr>-->
-                        </table>
-                      </div>
-<!--                    </table>-->
-
-                    <!--                </tbody>-->
-<!--                  </div>-->
-               </ol>
+                        <!--                </tbody>-->
+    <!--                  </div>-->
+                   </ol>
             </div>
               </div>
             </div>

@@ -965,7 +965,7 @@ body.minimized .main-content {
   Table CSS
 ----------------------------------*/
 .table > :not(caption) > * > * {
-  border-bottom: 1px solid #EEF3FA;
+  /*border-bottom: 1px solid #EEF3FA;*/
   padding: 17px 13px;
 }
 

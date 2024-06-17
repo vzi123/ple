@@ -22,20 +22,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="stock in allProducts" :key="stock.id">
+            <tr v-for="stock in allProducts">
 
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.product.id }}
+                {{ stock?.product?.id || NA }}
               </td>
 
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.product.name }}
+                {{ stock.product?.name || NA}}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.product.category.name }}
+                {{ stock.product?.category?.name  || NA}}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.inventory }}
+                {{ stock?.inventory || 0 }}
               </td>
 
             </tr>
