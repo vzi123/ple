@@ -16,7 +16,7 @@
                 Category Name
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Stock in Hand
+                Stock in Hand(UOM)
               </th>
 
             </tr>
@@ -35,7 +35,7 @@
                 {{ stock.product?.category?.name  || NA}}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock?.inventory || 0 }}
+                {{ stock?.inventory || 0 }} {{'('}}{{stock.uom}}{{')'}}
               </td>
 
             </tr>
