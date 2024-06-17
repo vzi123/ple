@@ -4,6 +4,7 @@ import CreateProductsPage from "../pages/Products/CreateProductsPage.vue";
 import ProductsListPage from "../pages/Products/ProductsListPage.vue";
 import InPage from "../pages/Products/InPage.vue";
 import OutPage from "../pages/Products/OutPage.vue";
+import InventoryLogPage from "../pages/Products/InventoryLogPage.vue";
 import EditProductsPage from "../pages/Products/EditProductsPage.vue";
 import PrintBarcodePage from "../pages/Products/PrintBarcodePage.vue";
 import ProductDetailsPage from "../pages/Products/ProductDetailsPage.vue";
@@ -79,7 +80,6 @@ import OfferPage from "../pages/BestElectronicsShop/OfferPage.vue";
 import FaqPage from "../pages/BestElectronicsShop/FaqPage.vue";
 import ContactPage from "../pages/BestElectronicsShop/ContactPage.vue";
 
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -95,6 +95,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/product-list",
     name: "ProductsListPage",
     component: ProductsListPage,
+  },
+  {
+    path: "/inventory-log",
+    name: "InventoryLogPage",
+    component: InventoryLogPage,
   },
   {
     path: "/edit-product",

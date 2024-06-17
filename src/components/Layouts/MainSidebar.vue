@@ -78,7 +78,10 @@ export default {
         icon: "products.svg",
         subMenu: [
           // { name: "Create Product", icon: "create-item.svg", link: "/create-product" },
-          { name: "Stock Details", icon: "item-list.svg", link: "/product-list" }
+          { name: "Stock Details", icon: "item-list.svg", link: "/product-list" },
+          { name: "Inward Entry", icon: "item-list.svg", link: "/product-list" },
+          { name: "Outward Entry", icon: "item-list.svg", link: "/product-list" },
+          { name: "Inventory Log", icon: "quantity-alert.svg", link: "/inventory-log" },
         ]
       },
       {
