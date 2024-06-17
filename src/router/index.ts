@@ -2,6 +2,7 @@ import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
 import DashboardPage from "../pages/Dashboard/DashboardPage.vue";
 import CreateProductsPage from "../pages/Products/CreateProductsPage.vue";
 import ProductsListPage from "../pages/Products/ProductsListPage.vue";
+import InventoryLogPage from "../pages/Products/InventoryLogPage.vue";
 import EditProductsPage from "../pages/Products/EditProductsPage.vue";
 import PrintBarcodePage from "../pages/Products/PrintBarcodePage.vue";
 import ProductDetailsPage from "../pages/Products/ProductDetailsPage.vue";
@@ -92,6 +93,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/product-list",
     name: "ProductsListPage",
     component: ProductsListPage,
+  },
+  {
+    path: "/inventory-log",
+    name: "InventoryLogPage",
+    component: InventoryLogPage,
   },
   {
     path: "/edit-product",

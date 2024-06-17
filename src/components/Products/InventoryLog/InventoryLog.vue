@@ -6,37 +6,60 @@
           <thead>
             <tr>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
+                Date
+              </th>
+              <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 Product ID
-
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 Product Name
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Category Name
+                IN/OUT
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
-                Stock in Hand
+                Quantity
               </th>
-
+              <th scope="col" class="text-title fw-normal fs-14 pt-0">
+                Updated Stock
+              </th>
+              <th scope="col" class="text-title fw-normal fs-14 pt-0">
+                Amount
+              </th>
+              <th scope="col" class="text-title fw-normal fs-14 pt-0">
+                Comments
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="stock in allProducts" :key="stock.id">
-
+            <tr v-for="inventoryLog in allProducts" :key="inventoryLog.id">
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.product.id }}
+                {{ formatDate(inventoryLog.createdAt) }}
               </td>
 
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.product.name }}
+                {{ inventoryLog.inventory.product.id }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.product.category.name }}
+                {{ inventoryLog.inventory.product.name }}
+              </td>
+
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ inventoryLog.inOut }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.inventory }}
+                {{ inventoryLog.quantity }}
               </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ inventoryLog.updatedStock }}
+              </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ inventoryLog.amount }}
+              </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ inventoryLog.comments }}
+              </td>
+
 
             </tr>
           </tbody>
@@ -83,7 +106,7 @@ export default defineComponent({
     const fetchProducts = async () => {
       try {
         loading.value = true; // Set loading to true before request
-        const response = await axios.get(`${BASE_URL}/freezy/v1/inventory/all`);
+        const response = await axios.get(`${BASE_URL}/freezy/v1/inventoryLog/all`);
         allProducts.value = response.data; // Assuming your API returns an array of products
         
       } catch (error) {
@@ -93,6 +116,20 @@ export default defineComponent({
       }
     };
 
+    // const filteredList = computed({
+    //   // getter
+    //   get() {
+    //     return allProducts.value.filter((productItem: any) => {
+    //       const userName = productItem?.user.first_name + " " + productItem?.user.last_name;
+    //       return userName.toLowerCase().includes(searchTerm.value.toLowerCase());
+    //     });
+    //   },
+    //   // setter
+    //   set(newValue: any) {
+    //     // Note: we are using destructuring assignment syntax here.
+    //     allProducts.value = newValue;
+    //   }
+    // })
 
     // Call fetchProducts when the component is mounted
     onMounted(() => {

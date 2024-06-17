@@ -57,7 +57,7 @@
               {{ userItem.id }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{ userItem.first_name + ' ' + userItem.last_name }}
+              {{ userItem.first_name }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 <span class="badge badge-success fs-14 fw-normal"
@@ -168,7 +168,7 @@ export default defineComponent({
     const fetchPurchageOrders = async () => {
       try {
         loading.value = true; // Set loading to true before request
-        const response = await axios.get(`${BASE_URL}/freezy/users/filter?type=supplier`);
+        const response = await axios.get(`${BASE_URL}/freezy/v1/users/filter?type=supplier`);
         purchaseListData.value = response.data; // Assuming your API returns an array of products
 
       } catch (error) {
