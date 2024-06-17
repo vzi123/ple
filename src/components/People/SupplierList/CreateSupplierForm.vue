@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-title" id="createModalLabel">
-           {{ isEditMode ? 'Edit Supplier' : 'Create Supplier' }}
+            Create Supplier
           </h5>
           <button
             type="button"
@@ -90,7 +90,7 @@
               </div>
               <div class="col-12">
                 <button  class="btn style-five w-100 d-block" id="submitButton" type="submit">
-                  {{ isEditMode ? 'Update' : 'Create' }}
+                  Create
                 </button>
               </div>
             </div>
@@ -114,12 +114,6 @@ export default defineComponent({
 
 
     },
-    props: {
-        supplierData: {
-          type: Object,
-          default: () => ({}),
-        },
-      },
     data() {
         return {
           form: {
@@ -131,31 +125,11 @@ export default defineComponent({
           },
 
 
- isEditMode: false,
+
                 loading: false,
         }
       },
       methods: {
-
-      openForm(supplierData) {
-            this.isEditMode = !!supplierData;
-            if (this.isEditMode) {
-              this.form = { ...supplierData };
-            } else {
-              this.resetForm();
-            }
-            const modal = new bootstrap.Modal(this.$refs.createModal);
-            modal.show();
-          },
-          resetForm() {
-            this.form = {
-              name: '',
-              email: '',
-              phoneNumber: '',
-              address: '',
-              city: '',
-            };
-          },
 
              async submitFilteredList(submitData: any) {
 
