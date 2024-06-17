@@ -142,6 +142,14 @@
 .btn.style-one:hover {
   border-color: transparent;
 }
+
+.btn.style-one:disabled {
+  background: linear-gradient(132deg, #B0B3D6 4.27%, #D3D4E1 100%);
+  color: #A1A1A1; /* Adjust to a suitable disabled text color */
+  cursor: not-allowed;
+  border: none;
+}
+
 .btn.style-two, .btn.style-three, .btn.style-four {
   background-color: transparent;
   border: 1px solid var(--secondaryColor);
@@ -1443,3 +1451,26 @@ body.minimized .main-content {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+
+/*---------------------------------
+  Created Popup CSS
+----------------------------------*/
+.created-popup.offcanvas {
+  width: 440px;
+  max-height: 92px;
+  top: 40%;
+  background: #2F28A9;
+  padding: 30px 20px 25px 40px;
+  box-shadow: 0px 4px 34px 0px rgba(234, 53, 72, 0.5);
+}
+.created-popup img {
+  position: relative;
+  top: -2px;
+}
+.created-popup span {
+  font-size: 16px;
+  margin-left: 15px;
+}
+
+

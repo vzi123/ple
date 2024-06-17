@@ -67,15 +67,21 @@
     <div class="col-xl-4">
       <button
         class="btn style-one d-inline-block transition border-0 fw-medium text-white rounded-1 fs-md-15 fs-lg-16 mb-20"
-        type="submit" @click="submit"
+        type="submit" @click="submit" id="submitButton" :disabled="loading"
       >
-        Submit Sales
+         <span v-if="loading">Loading...</span>
+                <span v-else>Submit Sales</span>
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import { defineComponent, onMounted } from "vue";
+import EventBus from '@/events/event-bus';
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+
 export default {
   name: "SubmitPurchase",
   props: {
@@ -84,6 +90,10 @@ export default {
         required: true,
          default: () => [],
       },
+       loading: {
+            type: Boolean,
+            default: false
+          },
     },
   data() {
     return {
@@ -92,6 +102,7 @@ export default {
       status: "Packed",
       notes: "",
       currncySymbol: "₹",
+      loading: false,
     };
   },
   computed: {
@@ -114,13 +125,23 @@ export default {
   },
   methods: {
     submit() {
+    document.getElementById('submitButton').disabled = true;
+        this.loading = true;
       this.$emit("submit", {
         discount: this.discount,
         status: this.status,
         notes: this.notes,
         total: this.total,
       });
+
     },
+    mounted() {
+         EventBus.on('loadingCompleted', () => {
+              this.loading = false; // Update allProducts with the emitted value
+              console.log("emiiteed Loading:");
+            });
+
+      },
   },
 };
 </script>

@@ -2,6 +2,8 @@ import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
 import DashboardPage from "../pages/Dashboard/DashboardPage.vue";
 import CreateProductsPage from "../pages/Products/CreateProductsPage.vue";
 import ProductsListPage from "../pages/Products/ProductsListPage.vue";
+import InPage from "../pages/Products/InPage.vue";
+import OutPage from "../pages/Products/OutPage.vue";
 import EditProductsPage from "../pages/Products/EditProductsPage.vue";
 import PrintBarcodePage from "../pages/Products/PrintBarcodePage.vue";
 import ProductDetailsPage from "../pages/Products/ProductDetailsPage.vue";
@@ -76,6 +78,7 @@ import TermsConditionsPage from "../pages/BestElectronicsShop/TermsConditionsPag
 import OfferPage from "../pages/BestElectronicsShop/OfferPage.vue";
 import FaqPage from "../pages/BestElectronicsShop/FaqPage.vue";
 import ContactPage from "../pages/BestElectronicsShop/ContactPage.vue";
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -203,6 +206,16 @@ const routes: Array<RouteRecordRaw> = [
     name: "CreateSalesPage",
     component: CreateSalesPage,
   },
+  {
+      path: "/in",
+      name: "InPage",
+      component: InPage,
+    },
+    {
+          path: "/out",
+          name: "OutPage",
+          component: OutPage,
+        },
   {
     path: "/sales-list",
     name: "SalesListPage",

@@ -4,15 +4,12 @@
   <div
     class="main-content bg_gray d-flex flex-column transition overflow-hidden"
   >
-    <BreadcrumbMenu pageTitle="Create Sales" />
+    <BreadcrumbMenu pageTitle="In" />
     <div class="row mb-40">
       <div class="col-lg-4">
         <div class="form-group mb-25">
-          <label class="d-block fs-14 text-black mb-2">Date</label>
-          <input v-model="form.date"
-            type="date"
-            class="w-100 h-55 bg_ash border-0 rounded-1 fs-14 text-black bg-white"
-          />
+
+
         </div>
       </div>
       <div class="col-lg-4">
@@ -30,15 +27,7 @@
       </div>
       <div class="col-lg-4">
         <div class="form-group mb-25">
-          <label class="d-block fs-14 text-black mb-2">Branch</label>
-           <v-select
-                               v-model="form.project"
-                               :options="projects"
-                               :reduce="project => project.code"
-                               label="name"
-                               class="bg-white border-0 rounded-1 fs-14 text-optional"
-                               placeholder="Select Project"
-                        />
+
         </div>
       </div>
       <div class="col-12">
@@ -71,9 +60,10 @@
         </div>
       </div>
     </div>
-    <SelectedProducts @remove-product="removeProduct" :products="products" :showDiscounts="true"  />
-    <SubmitPurchase :filteredList="filteredList" @submit="submitFilteredList" :loading="loading"  />
-    <a
+    <SelectedProducts @remove-product="removeProduct" :products="products" :showDiscounts="false" />
+    <SubmitPurchase :filteredList="filteredList" @submit="submitFilteredList" />
+
+<a
                         class="delete-btn"
                         data-bs-toggle="offcanvas"
                         href="#loadingPopup"
@@ -86,6 +76,7 @@
                           alt="Image"
                         />
                       </a>
+
     <div class="flex-grow-1"></div>
     <MainFooter />
   </div>
@@ -105,21 +96,20 @@
     </div>
   </div>
 
-    <div
-      class="created-popup offcanvas offcanvas-end border-0"
-      tabindex="-1"
-      id="loadingPopup"
-    >
-      <div class="offcanvas-body p-0">
-        <div class="delete-success">
-          <img src="../../assets/img/icons/tick-circle.svg" alt="Image" />
-          <span class="text-white fw-medium">
-            Your product is saved.
-          </span>
+  <div
+          class="created-popup offcanvas offcanvas-end border-0"
+          tabindex="-1"
+          id="loadingPopup"
+        >
+          <div class="offcanvas-body p-0">
+            <div class="delete-success">
+              <img src="../../assets/img/icons/tick-circle.svg" alt="Image" />
+              <span class="text-white fw-medium">
+                Your Inventory is saved.
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-
 </template>
 
 <script lang="ts">
@@ -137,7 +127,7 @@ import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 export default defineComponent({
-  name: "CreateSalesPage",
+  name: "InPage",
   components: {
     MainHeader,
     MainSidebar,
@@ -166,7 +156,6 @@ export default defineComponent({
       total: 0,
             status: "Packed",
             notes: "",
-            loading: false,
     }
   },
   methods: {
@@ -180,7 +169,7 @@ export default defineComponent({
     },
     async fetchCustomers() {
           try {
-            const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/users/all");
+            const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/users/all");
 
             this.customers = response.data.map((customer: any) => ({
                               code: customer.id,
@@ -209,19 +198,18 @@ export default defineComponent({
 
 
     async submitFilteredList(submitData: any) {
-
       const requestData = {
         userId: this.form.customer ,
         projectId: this.form.project,
         userPersona: 'customer',
-        quotationItems: this.detailedProducts,
+        inventories: this.detailedProducts,
         discount: submitData.discount,
          status: submitData.status,
-         notes: submitData.notes,
+         comments: submitData.notes,
         total: submitData.total,
       };
       try {
-        const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/quotations/save", requestData, {
+        const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/inventory/outward", requestData, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -230,25 +218,19 @@ export default defineComponent({
       } catch (error) {
         console.error("Error submitting the list:", error);
       } finally {
-                console.log("Response finally:", this.loading);
-               this.loading = false;
-                document.getElementById('submitButton').disabled = false;
-                document.getElementById('submitButton').text = 'Submit Sales';
-             EventBus.emit('loadingCompleted');
-             document.getElementById('loadingPopup').press = true;
-            const elem = this.$refs.myBtn;
-            elem.click();
-              this.loading = true;
-
-                       setTimeout(() => {
-                            this.$router.push({name:'SalesListPage'});
-                           this.loading = false;
-                       }, 3000);
-
-
-             }
-    },
-
+               const loadingPopupElement = document.getElementById('loadingPopup');
+                      if (loadingPopupElement) {
+                        (loadingPopupElement as any).press = true;
+                        const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+                        if (elem) {
+                          elem.click();
+                        }
+                        setTimeout(() => {
+                          this.$router.push({ name: 'ProductsListPage' });
+                        }, 3000);
+                      }
+              }
+    }
   },
   mounted() {
      EventBus.on('onAllProducts', (products: any) => {

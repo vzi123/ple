@@ -22,7 +22,7 @@
                 QUANTITY
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                DISCOUNT
+                <th v-if="showDiscounts">DISCOUNT</th>
               </th>
 
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
@@ -55,7 +55,7 @@
                           <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                             <QuantityCounter :initialQuantity="product.quantity ?? 1" :index="index" @quantity-change="updateQuantity" @input="calculateSubtotal(index)" />
                           </td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                          <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                             <input
                               type="number"
                               v-model.number="product.discountAmount"
@@ -103,6 +103,16 @@ import EventBus from '@/events/event-bus';
 
 export default defineComponent({
   name: "SelectedProducts",
+   props: {
+      showDiscounts: {
+        type: Boolean,
+        default: true
+      },
+      products: {
+        type: Array,
+        required: true
+      }
+    },
   components: {
     QuantityCounter,
   },
@@ -119,7 +129,7 @@ export default defineComponent({
 
         const fetchProducts = async () => {
               try {
-                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/products/all");
+                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/products/all");
                 // Transform the response data
                 allProducts.value = response.data.map((product: any) => ({
                   productId: product.id,
@@ -200,6 +210,7 @@ export default defineComponent({
                            const product = filteredList.value[index];
                            product.subTotal = (product.cost - product.discountAmount) * product.quantity;
                            product.effectivePrice = product.cost - product.discountAmount;
+                           product.unitPrice = product.cost;
                          }
                 };
 
