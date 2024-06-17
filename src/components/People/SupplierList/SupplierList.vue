@@ -81,9 +81,9 @@
                 <!--                >-->
                 <!--                  <img src="../../../assets/img/icons/eye.svg" alt="Image" />-->
                 <!--                </a>-->
-                <router-link to="/edit-purchase" title="Edit">
-                  <img src="../../../assets/img/icons/edit.svg" alt="Image" />
-                </router-link>
+                <a href="#" @click="editSupplier(userItem)">
+                                      <img src="../../../assets/img/icons/edit.svg" alt="Image" />
+                                    </a>
                 <a
                     class="delete-btn"
                     data-bs-toggle="offcanvas"
@@ -142,6 +142,7 @@
       </ul>
     </div>
   </div>
+  <CreateSupplierForm ref="createSupplierForm" @supplierUpdated="fetchPurchageOrders" />
 </template>
 
 <script lang="ts">
@@ -152,8 +153,13 @@ import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
 import EventBus from '../../../events/event-bus';
 
+import CreateSupplierForm from './CreateSupplierForm.vue';
+
 export default defineComponent({
   name: "SupplierList",
+   components: {
+      CreateSupplierForm,
+    },
   data() {
     return {
       currncySymbol:"₹",
@@ -177,6 +183,17 @@ export default defineComponent({
         loading.value = false; // Set loading to false after request
       }
     };
+    const fetchSuppliers = async () => {
+          try {
+            loading.value = true;
+            const response = await axios.get(`${BASE_URL}/freezy/v1/users/filter?type=supplier`);
+            purchaseListData.value = response.data;
+          } catch (error) {
+            console.error('Error fetching suppliers:', error);
+          } finally {
+            loading.value = false;
+          }
+        };
 
     const filteredList = computed({
       // getter
@@ -199,11 +216,14 @@ export default defineComponent({
         searchTerm.value = updatedSearchTerm.trim();
       });
       EventBus.on('supplierCreated', fetchPurchageOrders);
+
+
     });
 
     return {
       purchaseListData,
-      filteredList
+      filteredList,
+
     };
   },
   methods: {
@@ -211,6 +231,10 @@ export default defineComponent({
     getUserName(user: any) {
       return user.first_name + " " + user.last_name;
     },
+    editSupplier(userItem:any) {
+          // Open the modal and pass the user item data
+          this.$refs.createSupplierForm.openForm(userItem);
+        },
     getProjectName(project: any) {
       return project.name;
     },

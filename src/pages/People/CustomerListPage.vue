@@ -21,7 +21,7 @@
       <div class="delete-success">
         <img src="../../assets/img/icons/tick-circle.svg" alt="Image" />
         <span class="text-white fw-medium"
-          >Your product is deleted from the list.</span
+          >Your Customer is deleted from the list.</span
         >
       </div>
     </div>
