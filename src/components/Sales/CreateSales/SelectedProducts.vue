@@ -55,16 +55,16 @@
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                             <QuantityCounter :initialQuantity="product.quantity ?? 1" :index="index" @quantity-change="updateQuantity" @input="calculateSubtotal(index)" />
               </td>
-<!--              <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">-->
-<!--                            <input-->
-<!--                              type="number"-->
-<!--                              v-model.number="product.discountAmount"-->
-<!--                              @input="calculateSubtotal(index)"-->
-<!--                              class="form-control"-->
-<!--                            />-->
-<!--              </td>-->
+              <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                            <input
+                              type="number"
+                              v-model.number="product.discountAmount"
+                              @input="calculateSubtotal(index)"
+                              class="form-control"
+                            />
+              </td>
 
-              <td></td>
+
 
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ currncySymbol }} {{ product.subTotal }}

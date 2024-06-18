@@ -65,8 +65,7 @@
                         ref="myBtn"
                       >
                         <img
-                          src="../../assets/img/icons/close.svg"
-                          alt="Image"
+
                         />
                       </a>
 
