@@ -2,37 +2,37 @@
   <div class="card border-0 shadow-none rounded-1 mb-30">
     <div class="card-body p-xl-40">
       <h6 class="fs-18 mb-35 text-title fw-semibold">
-        Selected Products For Sales
+        Selected Products For Entry
       </h6>
       <div class="table-responsive">
         <table class="table text-nowrap align-middle mb-0">
           <thead>
             <tr>
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
-                PRODUCT
+                Product
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                CODE
+                Product Code
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                UNIT COST
+                Unit Cost
               </th>
 
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                QUANTITY
+                Quantity
               </th>
               <th v-if="showDiscounts" scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 <th >DISCOUNT</th>
               </th>
 
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                SUBTOTAL
+                Sub Total
               </th>
               <th
                 scope="col"
                 class="text-title fw-normal fs-14 pt-0 ls-1 text-end pe-0"
               >
-                DELETE
+                Delete
               </th>
             </tr>
           </thead>
@@ -51,18 +51,20 @@
                               @input="calculateSubtotal(index)"
                               class="form-control"
                             />
-                          </td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+            </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                             <QuantityCounter :initialQuantity="product.quantity ?? 1" :index="index" @quantity-change="updateQuantity" @input="calculateSubtotal(index)" />
-                          </td>
-                          <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                            <input
-                              type="number"
-                              v-model.number="product.discountAmount"
-                              @input="calculateSubtotal(index)"
-                              class="form-control"
-                            />
-                          </td>
+              </td>
+<!--              <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">-->
+<!--                            <input-->
+<!--                              type="number"-->
+<!--                              v-model.number="product.discountAmount"-->
+<!--                              @input="calculateSubtotal(index)"-->
+<!--                              class="form-control"-->
+<!--                            />-->
+<!--              </td>-->
+
+              <td></td>
 
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ currncySymbol }} {{ product.subTotal }}

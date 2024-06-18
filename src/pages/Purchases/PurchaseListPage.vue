@@ -39,6 +39,7 @@ import FilterContent from "../../components/Common/FilterContent.vue";
 import PurchaseList from "../../components/Purchases/PurchaseList/PurchaseList.vue";
 import PurchaseDetails from "../../components/Purchases/PurchaseList/PurchaseDetails.vue";
 import MainFooter from "../../components/Layouts/MainFooter.vue";
+import PreLoader from "../../components/Layouts/PreLoader.vue"
 
 export default defineComponent({
   name: "PurchaseListPage",
@@ -50,6 +51,7 @@ export default defineComponent({
     PurchaseList,
     PurchaseDetails,
     MainFooter,
+    PreLoader
   },
 
 

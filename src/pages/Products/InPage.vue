@@ -4,23 +4,18 @@
   <div
     class="main-content bg_gray d-flex flex-column transition overflow-hidden"
   >
-    <BreadcrumbMenu pageTitle="In" />
+    <BreadcrumbMenu pageTitle="Inward Inventory Details" />
     <div class="row mb-40">
       <div class="col-lg-4">
         <div class="form-group mb-25">
-
-        </div>
-      </div>
-      <div class="col-lg-4">
-        <div class="form-group mb-25">
-          <label class="d-block fs-14 text-black mb-2">Supplier</label>
+          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
           <v-select
                      v-model="form.customer"
                      :options="customers"
                      :reduce="customer => customer.code"
                      label="name"
                      class="bg-white border-0 rounded-1 fs-14 text-optional"
-                     placeholder="Select Customer"
+                     placeholder="Select Supplier"
               />
         </div>
       </div>
@@ -169,11 +164,11 @@ export default defineComponent({
     },
     async fetchCustomers() {
           try {
-            const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/users/all");
+            const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/users/filter?type=supplier");
 
             this.customers = response.data.map((customer: any) => ({
                               code: customer.id,
-                              name: `${customer.first_name} ${customer.last_name}`, // Change 'name' to 'product'
+                              name: `${customer.first_name}`, // Change 'name' to 'product'
                               email: customer.email,
                               phone_number: customer.phone_number, // Default quantity
                             }));

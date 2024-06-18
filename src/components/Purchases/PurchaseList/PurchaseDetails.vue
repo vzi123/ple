@@ -258,8 +258,8 @@
               <!-- Sales Order Details Content Here -->
               <div class="modal-body pb-40 border-0">
 <!--                <div class="table-responsive style-two">-->
-                  <div class="table-responsive style-two">
-                   <ol v-for="(soItems, index) in stateStore.salesOrderDetails" :key="index" class="table text-nowrap align-middle mb-0 border-0">
+                  <div v-for="(soItems, index) in stateStore.salesOrderDetails" :key="index"class="table-responsive style-two pb-40 border-0">
+<!--                   <ol v-for="(soItems, index) in stateStore.salesOrderDetails" :key="index" class="table text-nowrap align-middle mb-0 border-0">-->
                           <div class="row">
                             <div class="col-lg-4">
                               <h6 class="fs-16 fw-bold text-title mb-20">Sales info:</h6>
@@ -360,7 +360,7 @@
                               </thead>
                               <tr v-for="(soiItem, subIndex) in soItems.salesOrderItems" :key="subIndex">
                                 <td
-                                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1"
+                                    class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1 border-bottom"
                                 >
                                   {{soiItem?.id || NA}}
                                 </td>
@@ -414,7 +414,7 @@
 
                         <!--                </tbody>-->
     <!--                  </div>-->
-                   </ol>
+<!--                   </ol>-->
             </div>
               </div>
             </div>
