@@ -82,8 +82,7 @@
                         ref="myBtn"
                       >
                         <img
-                          src="../../assets/img/icons/close.svg"
-                          alt="Image"
+
                         />
                       </a>
     <div class="flex-grow-1"></div>
