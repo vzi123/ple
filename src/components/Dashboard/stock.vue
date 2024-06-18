@@ -1,7 +1,7 @@
 <template>
   <div class="card-body p-xl-40">
     <h6 class="card-title fw-semiBold fs-18 mb-30">Stock Log</h6>
-    <div class="table-responsive style-four">
+    <div class="table-responsive style-four" style="max-height: 200px; overflow-y: auto;">
       <table class="table text-nowrap align-middle mb-0">
         <thead>
           <tr>
