@@ -124,7 +124,7 @@ export default defineComponent({
     methods: {
         async fetchCategories() {
               try {
-                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/categories/all");
+                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/categories/all");
 
                 this.categories = response.data.map((category: any) => ({
                                   categoryId: category.id,
