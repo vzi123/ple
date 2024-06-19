@@ -220,7 +220,7 @@ export default defineComponent({
                         }
                         setTimeout(() => {
                           this.$router.push({ name: 'ProductsListPage' });
-                        }, 3000);
+                        }, 1500);
                       }
               }
     }
