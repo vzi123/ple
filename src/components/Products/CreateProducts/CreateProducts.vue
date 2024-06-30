@@ -48,6 +48,19 @@
 
 
           <div class="col-12">
+            <div class="col-lg-6" v-if="isCategoryAC">
+                        <div class="form-group mb-25">
+                          <label class="d-block fs-14 text-black mb-2">Brand</label>
+                          <v-select
+                                               v-model="form.brandId"
+                                               :options="brands"
+                                               :reduce="brand => brand.brandId"
+                                               label="name"
+                                               class="bg-white border-0 rounded-1 fs-14 text-optional"
+                                               placeholder="Select Brand"
+                                        />
+                        </div>
+                      </div>
             <button
               class="btn style-one transition border-0 fw-medium text-white rounded-1 fs-md-15 fs-lg-16"
               type="submit" id="submitButton"
@@ -102,6 +115,18 @@ import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 
+interface Category {
+  categoryId: number;
+  name: string;
+  description: string;
+}
+
+interface Brand {
+  brandId: number;
+  name: string;
+  description: string;
+}
+
 export default defineComponent({
   name: "CreateProducts",
   components: {
@@ -113,14 +138,21 @@ export default defineComponent({
         form: {
           name: "",
           hsnNo: "",
-        categoryId: "",
+            categoryId: null as number | null,
+                   brandId: null as number | null,
         },
 
-        categories: [],
-
+         categories: [] as Category[],
+              brands: [] as Brand[],
               loading: false,
       }
     },
+    computed: {
+        isCategoryAC(): boolean {
+          const selectedCategory = this.categories.find(category => category.categoryId === this.form.categoryId);
+          return selectedCategory ? selectedCategory.name === "ACs" : false;
+        }
+      },
     methods: {
         async fetchCategories() {
               try {
@@ -137,6 +169,20 @@ export default defineComponent({
               }
             },
 
+        async fetchBrands() {
+                      try {
+                        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/brands/all");
+
+                        this.brands = response.data.map((brand: any) => ({
+                                          brandId: brand.id,
+                                          name: brand.name, // Change 'name' to 'product'
+                                          description: brand.description,
+
+                                        }));
+                      } catch (error) {
+                        console.error("Error fetching customers:", error);
+                      }
+                    },
 
 
         async submitFilteredList(submitData: any) {
@@ -149,6 +195,7 @@ export default defineComponent({
             name: this.form.name ,
             hsnNo: this.form.hsnNo,
             categoryId: this.form.categoryId,
+            brandId: this.form.brandId,
            description: this.form.name ,
           };
           try {
@@ -182,6 +229,7 @@ export default defineComponent({
 
 
         this.fetchCategories();
+        this.fetchBrands();
       }
 });
 </script>

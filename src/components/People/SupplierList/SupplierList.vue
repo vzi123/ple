@@ -38,6 +38,22 @@
               />
             </th>
             <th scope="col" class="text-title fw-normal fs-14 pt-0">
+                          GSTNumber
+                          <img
+                              class="ms-2"
+                              src="../../../assets/img/icons/up-down-aroow.svg"
+                              alt="Image"
+                          />
+                        </th>
+                        <th scope="col" class="text-title fw-normal fs-14 pt-0">
+                                      PinCode
+                                      <img
+                                          class="ms-2"
+                                          src="../../../assets/img/icons/up-down-aroow.svg"
+                                          alt="Image"
+                                      />
+                                    </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0">
               Address
               <img
                   class="ms-2"
@@ -67,6 +83,12 @@
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
               {{userItem.phone_number }}
             </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                          {{userItem.gstId }}
+                        </td>
+                        <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                                      {{userItem.pincode }}
+                                    </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
               {{userItem.address }}
             </td>

@@ -75,6 +75,32 @@
                 </div>
               </div>
 
+              <div class="col-lg-6">
+                              <div class="form-group mb-15">
+                                <label class="d-block fs-14 text-black mb-10"
+                                  >GST Number</label
+                                >
+                                <input
+                                  type="number" v-model="form.gstId"
+                                  class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
+                                  placeholder="Enter GST Number"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                              <div class="form-group mb-15">
+                                <label class="d-block fs-14 text-black mb-10">Pin Code</label>
+                                <input
+                                  type="text" v-model="form.pincode"
+                                  class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
+                                  placeholder="Enter Pincode"
+                                />
+                              </div>
+                            </div>
+
+
+
               <div class="col-12">
                 <div class="form-group mb-15">
                   <label class="d-block fs-14 text-black mb-10">Address</label>
@@ -121,7 +147,9 @@ export default defineComponent({
                    email: "",
                    phoneNumber: "",
                    address:"",
-                   city:""
+                   city:"",
+                    gstId:"",
+                                      pincode:"",
           },
 
 
@@ -142,7 +170,9 @@ export default defineComponent({
                                        email: this.form.email,
                                        phoneNumber: this.form.phoneNumber,
                                        address:this.form.address,
-                                       city:this.form.city
+                                       city:this.form.city,
+                                       pincode:this.form.pincode,
+                                       gstId:this.form.gstId
                   };
                   try {
                     const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/users/saveCustomer", requestData, {
