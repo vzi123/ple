@@ -72,7 +72,9 @@
          <span v-if="loading">Loading...</span>
                 <span v-else>Submit Entry</span>
       </button>
+
     </div>
+
   </div>
 </template>
 

@@ -133,7 +133,16 @@
                         />
                       </a>
 
+<div class="col-xl-4">
+          <button
+            class="btn style-one d-inline-block transition border-0 fw-medium text-white rounded-1 fs-md-15 fs-lg-16 mb-20"
+            type="submit" @click="printPdf" id="submitButton"
+          >
 
+                    <span >PDF</span>
+          </button>
+
+        </div>
     <div class="flex-grow-1"></div>
     <MainFooter />
   </div>
@@ -229,6 +238,39 @@ export default defineComponent({
     }
   },
   methods: {
+
+    async printPdf() {
+          try {
+            const response = await axios.get('https://freezy-small-dew-912.fly.dev/freezy/v1/consignments/dc/DC2405767746', {
+              responseType: 'blob', // Important to get the response as a Blob
+              headers: {
+                'Content-Type': 'application/pdf',
+              },
+            });
+
+            const blob = response.data;
+            const url = window.URL.createObjectURL(blob);
+
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = url;
+
+            document.body.appendChild(iframe);
+
+            iframe.onload = () => {
+              if (iframe.contentWindow) {
+
+                iframe.contentWindow.print();
+
+
+              } else {
+                console.error('Error: iframe.contentWindow is null');
+              }
+            };
+          } catch (error) {
+            console.error('Error fetching and printing PDF:', error);
+          }
+        },
     onUpdateProducts(product: string) {
       this.products.push(product as never);
       EventBus.emit('onUpdateProducts', this.products);
@@ -288,7 +330,7 @@ export default defineComponent({
         userId: this.form.customer ,
         projectId: this.form.project,
         userPersona: 'customer',
-        inventories: this.detailedProducts,
+        products: this.detailedProducts,
         accessories: this.detailedAccessories,
         services: this.detailedServices,
         discount: submitData.discount,
