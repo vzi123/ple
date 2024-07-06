@@ -19,11 +19,16 @@
               </th>
 
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                Quantity
+                Serial Number
               </th>
+
+              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+                                            GST-%
+                                          </th>
               <th v-if="showDiscounts" scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 <th >DISCOUNT</th>
               </th>
+
 
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 Sub Total
@@ -53,8 +58,26 @@
                             />
             </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                            <QuantityCounter :initialQuantity="product.quantity ?? 1" :index="index" @quantity-change="updateQuantity" @input="calculateSubtotal(index)" />
+                           <input
+                                                         type="number"
+                                                         v-model.number="product.serialNo"
+                                                         class="form-control"
+                                                       />
               </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                         <v-select
+                                  v-model="product.gstValue"
+                                  :options="gst"
+                                  label="gstRate"
+                                  v-on:change="calculateSubtotal(index)"
+                                  v-on:input="calculateSubtotal(index)"
+                                  v-on:select="calculateSubtotal(index)"
+                                  v-on:search="calculateSubtotal(index)"
+                                  class="bg-white border-0 rounded-1 fs-14 text-optional"
+                                  placeholder="Select gstRate"
+                                  @update:modelValue="calculateSubtotal(index)"
+                           />
+                        </td>
               <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                             <input
                               type="number"
@@ -63,10 +86,7 @@
                               class="form-control"
                             />
               </td>
-
-
-
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+           <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ currncySymbol }} {{ product.subTotal }}
               </td>
               <td class="shadow-none lh-1 text-end pe-0">
@@ -102,6 +122,8 @@ import { defineComponent, ref, computed, onMounted } from "vue";
 import axios from "axios";
 import QuantityCounter from "./QuantityCounter.vue";
 import EventBus from '@/events/event-bus';
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 
 export default defineComponent({
   name: "SelectedProducts",
@@ -117,11 +139,32 @@ export default defineComponent({
     },
   components: {
     QuantityCounter,
+    vSelect,
+
   },
   data() {
     return {
       currncySymbol:"₹",
       selectedProduct: "",
+      gst :[
+      {
+       gstRate: "IGST-14%",
+       gstValue: 0.14,
+      },
+       {
+             gstRate: "IGST-28%",
+             gstValue: 0.28,
+            },
+             {
+                   gstRate: "CGST-14%",
+                   gstValue: 0.14,
+                  },
+                   {
+                         gstRate: "CGST-28%",
+                         gstValue: 0.28,
+                        },
+
+      ],
     };
   },
 
@@ -143,6 +186,8 @@ export default defineComponent({
                   discountAmount: 0,
                   subTotal: (product.cost - 0) * 1,
                   effectivePrice: (product.cost - 0) * 1,
+                  serialNo: "",
+                  gstValue:0
                 }));
                 EventBus.emit('onAllProducts', allProducts.value);
               } catch (error) {
@@ -210,8 +255,16 @@ export default defineComponent({
        console.log(index, 'calculateSubtotal successfully!');
                     if (index >= 0 && index < filteredList.value.length) {
                            const product = filteredList.value[index];
-                           product.subTotal = (product.cost - product.discountAmount) * product.quantity;
                            product.effectivePrice = product.cost - product.discountAmount;
+                             if (  product.gstValue !== undefined && product.gstValue !== null && product.gstValue.gstValue !== undefined && product.gstValue.gstValue !== null) {
+                                        console.log("before:", product.effectivePrice);
+                                       const gstRate = parseFloat(product.gstValue.gstValue) || 0;
+                                       product.effectivePrice = product.effectivePrice + ( gstRate * product.effectivePrice);
+
+                                      console.log("after:", product.effectivePrice);
+                             }
+                            product.subTotal = (product.effectivePrice) * product.quantity ;
+                             product.subTotal = parseFloat(product.subTotal).toFixed(2);
                            product.unitPrice = product.cost;
                          }
                 };

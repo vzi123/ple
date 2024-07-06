@@ -77,8 +77,8 @@
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 <span class="badge badge-success fs-14 fw-normal"
-                > {{ userItem.email }}</span
-                >
+                > {{ userItem.email }}
+                </span>
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
               {{userItem.phone_number }}

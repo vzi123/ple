@@ -90,6 +90,17 @@ export default {
         required: true,
          default: () => [],
       },
+      filteredAccessoriesList: {
+              type: Array,
+              required: true,
+               default: () => [],
+            },
+
+       filteredServicesList: {
+                     type: Array,
+                     required: true,
+                      default: () => [],
+                   },
        loading: {
             type: Boolean,
             default: false
@@ -107,21 +118,52 @@ export default {
   },
   computed: {
      calculateGrandTotal() {
-      console.log("calculateGrandTotal:");
-       if (!this.filteredList || !Array.isArray(this.filteredList)) {
-       console.log("calculateGrandTotal: 00");
-              return 0;
-            }
+       console.log("calculateGrandTotal:");
+        let total =0;
+       let filteredListtotal = 0;
+       let filteredAccessoriesListtotal = 0;
+       let filteredServicesListtotal = 0;
+console.log("calculateGrandTotal: this.total ",this.total );
+console.log("calculateGrandTotal: this.total ",total );
+       if (this.filteredList && Array.isArray(this.filteredList)) {
+         filteredListtotal += this.filteredList.reduce((acc, product) => {
+           console.log("calculateGrandTotal: filteredList value",product.subTotal );
+           return acc + (parseFloat(product.subTotal) || 0);
+         }, 0);
+         console.log("filteredList: this.total ",this.total );
+         console.log("filteredList: this.total ",filteredListtotal );
+       }
 
-            const total = this.filteredList.reduce((acc, product) => {
-              console.log("calculateGrandTotal:value" );
-              return acc + (product.subTotal || 0);
+       if (this.filteredAccessoriesList && Array.isArray(this.filteredAccessoriesList)) {
+         filteredAccessoriesListtotal += this.filteredAccessoriesList.reduce((acc, accessory) => {
+           console.log("calculateGrandTotal: filteredAccessoriesList value");
+           return acc + ( parseFloat(accessory.subTotal) || 0);
+         }, 0);
+         console.log("filteredAccessoriesList: this.total ",this.total );
+                  console.log("filteredAccessoriesList: this.total ",filteredAccessoriesListtotal );
 
-            }, 0);
-            this.total = total - this.discount;
-            return this.total;
+       }
+       if (this.filteredServicesList && Array.isArray(this.filteredServicesList)) {
+                filteredServicesListtotal += this.filteredServicesList.reduce((ser, service) => {
+                  console.log("calculateGrandTotal: filteredServicesList value");
+                  return ser + (parseFloat(service.subTotal) || 0);
+                }, 0);
+                console.log("filteredServicesList: this.total ",this.total );
+                                  console.log("filteredServicesList: this.total ",filteredServicesListtotal );
+        }
 
-        },
+     console.log("final: this.total ",this.filteredListtotal );
+     console.log("final: this.total ",this.filteredAccessoriesListtotal );
+       console.log("final: this.total ",this.filteredServicesListtotal );
+                                  console.log("final: total ",total );
+      this.total = filteredListtotal + filteredAccessoriesListtotal + filteredServicesListtotal;
+       this.total = this.total - (this.discount || 0);
+       this.total = parseFloat(this.total).toFixed(2);
+       console.log("final: this.total ",this.total );
+
+       return this.total;
+     }
+,
   },
   methods: {
     submit() {
