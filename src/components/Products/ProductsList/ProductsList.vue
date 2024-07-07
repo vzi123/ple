@@ -22,23 +22,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="stock in allProducts">
-
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock?.product?.id || NA }}
-              </td>
-
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.product?.name || NA}}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock.product?.category?.name  || NA}}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ stock?.inventory || 0 }} {{'('}}{{stock.uom}}{{')'}}
-              </td>
-
-            </tr>
+             <tr v-for="item in allProducts" :key="item.id">
+                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                            {{ item.product?.id || item.accessory?.id || 'NA' }}
+                          </td>
+                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                            {{ item.product?.name || item.accessory?.name || 'NA' }}
+                          </td>
+                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                            {{ item.product?.category?.name || item.accessory?.category?.name || 'NA' }}
+                          </td>
+                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                            {{ item.inventory || 0 }} ({{ item.uom }})
+                          </td>
+                        </tr>
           </tbody>
         </table>
       </div>

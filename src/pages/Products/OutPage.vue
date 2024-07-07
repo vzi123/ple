@@ -281,7 +281,7 @@ export default defineComponent({
         userId: this.form.customer ,
         projectId: this.form.project,
         userPersona: 'customer',
-        inventories: this.detailedProducts,
+        products: this.detailedProducts,
         accessories: this.detailedAccessories,
         services: this.detailedServices,
         discount: submitData.discount,
