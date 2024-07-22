@@ -55,6 +55,7 @@
       </div>
     </div>
     <SelectedProducts @remove-product="removeProduct" :products="products" :showDiscounts="false" />
+    <div class="row mb-20">
      <div class="col-12">
             <div class="form-group">
               <label class="d-block fs-14 text-black mb-2">Choose Accessory</label>
@@ -84,7 +85,9 @@
               </div>
             </div>
           </div>
+          </div>
         <SelectedAccessories @remove-accessory="removeAccessory" :accessories="accessories" :showDiscounts="false" />
+             <div class="row mb-20">
              <div class="col-12">
                     <div class="form-group">
                       <label class="d-block fs-14 text-black mb-2">Choose Services</label>
@@ -112,6 +115,7 @@
                         /> -->
                       </div>
                     </div>
+                  </div>
                   </div>
              <SelectedServices @remove-service="removeService" :services="services" :showDiscounts="false" />
         <SubmitPurchase :filteredList="filteredList"  :filteredAccessoriesList="filteredAccessoriesList" :filteredServicesList="filteredServicesList" @submit="submitFilteredList" />
