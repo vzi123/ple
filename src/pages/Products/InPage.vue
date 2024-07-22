@@ -55,11 +55,13 @@
       </div>
     </div>
     <SelectedProducts @remove-product="removeProduct" :products="products" :showDiscounts="false" />
-     <div class="col-12">
+     <div class="row mb-20">
+        <div class="col-12">
             <div class="form-group">
               <label class="d-block fs-14 text-black mb-2">Choose Accessory</label>
               <div class="search-area style-two position-relative w-100">
                 <Typeahead @update:modelValue="onUpdateAccessories" :minInputLength="0" :requestDelay="0" placeholder="Search by Accessory" :items="allAccessories.map(accessory => accessory.accessory)" />
+
                 <div class="mt-2" v-show="accessories.length > 0">
                   <span
                     :class="{
@@ -84,9 +86,9 @@
               </div>
             </div>
           </div>
-
+        </div>
         <SelectedAccessories @remove-accessory="removeAccessory" :accessories="accessories" :showDiscounts="false" />
-
+        <div class="row mb-20">
              <div class="col-12">
                     <div class="form-group">
                       <label class="d-block fs-14 text-black mb-2">Choose Services</label>
@@ -116,7 +118,7 @@
                       </div>
                     </div>
                   </div>
-
+            </div>
              <SelectedServices @remove-service="removeService" :services="services" :showDiscounts="false" />
 
         <SubmitPurchase :filteredList="filteredList"  :filteredAccessoriesList="filteredAccessoriesList" :filteredServicesList="filteredServicesList" @submit="submitFilteredList" />

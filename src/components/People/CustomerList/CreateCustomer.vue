@@ -81,7 +81,7 @@
                                   >GST Number</label
                                 >
                                 <input
-                                  type="number" v-model="form.gstId"
+                                  type="text" v-model="form.gstId"
                                   class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
                                   placeholder="Enter GST Number"
                                 />
@@ -92,7 +92,7 @@
                               <div class="form-group mb-15">
                                 <label class="d-block fs-14 text-black mb-10">Pin Code</label>
                                 <input
-                                  type="text" v-model="form.pincode"
+                                  type="number" v-model="form.pincode"
                                   class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
                                   placeholder="Enter Pincode"
                                 />

@@ -59,7 +59,7 @@
             </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                            <input
-                                                         type="number"
+                                                         type="text"
                                                          v-model.number="product.serialNo"
                                                          class="form-control"
                                                        />

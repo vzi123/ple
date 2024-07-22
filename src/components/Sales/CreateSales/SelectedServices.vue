@@ -21,6 +21,9 @@
               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 Quantity
               </th>
+               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+                                                                        GST-%
+                                                                      </th>
               <th v-if="showDiscounts" scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
                 <th >DISCOUNT</th>
               </th>
