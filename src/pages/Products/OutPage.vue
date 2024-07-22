@@ -340,6 +340,8 @@ async printPdf(response : any) {
 
                           iframe.contentWindow.print();
 
+                          this.$router.push({ name: 'ProductsListPage' });
+
                         iframe.contentWindow.onafterprint = () => {
                               document.body.removeChild(iframe); // Clean up the iframe
                               console.log("My iframe:");
