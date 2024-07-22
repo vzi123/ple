@@ -217,6 +217,7 @@ export default defineComponent({
                            elem.click();
                          }
                          setTimeout(() => {
+                            console.log("I am getting executed:");
                            this.$router.push({ name: 'ProductsListPage' });
                          }, 3000);
                        }

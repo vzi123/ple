@@ -274,7 +274,33 @@ export default defineComponent({
                 console.error("Error fetching projects:", error);
               }
             },
+async printPdf(response : any) {
+          try {
 
+
+            const blob = response.data;
+            const url = window.URL.createObjectURL(blob);
+
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = url;
+
+            document.body.appendChild(iframe);
+
+            iframe.onload = () => {
+              if (iframe.contentWindow) {
+
+                iframe.contentWindow.print();
+
+
+              } else {
+                console.error('Error: iframe.contentWindow is null');
+              }
+            };
+          } catch (error) {
+            console.error('Error fetching and printing PDF:', error);
+          }
+        },
 
     async submitFilteredList(submitData: any) {
       const requestData = {
@@ -291,25 +317,46 @@ export default defineComponent({
       };
       try {
         const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/inventory/outward", requestData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log("Response:", response.data);
+                responseType: 'blob',
+
+
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                      });
+
+                      const blob = response.data;
+                      const url = window.URL.createObjectURL(blob);
+
+                      const iframe = document.createElement('iframe');
+                      iframe.style.display = 'none';
+                      iframe.src = url;
+
+                      document.body.appendChild(iframe);
+
+                      iframe.onload = () => {
+                        if (iframe.contentWindow) {
+                        console.log("My response:");
+
+                          iframe.contentWindow.print();
+
+                        iframe.contentWindow.onafterprint = () => {
+                              document.body.removeChild(iframe); // Clean up the iframe
+                              console.log("My iframe:");
+                              this.$router.push({ name: 'ProductsListPage' }); // Navigate to the desired page
+                            };
+
+
+                        } else {
+                          console.error('Error: iframe.contentWindow is null');
+                        }
+                      }
+
       } catch (error) {
         console.error("Error submitting the list:", error);
       } finally {
-               const loadingPopupElement = document.getElementById('loadingPopup');
-                      if (loadingPopupElement) {
-                        (loadingPopupElement as any).press = true;
-                        const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
-                        if (elem) {
-                          elem.click();
-                        }
-                        setTimeout(() => {
-                          this.$router.push({ name: 'ProductsListPage' });
-                        }, 1500);
-                      }
+
+
               }
     }
   },
