@@ -175,7 +175,7 @@ export default defineComponent({
                                        gstId:this.form.gstId
                   };
                   try {
-                    const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/users/saveCustomer", requestData, {
+                    const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/users/customer", requestData, {
                       headers: {
                         "Content-Type": "application/json",
                       },
