@@ -193,7 +193,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "ProductsList",
+  name: "ProductsListcopy",
   data() {
     return {
       products: [

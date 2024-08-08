@@ -2,6 +2,7 @@ import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
 import DashboardPage from "../pages/Dashboard/DashboardPage.vue";
 import CreateProductsPage from "../pages/Products/CreateProductsPage.vue";
 import ProductsListPage from "../pages/Products/ProductsListPage.vue";
+import ProductsListcopyPage from "../pages/Products/ProductsListPage.vue";           //Added
 import InPage from "../pages/Products/InPage.vue";
 import OutPage from "../pages/Products/OutPage.vue";
 import InventoryLogPage from "../pages/Products/InventoryLogPage.vue";
@@ -22,6 +23,7 @@ import CreateQuotationPage from "../pages/Quotations/CreateQuotationPage.vue";
 import QuotationListPage from "../pages/Quotations/QuotationListPage.vue";
 import EditQuotationPage from "../pages/Quotations/EditQuotationPage.vue";
 import CreatePurchasePage from "../pages/Purchases/CreatePurchasePage.vue";
+import customerCreatePurchasePage from "../pages/Purchases/CreatePurchasePage.vue";        //Added
 import PurchaseListPage from "../pages/Purchases/PurchaseListPage.vue";
 import CustomerPurchaseListPage from "../pages/Purchases/CustomerPurchaseListPage.vue";
 import SupplierPurchaseListPage from "../pages/Purchases/SupplierPurchaseListPage.vue";
@@ -80,6 +82,7 @@ import OfferPage from "../pages/BestElectronicsShop/OfferPage.vue";
 import FaqPage from "../pages/BestElectronicsShop/FaqPage.vue";
 import ContactPage from "../pages/BestElectronicsShop/ContactPage.vue";
 
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -95,6 +98,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/product-list",
     name: "ProductsListPage",
     component: ProductsListPage,
+  },
+  {
+    path: "/stock-list",
+    name: "stockListPage",                                   //Added link
+    component: ProductsListcopyPage,
   },
   {
     path: "/inventory-log",
@@ -187,6 +195,12 @@ const routes: Array<RouteRecordRaw> = [
     component: CreatePurchasePage,
   },
   {
+    path: "/customer-create-purchase",
+    name: "customerCreatePurchasePage",                     //Added link
+    component: customerCreatePurchasePage,
+  },
+
+  {
     path: "/purchase-list",
     name: "PurchaseListPage",
     component: PurchaseListPage,
@@ -212,15 +226,15 @@ const routes: Array<RouteRecordRaw> = [
     component: CreateSalesPage,
   },
   {
-      path: "/in",
-      name: "InPage",
-      component: InPage,
-    },
-    {
-          path: "/out",
-          name: "OutPage",
-          component: OutPage,
-        },
+    path: "/in",
+    name: "InPage",
+    component: InPage,
+  },
+  {
+    path: "/out",
+    name: "OutPage",
+    component: OutPage,
+  },
   {
     path: "/sales-list",
     name: "SalesListPage",

@@ -12,14 +12,14 @@
               PROJECT ID
             </th>
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                          PROJECT NAME
-                        </th>
+              PROJECT NAME
+            </th>
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
               AMOUNT
             </th>
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                          QUOTATION ID
-                        </th>
+              QUOTATION ID
+            </th>
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
               STATUS
             </th>
@@ -27,26 +27,26 @@
           </tr>
         </thead>
         <tbody v-for="(purchaseItem, index) in allProducts" :key="index">
-                  <tr>
-                    <td class="shadow-none fw-normal text-black title ps-0">
-                      <span class="text-optional fs-14">{{ purchaseItem.userId }}</span>
-                    </td>
-                    <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                      {{ purchaseItem.projectId }}
-                    </td>
-                    <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                                          {{ purchaseItem.projectName }}
-                                        </td>
-                    <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                      {{ purchaseItem.budget }}
-                    </td>
-                    <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                      {{ purchaseItem.quotationId }}
-                    </td>
-                    <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                      {{ purchaseItem.status }}
-                    </td>
-                  </tr>
+          <tr>
+            <td class="shadow-none fw-normal text-black title ps-0">
+              <span class="text-optional fs-14">{{ purchaseItem.userId }}</span>
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ purchaseItem.projectId }}
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ purchaseItem.projectName }}
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ purchaseItem.budget }}
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ purchaseItem.quotationId }}
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ purchaseItem.status }}
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -63,7 +63,7 @@ export default defineComponent({
   name: "ProductsList",
   data() {
     return {
-      currncySymbol:"₹"
+      currncySymbol: "₹"
     };
   },
   setup() {

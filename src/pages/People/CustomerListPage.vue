@@ -1,28 +1,20 @@
 <template>
   <MainHeader />
   <MainSidebar />
-  <div
-    class="main-content bg_gray d-flex flex-column transition overflow-hidden"
-  >
+  <div class="main-content bg_gray d-flex flex-column transition overflow-hidden">
     <BreadcrumbMenu pageTitle="Customer List" />
-    <FilterContent />
+    <!-- <FilterContent /> -->
     <CustomerList />
 
     <div class="flex-grow-1"></div>
     <MainFooter />
   </div>
 
-  <div
-    class="delete-popup offcanvas offcanvas-end border-0"
-    tabindex="-1"
-    id="deletePopup"
-  >
+  <div class="delete-popup offcanvas offcanvas-end border-0" tabindex="-1" id="deletePopup">
     <div class="offcanvas-body p-0">
       <div class="delete-success">
         <img src="../../assets/img/icons/tick-circle.svg" alt="Image" />
-        <span class="text-white fw-medium"
-          >Your Customer is deleted from the list.</span
-        >
+        <span class="text-white fw-medium">Your Customer is deleted from the list.</span>
       </div>
     </div>
   </div>

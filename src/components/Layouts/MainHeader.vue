@@ -5,41 +5,22 @@
         <div class="col-xl-6 col-lg-5 col-md-5 col-sm-4">
           <div class="header-left d-flex align-items-center">
             <router-link to="/" class="logo">
-              <img
-                class="logo-light"
-                src="../../assets/img/logo.webp"
-                alt="Image"
-              />
-              <img
-                class="logo-dark"
-                src="../../assets/img/logo-white.webp"
-                alt="Image"
-              />
+              <img class="logo-light" src="../../assets/img/logo.webp" alt="Image" />
+              <img class="logo-dark" src="../../assets/img/logo-white.webp" alt="Image" />
             </router-link>
-            <button
-              class="header-burger-menu transition position-relative lh-1 bg-transparent p-0 border-0"
-              id="header-burger-menu"
-              title="Hide/Show"
-              @click="toggleBurgerMenu"
-            >
-              <i
-                class="menu ri-menu-line"
-                @click="toggleButtonVisibility('openBtn')"
-                v-show="showOpenBtn"
-              ></i>
-              <i
-                class="close ri-close-line"
-                @click="toggleButtonVisibility('closeBtn')"
-                v-show="showCloseBtn"
-              ></i>
+            <button class="header-burger-menu transition position-relative lh-1 bg-transparent p-0 border-0"
+              id="header-burger-menu" title="Hide/Show" @click="toggleBurgerMenu">
+
+              <!-- i tag class was given wrong -->
+
+              <i class="close ri-close-line" @click="toggleButtonVisibility('openBtn')" v-show="showOpenBtn"></i>
+              <i class="menu ri-menu-line" @click="toggleButtonVisibility('closeBtn')" v-show="showCloseBtn"></i>
               <!-- <img src="../../assets/img/icons/sidebar-menu.svg" alt="Image" /> -->
             </button>
           </div>
         </div>
         <div class="col-xl-6 col-lg-7 col-md-7 col-sm-8">
-          <div
-            class="header-right d-flex align-items-center justify-content-sm-end justify-content-between"
-          >
+          <div class="header-right d-flex align-items-center justify-content-sm-end justify-content-between">
             <div class="option-item">
 
             </div>
@@ -53,7 +34,7 @@
               <NotificationDropdown />
             </div>
             <div class="option-item">
-                  <ProfileDropdown :displayName="user.displayName" />
+              <ProfileDropdown :displayName="user.displayName" />
             </div>
             <div class="option-item">
               <SettingsBarBtn />
@@ -124,13 +105,16 @@ export default defineComponent({
     left: 0;
     width: 100%;
     z-index: 99;
+
     padding: {
       top: 28.5px;
       bottom: 28.5px;
     }
+
     .header-left {
       .header-burger-menu {
         margin-left: 40px;
+
         i {
           font-size: 25px;
 
@@ -141,15 +125,19 @@ export default defineComponent({
       }
     }
   }
+
   .header-left {
     .logo {
       min-width: 110px;
     }
+
     .search-area {
       margin-left: 30px;
+
       input {
         height: 55px;
         padding: 13px 35px 13px 23px;
+
         &::placeholder {
           opacity: 1;
           color: #8d929a;
@@ -157,27 +145,34 @@ export default defineComponent({
       }
     }
   }
+
   .header-right {
     .navbar-nav {
       margin-right: 25px;
-      & > .nav-item {
+
+      &>.nav-item {
         display: inline-block;
         margin-right: 20px;
         position: relative;
+
         &:last-child {
           margin-right: 0;
         }
+
         .nav-link {
           color: #0e1622;
           font-weight: 500;
           position: relative;
+
           &.dropdown-toggle {
             padding-right: 12px;
           }
+
           &.active,
           &:hover {
             color: var(--secondaryColor);
           }
+
           &.dropdown-toggle {
             &:before {
               position: absolute;
@@ -190,9 +185,11 @@ export default defineComponent({
               width: 10px;
               height: 10px;
             }
+
             &:after {
               display: none;
             }
+
             &.active,
             &:hover {
               &:before {
@@ -201,6 +198,7 @@ export default defineComponent({
             }
           }
         }
+
         .dropdown-menu {
           top: 65px;
           opacity: 0;
@@ -213,15 +211,18 @@ export default defineComponent({
           border: none;
           transform: translate3d(0, 18px, 0);
           box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
           .nav-item {
             .nav-link {
               transition: var(--transition);
+
               &:hover {
                 padding-left: 8px;
               }
             }
           }
         }
+
         &:hover {
           .dropdown-menu {
             top: 50px;
@@ -232,22 +233,27 @@ export default defineComponent({
         }
       }
     }
+
     .option-item {
       margin-right: 20px;
+
       &:last-child {
         margin-right: 0;
       }
+
       .pos-link {
         color: #4f46e5;
         border: 2px solid var(--Purple-Gradient, #4f46e5);
         box-shadow: 0px 5px 10px 0px rgba(99, 102, 241, 0.2);
         padding: 11.5px 22.5px;
+
         &:hover {
           border-color: transparent;
           background-color: #4f46e5;
           color: var(--whiteColor);
         }
       }
+
       .notification-dropdown,
       .language-dropdown {
         .dropdown-toggle {
@@ -256,6 +262,7 @@ export default defineComponent({
           }
         }
       }
+
       .language-dropdown {
         .dropdown-toggle {
           img {
@@ -267,21 +274,23 @@ export default defineComponent({
     }
   }
 }
+
 .shopcart {
   padding: 3px 7px 0 0;
+
   span {
     width: 17px;
     height: 17px;
     font-size: 11px;
-    background: var(
-      --Purple-Gradient,
-      linear-gradient(132deg, #4f46e5 4.27%, #6366f1 100%)
-    );
+    background: var(--Purple-Gradient,
+        linear-gradient(132deg, #4f46e5 4.27%, #6366f1 100%));
     line-height: 17px;
   }
 }
+
 .searchModal {
   overflow-x: hidden;
+
   .modal-dialog {
     margin: 0;
     width: 100%;
@@ -291,6 +300,7 @@ export default defineComponent({
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+
     .modal-content {
       border: 0;
       padding: 0;
@@ -301,9 +311,11 @@ export default defineComponent({
       background-color: transparent;
       margin-left: auto;
       margin-right: auto;
+
       form {
         width: calc(100% - 25px);
         position: relative;
+
         .form-control {
           height: 55px;
           border-radius: 0;
@@ -315,10 +327,12 @@ export default defineComponent({
           background-color: var(--whiteColor);
           padding-left: 18px;
           padding-right: 18px;
+
           &::placeholder {
             transition: var(--transition);
             color: var(--paraColor);
           }
+
           &:focus {
             &::-moz-placeholder {
               color: transparent;
@@ -332,17 +346,20 @@ export default defineComponent({
               color: transparent;
             }
           }
+
           &:-moz-placeholder {
             -moz-transition: var(--transition);
             transition: var(--transition);
             color: var(--paragraphColor);
           }
+
           &:-ms-input-placeholder {
             -ms-transition: var(--transition);
             transition: var(--transition);
             color: var(--paragraphColor);
           }
         }
+
         button {
           top: 5px;
           border: 0;
@@ -356,10 +373,12 @@ export default defineComponent({
           color: var(--whiteColor);
           transition: var(--transition);
           background-color: var(--secondaryColor);
+
           &:hover {
             background-color: var(--titleColor);
             color: var(--whiteColor);
           }
+
           img {
             position: relative;
             top: -1px;
@@ -367,6 +386,7 @@ export default defineComponent({
           }
         }
       }
+
       .btn-close {
         top: 13px;
         padding: 0;
@@ -379,6 +399,7 @@ export default defineComponent({
         position: absolute;
         background-color: transparent;
         background-image: none;
+
         img {
           min-width: 22px;
         }
@@ -386,6 +407,7 @@ export default defineComponent({
     }
   }
 }
+
 @media only screen and (max-width: 575px) {
   .header-area {
     .header-left {
@@ -394,12 +416,15 @@ export default defineComponent({
         min-width: 82px;
       }
     }
+
     .header-right {
       .option-item {
         margin-right: 10px;
+
         &:last-child {
           margin-right: 0;
         }
+
         .settings-toggler {
           img {
             max-width: 20px;
@@ -409,18 +434,23 @@ export default defineComponent({
         }
       }
     }
+
     &.style-two {
       .header-left {
         margin-bottom: 15px;
         justify-content: space-between;
       }
+
       .header-right {
         justify-content: space-between;
+
         .option-item {
           margin-right: 10px;
+
           &:last-child {
             margin-right: 0;
           }
+
           .pos-link {
             font-size: 14px;
             padding: 8px 15px;
@@ -430,18 +460,22 @@ export default defineComponent({
     }
   }
 }
+
 @media only screen and (max-width: 767px) {
   .header-area {
     &.style-two {
       padding: 18px 0;
+
       .header-left {
         .header-burger-menu {
           margin-left: 20px;
         }
       }
+
       .header-right {
         .option-item {
           margin-right: 15px;
+
           &:last-child {
             margin-right: 0;
           }
@@ -450,6 +484,7 @@ export default defineComponent({
     }
   }
 }
+
 @media only screen and (max-width: 991px) {
   .header-area {
     .header-left {
@@ -458,12 +493,14 @@ export default defineComponent({
         min-width: 85px;
       }
     }
+
     .header-right {
       .option-item {
         .settings-toggler {
           width: 35px;
           height: 35px;
         }
+
         .profile-dropdown {
           .dropdown-toggle {
             img {
@@ -475,15 +512,18 @@ export default defineComponent({
       }
     }
   }
+
   .profile-dropdown img {
     margin-right: 0;
   }
+
   .navbar-toggler {
     width: 35px;
     height: 35px;
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
 }
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .header-area {
     .header-right {
@@ -495,6 +535,7 @@ export default defineComponent({
     }
   }
 }
+
 @media only screen and (min-width: 1400px) {
   .header-area {
     .container-fluid {
@@ -503,28 +544,34 @@ export default defineComponent({
         left: 50px;
       }
     }
+
     .header-left {
       .search-area {
         margin-left: 80px;
       }
     }
+
     .header-right {
       .navbar-nav {
         margin-right: 38px;
-        & > .nav-item {
+
+        &>.nav-item {
           margin-right: 43px;
         }
       }
     }
+
     &.style-two {
       .header-left {
         .header-burger-menu {
           margin-left: 78px;
         }
       }
+
       .header-right {
         .option-item {
           margin-right: 27px;
+
           &:last-child {
             margin-right: 0;
           }
