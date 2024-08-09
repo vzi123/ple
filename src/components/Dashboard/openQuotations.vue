@@ -23,11 +23,10 @@
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
               STATUS
             </th>
-
           </tr>
         </thead>
-        <tbody v-for="(purchaseItem, index) in allProducts" :key="index">
-          <tr>
+        <tbody>
+          <tr v-for="(purchaseItem, index) in allProducts" :key="index">
             <td class="shadow-none fw-normal text-black title ps-0">
               <span class="text-optional fs-14">{{ purchaseItem.userId }}</span>
             </td>
@@ -50,12 +49,30 @@
         </tbody>
       </table>
     </div>
+    <!-- Pagination controls -->
+    <div class="col-sm-6 text-sm-end text-center mt-3">
+      <ul class="page-nav list-style">
+        <li :class="{ disabled: currentPage === 1 }">
+          <a href="#" @click.prevent="prevPage" :disabled="currentPage === 1">
+            <img src="./../../assets/img/icons/left-arrow-purple.svg" alt="Image" />
+          </a>
+        </li>
+        <li v-for="page in pageNumbers" :key="page" :class="{ active: currentPage === page }">
+          <a href="#" @click.prevent="goToPage(page)" v-if="page !== '...'">{{ page }}</a>
+          <span class="page-link" v-else>...</span>
+        </li>
+        <li :class="{ disabled: currentPage === totalPages }">
+          <a href="#" @click.prevent="nextPage" :disabled="currentPage === totalPages">
+            <img src="./../../assets/img/icons/right-arrow-purple.svg" alt="Image" />
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
-
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { formatDate, BASE_URL } from "@/utils/utils";
 
@@ -63,12 +80,14 @@ export default defineComponent({
   name: "ProductsList",
   data() {
     return {
-      currncySymbol: "₹"
+      currncySymbol: "₹",
     };
   },
   setup() {
     const allProducts = ref([]); // Use ref to make it reactive
     const loading = ref(false);
+    const currentPage = ref(1);
+    const itemsPerPage = ref(10);
 
     // Function to fetch products using Axios
     const fetchProducts = async () => {
@@ -77,7 +96,6 @@ export default defineComponent({
         const response = await axios.get(`${BASE_URL}/freezy/dashboard/openQuotations`);
         allProducts.value = response.data; // Assuming your API returns an array of products
         console.log("Products fetched:", allProducts.value);
-
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -90,10 +108,76 @@ export default defineComponent({
       fetchProducts();
     });
 
+    // Computed properties for pagination
+    const totalPages = computed(() => {
+      return Math.ceil(allProducts.value.length / itemsPerPage.value);
+    });
+
+    const paginatedProducts = computed(() => {
+      const start = (currentPage.value - 1) * itemsPerPage.value;
+      const end = start + itemsPerPage.value;
+      return allProducts.value.slice(start, end);
+    });
+
+    // Function to calculate visible page numbers
+    const pageNumbers = computed(() => {
+      const total = totalPages.value;
+      const current = currentPage.value;
+      const delta = 2; // How many numbers to show on each side of the current page
+
+      const range: (number | string)[] = [];
+      for (
+        let i = Math.max(2, current - delta);
+        i <= Math.min(total - 1, current + delta);
+        i++
+      ) {
+        range.push(i);
+      }
+
+      if (current - delta > 2) {
+        range.unshift("...");
+      }
+      if (current + delta < total - 1) {
+        range.push("...");
+      }
+
+      range.unshift(1);
+      if (total > 1) range.push(total);
+
+      return range;
+    });
+
+    const goToPage = (page: number | string) => {
+      if (typeof page === "number") {
+        currentPage.value = page;
+      }
+    };
+
+    // Functions to handle page navigation
+    const prevPage = () => {
+      if (currentPage.value > 1) {
+        currentPage.value--;
+      }
+    };
+
+    const nextPage = () => {
+      if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+      }
+    };
+
     // Return reactive variables and function
     return {
       allProducts,
       loading,
+      currentPage,
+      itemsPerPage,
+      totalPages,
+      paginatedProducts,
+      pageNumbers,
+      goToPage,
+      prevPage,
+      nextPage,
     };
   },
   methods: {

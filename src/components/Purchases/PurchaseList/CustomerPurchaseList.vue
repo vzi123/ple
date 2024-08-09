@@ -20,70 +20,46 @@
               </th> -->
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 PO ID
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 Name
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
-<!--              <th scope="col" class="text-title fw-normal fs-14 pt-0">-->
-<!--                PERSONA-->
-<!--                <img-->
-<!--                  class="ms-2"-->
-<!--                  src="../../../assets/img/icons/up-down-aroow.svg"-->
-<!--                  alt="Image"-->
-<!--                />-->
-<!--              </th>-->
+              <!--              <th scope="col" class="text-title fw-normal fs-14 pt-0">-->
+              <!--                PERSONA-->
+              <!--                <img-->
+              <!--                  class="ms-2"-->
+              <!--                  src="../../../assets/img/icons/up-down-aroow.svg"-->
+              <!--                  alt="Image"-->
+              <!--                />-->
+              <!--              </th>-->
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 Project
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 Budget
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 Created Date
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 Status
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
-             
+
               <th scope="col" class="text-title fw-normal fs-14 pt-0 pe-0">
                 Actions
               </th>
             </tr>
           </thead>
-          
-         <tbody v-for="(purchaseItem, index) in filteredList" :key="index">
-         
-            
+
+          <tbody v-for="(purchaseItem, index) in filteredList" :key="index">
+
+
 
             <tr>
               <!-- <td class="shadow-none fw-normal text-black title ps-0">
@@ -104,15 +80,13 @@
                 {{ purchaseItem.id }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-               {{ getUserName(purchaseItem.user) }}
+                {{ getUserName(purchaseItem.user) }}
               </td>
-<!--              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">-->
-<!--                {{ purchaseItem.userPersona }}-->
-<!--              </td>-->
+              <!--              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">-->
+              <!--                {{ purchaseItem.userPersona }}-->
+              <!--              </td>-->
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                <span class="badge badge-success fs-14 fw-normal"
-                  > {{ getProjectName(purchaseItem.project) }}</span
-                >
+                <span class="badge badge-success fs-14 fw-normal"> {{ getProjectName(purchaseItem.project) }}</span>
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ currncySymbol }} {{ purchaseItem.budget }}
@@ -125,46 +99,31 @@
               </td>
               <td class="shadow-none lh-1 text-end pe-0">
                 <div class="button-group d-flex flex-wrap align-items-center">
-                  <a
-                    href="javascript:void(0)"
-                    title="View"
-                    data-bs-toggle="modal"
-                    data-bs-target="#detailsModal"
-                    @click="onViewPurchase(purchaseItem)"
-                  >
+                  <a href="javascript:void(0)" title="View" data-bs-toggle="modal" data-bs-target="#detailsModal"
+                    @click="onViewPurchase(purchaseItem)">
                     <img src="../../../assets/img/icons/eye.svg" alt="Image" />
                   </a>
                   <router-link to="/edit-purchase" title="Edit">
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
                   </router-link>
-                  <a
-                    class="delete-btn"
-                    data-bs-toggle="offcanvas"
-                    href="#deletePopup"
-                    role="button"
-                    aria-controls="deletePopup"
-                  >
-                    <img
-                      src="../../../assets/img/icons/close.svg"
-                      alt="Image"
-                    />
+                  <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
+                    aria-controls="deletePopup">
+                    <img src="../../../assets/img/icons/close.svg" alt="Image" />
                   </a>
                 </div>
               </td>
             </tr>
 
-      
+
           </tbody>
-        </table>
+        </table>      
       </div>
     </div>
   </div>
 
   <div class="row pb-45 align-items-center">
     <div class="col-sm-6">
-      <div
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-start page-unit"
-      >
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-start page-unit">
         <span class="fs-13">Showing product per page</span>
         <select class="text-title border-0 fs-14 bg-transparent">
           <option value="0">10</option>
@@ -177,10 +136,7 @@
       <ul class="page-nav list-style">
         <li>
           <a href="#">
-            <img
-              src="../../../assets/img/icons/left-arrow-purple.svg"
-              alt="Image"
-            />
+            <img src="../../../assets/img/icons/left-arrow-purple.svg" alt="Image" />
           </a>
         </li>
         <li><a href="#" class="active">1</a></li>
@@ -188,10 +144,7 @@
         <li><a href="#">3</a></li>
         <li>
           <a href="#">
-            <img
-              src="../../../assets/img/icons/right-arrow-purple.svg"
-              alt="Image"
-            />
+            <img src="../../../assets/img/icons/right-arrow-purple.svg" alt="Image" />
           </a>
         </li>
       </ul>
@@ -211,7 +164,7 @@ export default defineComponent({
   name: "CustomerPurchaseList",
   data() {
     return {
-      currncySymbol:"₹",
+      currncySymbol: "₹",
     };
   },
   setup() {
@@ -225,7 +178,7 @@ export default defineComponent({
         loading.value = true; // Set loading to true before request
         const response = await axios.get(`${BASE_URL}/freezy/purchaseOrders/all/customer`);
         purchaseListData.value = response.data; // Assuming your API returns an array of products
-        
+
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {

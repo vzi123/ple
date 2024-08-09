@@ -11,10 +11,9 @@
             <button class="header-burger-menu transition position-relative lh-1 bg-transparent p-0 border-0"
               id="header-burger-menu" title="Hide/Show" @click="toggleBurgerMenu">
 
-              <!-- i tag class was given wrong -->
 
-              <i class="close ri-close-line" @click="toggleButtonVisibility('openBtn')" v-show="showOpenBtn"></i>
-              <i class="menu ri-menu-line" @click="toggleButtonVisibility('closeBtn')" v-show="showCloseBtn"></i>
+              <i class="menu ri-menu-line" @click="toggleButtonVisibility('openBtn')" v-show="showOpenBtn"></i>
+              <i class="close ri-close-line" @click="toggleButtonVisibility('closeBtn')" v-show="showCloseBtn"></i>
               <!-- <img src="../../assets/img/icons/sidebar-menu.svg" alt="Image" /> -->
             </button>
           </div>
