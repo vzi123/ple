@@ -26,6 +26,7 @@ import CreatePurchasePage from "../pages/Purchases/CreatePurchasePage.vue";
 import customerCreatePurchasePage from "../pages/Purchases/CreatePurchasePage.vue";        //Added
 import PurchaseListPage from "../pages/Purchases/PurchaseListPage.vue";
 import CustomerPurchaseListPage from "../pages/Purchases/CustomerPurchaseListPage.vue";
+import ConsignmentListPage from "../pages/Purchases/ConsignmentListPage.vue";
 import SupplierPurchaseListPage from "../pages/Purchases/SupplierPurchaseListPage.vue";
 import EditPurchasePage from "../pages/Purchases/EditPurchasePage.vue";
 import CreateSalesPage from "../pages/Sales/CreateSalesPage.vue";
@@ -210,6 +211,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "CustomerPurchaseListPage",
     component: CustomerPurchaseListPage,
   },
+  {
+      path: "/consignment-list",
+      name: "ConsignmentListPage",
+      component: ConsignmentListPage,
+    },
   {
     path: "/supplier-purchase-list",
     name: "SupplierPurchaseListPage",
