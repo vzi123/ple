@@ -7,6 +7,7 @@ interface StateStore {
   quotationDetails: any;
   productDetails:any;
   salesOrderDetails:any;
+  productListDetails:any;
 }
 
 const stateStore: StateStore = reactive({
@@ -54,6 +55,19 @@ const stateStore: StateStore = reactive({
     "createdAt": "2024-04-27 19:03:36",
     "quotationItems": []
   },
+  productListDetails:[ {
+      "id": "",
+      "user": {},
+      "userPersona": "",
+      "budget": 0,
+      "status": "",
+      "project": {
+        "customer": {}
+      },
+      "createdBy": {},
+      "createdAt": "2024-04-27 19:03:36",
+      "quotationItems": []
+    }],
   salesOrderDetails:
       [{
         "id": "",

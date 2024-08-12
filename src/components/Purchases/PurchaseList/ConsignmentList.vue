@@ -263,8 +263,10 @@ export default defineComponent({
     },
 
     onViewPurchase(consignmentItem: any) {
-      stateStore.salesOrderDetails = consignmentItem?.salesOrders;
+      stateStore.productListDetails = consignmentItem?.products;
       stateStore.purchaseDetails = consignmentItem;
+
+
     },
   },
 });
