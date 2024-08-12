@@ -38,7 +38,7 @@ import BreadcrumbMenu from "../../components/Common/BreadcrumbMenu.vue";
 import FilterContent from "../../components/Common/FilterContent.vue";
 import PurchaseList from "../../components/Purchases/PurchaseList/PurchaseList.vue";
 import ConsignmentList from "../../components/Purchases/PurchaseList/ConsignmentList.vue";
-import PurchaseDetails from "../../components/Purchases/PurchaseList/ConsignmentDetails.vue";
+import ConsignmentDetails from "../../components/Purchases/PurchaseList/ConsignmentDetails.vue";
 import MainFooter from "../../components/Layouts/MainFooter.vue";
 
 export default defineComponent({
