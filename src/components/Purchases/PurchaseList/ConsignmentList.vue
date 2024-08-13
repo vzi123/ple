@@ -219,7 +219,7 @@ export default defineComponent({
     const fetchConsignmentListData = async () => {
       try {
         loading.value = true; // Set loading to true before request
-        const response = await axios.get(`${BASE_URL}/freezy/v1/consignments/all`);
+        const response = await axios.get(`${BASE_URL}/freezy/v1/inventoryLog/consignments`);
         consignmentListData.value = response.data; // Assuming your API returns an array of products
         
       } catch (error) {
@@ -262,10 +262,10 @@ export default defineComponent({
       return user.first_name + " " + user.last_name;
     },
 
-    onViewPurchase(consignmentItem: any) {
-      stateStore.productListDetails = consignmentItem?.products;
-      stateStore.purchaseDetails = consignmentItem;
-
+     onViewPurchase(consignmentItem: any) {
+      stateStore.consignmentDetails = consignmentItem;
+      console.log(stateStore.consignmentDetails);
+      
 
     },
   },

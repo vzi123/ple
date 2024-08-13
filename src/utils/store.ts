@@ -3,11 +3,8 @@ import { reactive } from "vue";
 interface StateStore {
   open: boolean;
   onChange: () => void;
-  purchaseDetails: any;
-  quotationDetails: any;
-  productDetails:any;
-  salesOrderDetails:any;
-  productListDetails:any;
+  consignmentDetails: any;
+
 }
 
 const stateStore: StateStore = reactive({
@@ -15,69 +12,78 @@ const stateStore: StateStore = reactive({
   onChange ()  {
     stateStore.open = !stateStore.open
   },
-  purchaseDetails: {
+  consignmentDetails: {
     "id": "",
-    "user": {},
-    "userPersona": "",
-    "budget": 0,
-    "status": "",
-    "project": {
-      "customer": {}
-    },
-    "createdBy": {},
-    "createdAt": "2024-04-27 19:03:36",
-    "purchaseOrderItems": [],
-    "salesOrders": []
-  },
-  quotationDetails: {
-    "id": "",
-    "user": {},
-    "userPersona": "",
-    "budget": 0,
-    "status": "",
-    "project": {
-      "customer": {}
-    },
-    "createdBy": {},
-    "createdAt": "2024-04-27 19:03:36",
-    "quotationItems": []
-  },
-  productDetails: {
-    "id": "",
-    "user": {},
-    "userPersona": "",
-    "budget": 0,
-    "status": "",
-    "project": {
-      "customer": {}
-    },
-    "createdBy": {},
-    "createdAt": "2024-04-27 19:03:36",
-    "quotationItems": []
-  },
-  productListDetails:[ {
+    "inOut": "",
+    "comments": "",
+    "itemCount": 0,
+    "createdAt": "",
+    "totalAmount": 0,
+    "createdFor": {
       "id": "",
-      "user": {},
-      "userPersona": "",
-      "budget": 0,
-      "status": "",
-      "project": {
-        "customer": {}
-      },
-      "createdBy": {},
-      "createdAt": "2024-04-27 19:03:36",
-      "quotationItems": []
-    }],
-  salesOrderDetails:
-      [{
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "phone_number": "",
+      "role": "",
+      "address": "",
+      "city": "",
+      "gstId": "",
+      "pincode": ""
+    },
+    "products": [
+      {
         "id": "",
-        "user": {},
-        "userPersona": "",
-        "status": "",
-        "salesOrderItems": [],
-        "createdBy": {},
-        "createdAt": ""
-      }]
+        "name": "",
+        "description": "",
+        "cost": 0,
+        "hsnNo": "",
+        "category": {
+          "id": "",
+          "name": "",
+          "description": ""
+        },
+        "brand": {
+          "id": "",
+          "name": "",
+          "description": ""
+        }
+      }
+    ],
+    "accessories": [
+      {
+        "id": "",
+        "name": "",
+        "description": "",
+        "cost": 0,
+        "category": {
+          "id": "",
+          "name": "",
+          "description": ""
+        },
+        "brand": null
+      }
+    ],
+    "services": [
+      {
+        "id": "",
+        "name": "",
+        "description": "",
+        "cost": 0,
+        "category": {
+          "id": "",
+          "name": "",
+          "description": ""
+        },
+        "serviceTier": {
+          "id": "",
+          "name": "",
+          "description": "",
+          "type": ""
+        }
+      }
+    ]
+  },
 })
 
 export default stateStore
