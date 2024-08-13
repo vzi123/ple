@@ -212,10 +212,10 @@ const routes: Array<RouteRecordRaw> = [
     component: CustomerPurchaseListPage,
   },
   {
-      path: "/consignment-list",
-      name: "ConsignmentListPage",
-      component: ConsignmentListPage,
-    },
+    path: "/consignment-list",
+    name: "ConsignmentListPage",
+    component: ConsignmentListPage,
+  },
   {
     path: "/supplier-purchase-list",
     name: "SupplierPurchaseListPage",

@@ -98,30 +98,30 @@ export default {
             { name: "Product Details", icon: "item-list.svg", link: "/stock-list" },
           ]
         },
-        {
-          name: "Customers",
-          icon: "people.svg",
-          subMenu: [
-            { name: "Purchase Orders", icon: "item-list.svg", link: "/customer-purchase-list" },
-            { name: "Create Purchases", icon: "create-item.svg", link: "/customer-create-purchase" }
-          ]
-        },
-        {
-          name: "Suppliers",
-          icon: "people.svg",
-          subMenu: [
-            { name: "Purchase Orders", icon: "item-list.svg", link: "/supplier-purchase-list" },
-            { name: "Create Purchases", icon: "create-item.svg", link: "/create-purchase" }
-          ]
-        },
-        {
-          name: "Quotations",
-          icon: "quotation.svg",
-          subMenu: [
-            { name: "Create Quotation", icon: "create-item.svg", link: "/create-quotation" },
-            { name: "Quotation List", icon: "item-list.svg", link: "/quotation-list" }
-          ]
-        },
+        // {
+        //   name: "Customers",
+        //   icon: "people.svg",
+        //   subMenu: [
+        //     { name: "Purchase Orders", icon: "item-list.svg", link: "/customer-purchase-list" },
+        //     { name: "Create Purchases", icon: "create-item.svg", link: "/customer-create-purchase" }
+        //   ]
+        // },
+        // {
+        //   name: "Suppliers",
+        //   icon: "people.svg",
+        //   subMenu: [
+        //     { name: "Purchase Orders", icon: "item-list.svg", link: "/supplier-purchase-list" },
+        //     { name: "Create Purchases", icon: "create-item.svg", link: "/create-purchase" }
+        //   ]
+        // },
+        // {
+        //   name: "Quotations",
+        //   icon: "quotation.svg",
+        //   subMenu: [
+        //     { name: "Create Quotation", icon: "create-item.svg", link: "/create-quotation" },
+        //     { name: "Quotation List", icon: "item-list.svg", link: "/quotation-list" }
+        //   ]
+        // },
         {
           name: "People",
           icon: "adjustments.svg",
@@ -131,44 +131,44 @@ export default {
             // { name: "Contractor List", icon: "profile-circle.svg", link: "/user-list" }
           ]
         },
-        {
-          name: "Settings",
-          icon: "setting-2.svg",
-          subMenu: [
-            { name: "Branch", icon: "warehouse.svg", link: "/warehouse-list" },
-            { name: "Category", icon: "category.svg", link: "/category-list" },
-            { name: "Unit", icon: "unit.svg", link: "/unit-list" },
+        // {
+        //   name: "Settings",
+        //   icon: "setting-2.svg",
+        //   subMenu: [
+        //     { name: "Branch", icon: "warehouse.svg", link: "/warehouse-list" },
+        //     { name: "Category", icon: "category.svg", link: "/category-list" },
+        //     { name: "Unit", icon: "unit.svg", link: "/unit-list" },
 
             
-                                        // No need to show the products on settings 
-            // {
-            //   name: "Products", icon: "setting-3.svg", link: "/_", subMenu: [
-            //     { name: "Create Product", icon: "brand.svg", link: "/create-product" },
-            //     { name: "Product List", icon: "currency.svg", link: "/product-list" },
-            //   ]
-            // },
-          ]
-        },
-        {
-          name: "Reports",
-          icon: "reports.svg",
-          subMenu: [
-            { name: "Purchase Report", icon: "purchase-2.svg", link: "/purchase-report" },
-            { name: "Purchase Payment Report", icon: "purchase-payment.svg", link: "/purchase-payment-report" },
-            { name: "Purchase Return Report", icon: "purchase-return-2.svg", link: "/purchase-return-report" },
-            { name: "Sales Report", icon: "money-3.svg", link: "/sales-report" },
-            { name: "Sales Payment Report", icon: "money-3.svg", link: "/sales-payment-report" },
-            { name: "Sales Return Report", icon: "sales-return-2.svg", link: "/sales-return-report" },
-            { name: "Product Quantity Alert", icon: "quantity-alert.svg", link: "/product-quantity-alert" },
-            { name: "Profit & Loss", icon: "dollar-circle.svg", link: "/profit-loss" },
-            { name: "Product Report", icon: "create-item.svg", link: "/product-report" },
-            { name: "Stock Report", icon: "category.svg", link: "/stock-report" },
-            { name: "Warehouse Report", icon: "warehouse-report.svg", link: "/warehouse-report" },
-            { name: "Customer Report", icon: "customer-report.svg", link: "/customer-report" },
-            { name: "Supplier Report", icon: "supplier-report.svg", link: "/supplier-report" },
-            { name: "User Report", icon: "user-square.svg", link: "/user-report" }
-          ]
-        }
+        //                                 // No need to show the products on settings 
+        //     // {
+        //     //   name: "Products", icon: "setting-3.svg", link: "/_", subMenu: [
+        //     //     { name: "Create Product", icon: "brand.svg", link: "/create-product" },
+        //     //     { name: "Product List", icon: "currency.svg", link: "/product-list" },
+        //     //   ]
+        //     // },
+        //   ]
+        // },
+        // {
+        //   name: "Reports",
+        //   icon: "reports.svg",
+        //   subMenu: [
+        //     { name: "Purchase Report", icon: "purchase-2.svg", link: "/purchase-report" },
+        //     { name: "Purchase Payment Report", icon: "purchase-payment.svg", link: "/purchase-payment-report" },
+        //     { name: "Purchase Return Report", icon: "purchase-return-2.svg", link: "/purchase-return-report" },
+        //     { name: "Sales Report", icon: "money-3.svg", link: "/sales-report" },
+        //     { name: "Sales Payment Report", icon: "money-3.svg", link: "/sales-payment-report" },
+        //     { name: "Sales Return Report", icon: "sales-return-2.svg", link: "/sales-return-report" },
+        //     { name: "Product Quantity Alert", icon: "quantity-alert.svg", link: "/product-quantity-alert" },
+        //     { name: "Profit & Loss", icon: "dollar-circle.svg", link: "/profit-loss" },
+        //     { name: "Product Report", icon: "create-item.svg", link: "/product-report" },
+        //     { name: "Stock Report", icon: "category.svg", link: "/stock-report" },
+        //     { name: "Warehouse Report", icon: "warehouse-report.svg", link: "/warehouse-report" },
+        //     { name: "Customer Report", icon: "customer-report.svg", link: "/customer-report" },
+        //     { name: "Supplier Report", icon: "supplier-report.svg", link: "/supplier-report" },
+        //     { name: "User Report", icon: "user-square.svg", link: "/user-report" }
+        //   ]
+        // }
       ]
     };
   },

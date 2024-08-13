@@ -4,7 +4,7 @@
   <div
     class="main-content bg_gray d-flex flex-column transition overflow-hidden"
   >
-    <BreadcrumbMenu pageTitle="Purchase Orders" />
+    <BreadcrumbMenu pageTitle="Consignments" />
     <FilterContent btnText="Purchase" btnLink="/create-purchase" />
     <ConsignmentList />
 

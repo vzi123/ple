@@ -33,7 +33,7 @@
               :class="{ show: currentTab === 'Product', active: currentTab === 'Product' }" id="Product" role="tabpanel"
               aria-labelledby="Product-tab" v-show="currentTab === 'Product'">
               <!-- Product Details Content Here -->
-              <div class="row">
+              <div class="row ps-2">
                 <div class="row mb-20"></div>
                 <div class="col-lg-6">
                   <ul class="details-title list-style mb-40">
@@ -63,8 +63,8 @@
                   </ul>
                 </div>
               </div>
-              <div class="">
-                <table class="table text-nowrap align-middle mb-0 border-0">
+              <div class="table-responsive pb-75">
+                <table class="table table-bordered table-hover text-nowrap align-middle mb-0">
                   <thead>
                     <tr class="bg_mild">
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
@@ -80,10 +80,10 @@
                         HSN No.
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                        Catrgory
+                        Category
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                        Brand
+                        Type
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
                         Description
@@ -110,9 +110,9 @@
                           {{ prod?.category?.name }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.category?.id }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.category?.name }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.category?.description }}</li>
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.category?.id }}</label >
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.category?.name }}</label >
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.category?.description }}</label >
                         </ul>
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
@@ -120,9 +120,9 @@
                           {{ prod?.brand?.name }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.brand?.id }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.brand?.name }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.brand?.description }}</li>
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.brand?.id }}</label >
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.brand?.name }}</label >
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.brand?.description }}</label >
                         </ul>
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
@@ -140,7 +140,7 @@
               :class="{ show: currentTab === 'accessories', active: currentTab === 'accessories' }" id="accessories"
               role="tabpanel" aria-labelledby="accessories-tab" v-show="currentTab === 'accessories'">
               <!-- accessories Details Content Here -->
-              <div class="row">
+              <div class="row ps-2">
                 <div class="row mb-20"></div>
                 <div class="col-lg-6">
                   <ul class="details-title list-style mb-40">
@@ -170,8 +170,8 @@
                   </ul>
                 </div>
             
-                <div class="">
-                  <table class="table text-nowrap align-middle mb-0 border-0">
+                <div class="table-responsive pb-75">
+                  <table class="table text-nowrap table-bordered table-hover align-middle mb-0">
                     <thead>
                       <tr class="bg_mild">
                         <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
@@ -181,16 +181,16 @@
                           Accessory Name
                         </th>
                         <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
+                          Description
+                        </th>
+                        <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
                           Unit Price
                         </th>
                         <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                          Catrgory
+                          Category
                         </th>
                         <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                          Brand
-                        </th>
-                        <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                          Description
+                          Type
                         </th>
                       </tr>
                     </thead>
@@ -202,6 +202,9 @@
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                           {{ prod?.name }}
+                        </td>
+                        <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                          {{ prod?.description }}
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                           {{ prod?.cost }}
@@ -226,9 +229,6 @@
                             <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.brand?.description }}</li>
                           </ul>
                         </td>
-                        <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                          {{ prod?.description }}
-                        </td>
                       </tr>
   
   
@@ -243,7 +243,7 @@
               aria-labelledby="Service-tab" v-show="currentTab === 'Service'">
               <!-- Service Details Content Here -->
 
-              <div class="row">
+              <div class="row ps-2">
                 <div class="row mb-20"></div>
                 <div class="col-lg-6">
                   <ul class="details-title list-style mb-40">
@@ -274,8 +274,8 @@
                 </div>
                
               </div>
-              <div class="">
-                <table class="table text-nowrap align-middle mb-0 border-0">
+              <div class="table-responsive pb-75">
+                <table class="table text-nowrap table-bordered table-hover align-middle mb-0">
                   <thead>
                     <tr class="bg_mild">
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
@@ -285,16 +285,16 @@
                         Service Name
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
+                        Description
+                      </th>
+                      <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
                         Unit Price
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                        Catrgory
+                        Category
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                        Brand
-                      </th>
-                      <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                        Description
+                        Type
                       </th>
                     </tr>
                   </thead>
@@ -306,6 +306,9 @@
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                         {{ prod?.name }}
+                      </td>
+                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                        {{ prod?.description }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                         {{ prod?.cost }}
@@ -331,9 +334,6 @@
                           <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Type: {{ prod?.serviceTier?.type }}</li>
                         </ul>
                       </td>
-                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.description }}
-                      </td>
                     </tr>
 
 
@@ -354,7 +354,7 @@
 import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
 export default {
-  name: "productListDetails",
+  name: "consignmentListDetails",
   data() {
     return {
       currncySymbol: "₹",
