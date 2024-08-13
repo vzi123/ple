@@ -2,9 +2,7 @@
   <FilterContent @update:searchTerm="updateSearchTerm" />
   <div class="card border-0 shadow-none rounded-1 mb-25">
     <div class="card-body p-xl-40">
-      <div v-if="warningMessage" class="alert alert-warning">
-        {{ warningMessage }}
-      </div>
+   
       <div class="table-responsive style-three">
         <table class="table text-nowrap align-middle mb-0">
           <thead>
@@ -102,7 +100,6 @@ export default defineComponent({
     const loading = ref(false);
     const searchTerm = ref('');
     const purchaseListData = ref([]);
-    const warningMessage = ref('');
 
     const updateSearchTerm = (term: string) => {
       searchTerm.value = term;
@@ -120,23 +117,26 @@ export default defineComponent({
       }
     };
 
-    const filteredList = computed(() => {
-      const results = purchaseListData.value.filter((purchaseItem: any) => {
-        const userName = `${purchaseItem?.first_name || ''} ${purchaseItem?.last_name || ''}`;
-        const userPincode = `${purchaseItem?.pincode || ''}`;
+    const filteredList = computed({
+      // getter
+      get() {
+        return purchaseListData.value.filter((purchaseItem: any) => {
+          const userName = `${purchaseItem?.first_name || ''} ${purchaseItem?.last_name || ''}`;
+          const userPincode = `${purchaseItem?.pincode || ''}`;
 
-        const searchLower = searchTerm.value.toLowerCase();
-        return (
-          userName.toLowerCase().includes(searchLower) ||
-          userPincode.includes(searchLower)
-        );
-      });
-
-      // Set the warning message if no results are found
-      warningMessage.value = results.length === 0 ? 'No results found. Please search using a name or pin code only.' : '';
-
-      return results;
-    });
+          const searchLower = searchTerm.value.toLowerCase();
+          return (
+            userName.toLowerCase().includes(searchLower) ||
+            userPincode.includes(searchLower)
+          );
+        });
+      },
+      // setter
+      set(newValue: any) {
+        // Note: we are using destructuring assignment syntax here.
+        purchaseListData.value = newValue;
+      }
+    })
 
     onMounted(() => {
       fetchPurchageOrders();
@@ -150,7 +150,6 @@ export default defineComponent({
       purchaseListData,
       filteredList,
       updateSearchTerm,
-      warningMessage,
     };
   },
   methods: {

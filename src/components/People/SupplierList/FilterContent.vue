@@ -5,13 +5,13 @@
         <button type="button" class="btn style-two" data-bs-toggle="modal" data-bs-target="#filterModal">
           Filter <img src="../../../assets/img/icons/filter.svg" alt="Image" />
         </button>
-        <form action="#" class="search-area position-relative w-sm-100">
-          <input type="text" placeholder="Search On This Table"
-            class="w-100 h-55 bg_ash border-0 rounded-1 fs-14 text-black bg-white" />
+        <div class="search-area position-relative w-sm-100">
+          <input v-model="searchInput" type="text" placeholder="Search On This Table"
+            class="w-100 h-55 bg_ash border-0 rounded-1 fs-14 text-black bg-white" @input="handleSearch" />
           <button type="submit" class="bg-transparent border-0 position-absolute top-0 end-0 h-100 pt-0 py-0 px-2">
             <img src="../../../assets/img/icons/search.svg" alt="Image" />
           </button>
-        </form>
+        </div>
       </div>
     </div>
     <div class="col-md-6">
@@ -34,6 +34,17 @@
 <script>
 export default {
   name: "FilterContent",
+  data() {
+    return {
+      searchInput: '' // Store the input value here
+    };
+  },
+  methods: {
+    handleSearch() {
+      // Emit the search input value when the search button is clicked
+      this.$emit('update:searchTerm', this.searchInput);
+    }
+  }
 };
 </script>
 

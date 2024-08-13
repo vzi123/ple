@@ -8,6 +8,7 @@
               <th scope="col" class="text-title fw-normal fs-14 pt-0">Date</th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">ID</th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">Name</th>
+              <th scope="col" class="text-title fw-normal fs-14 pt-0">Customer</th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">Category</th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">IN/OUT</th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">Quantity</th>
@@ -17,17 +18,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="log in allLogs" :key="log.id">
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ formatDate(log?.createdAt) }}</td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.item?.id }}</td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.item?.name }}</td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.category }}</td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.inOut }}</td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.quantity }}</td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.updatedStock }}</td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.amount }}</td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.comments }}</td>
-                        </tr>
+            <tr v-for="log in filteredList" :key="log.id">
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ formatDate(log?.createdAt) }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.id }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.name }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.customer }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.category }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.inOut }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.quantity }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.updatedStock }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.amount }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.comments }}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -45,7 +47,7 @@
 
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { formatDate, BASE_URL } from "@/utils/utils";
 import EventBus from '../../../events/event-bus';
@@ -72,9 +74,25 @@ export default defineComponent({
       }
     };
 
+    const filteredList = computed({
+      get() {
+        return allLogs.value.filter((logItem) => {
+          const logName = logItem?.id; // Safely accessing log and name
+          return logName
+            ? logName.toLowerCase().includes(searchTerm.value.toLowerCase())
+            : false;
+        });
+      },
+      set(newValue) {
+        allLogs.value = newValue;
+      }
+    });
+
     // Call fetchItems when the component is mounted
     onMounted(() => {
       fetchItems();
+      console.log(filteredList);
+
       EventBus.on('searchTermUpdated', (updatedSearchTerm: any) => {
         searchTerm.value = updatedSearchTerm.trim();
       });
@@ -83,7 +101,8 @@ export default defineComponent({
     // Return reactive variables and function
     return {
       allLogs,
-      loading
+      loading,
+      filteredList
     };
   },
   methods: {

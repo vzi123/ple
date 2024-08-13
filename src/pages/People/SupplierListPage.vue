@@ -5,7 +5,7 @@
     class="main-content bg_gray d-flex flex-column transition overflow-hidden"
   >
     <BreadcrumbMenu pageTitle="Supplier List" />
-    <FilterContent />
+    <!-- <FilterContent /> -->
     <FilterModal />
     <SupplierList />
 

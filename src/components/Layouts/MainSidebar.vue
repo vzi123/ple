@@ -87,6 +87,7 @@ export default {
             { name: "Inward Entry", icon: "item-list.svg", link: "/in" },
             { name: "Outward Entry", icon: "item-list.svg", link: "/out" },
             { name: "Inventory Log", icon: "quantity-alert.svg", link: "/inventory-log" },
+            { name: "Consignment List", icon: "item-list.svg", link: "/consignment-list" },
           ]
         },
         {

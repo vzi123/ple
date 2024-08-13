@@ -10,45 +10,25 @@
                   <input class="form-check-input" type="checkbox" id="test_1" />
                   <label class="form-check-label" for="test_1">
                     NAME
-                    <img
-                      class="ms-2"
-                      src="../../../assets/img/icons/up-down-aroow.svg"
-                      alt="Image"
-                    />
+                    <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
                   </label>
                 </div>
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 PHONE
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 EMAIL
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 COUNTRY
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 CITY
-                <img
-                  class="ms-2"
-                  src="../../../assets/img/icons/up-down-aroow.svg"
-                  alt="Image"
-                />
+                <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0 pe-0">
                 ACTION
@@ -74,26 +54,13 @@
               </td>
               <td class="shadow-none lh-1 text-end pe-0">
                 <div class="button-group d-flex flex-wrap align-items-center">
-                  <a
-                    href="javascript:void(0)"
-                    class=""
-                    title="Edit"
-                    data-bs-toggle="modal"
-                    data-bs-target="#createModal"
-                  >
+                  <a href="javascript:void(0)" class="" title="Edit" data-bs-toggle="modal"
+                    data-bs-target="#createModal">
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
                   </a>
-                  <a
-                    class="delete-btn"
-                    data-bs-toggle="offcanvas"
-                    href="#deletePopup"
-                    role="button"
-                    aria-controls="deletePopup"
-                  >
-                    <img
-                      src="../../../assets/img/icons/close.svg"
-                      alt="Image"
-                    />
+                  <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
+                    aria-controls="deletePopup">
+                    <img src="../../../assets/img/icons/close.svg" alt="Image" />
                   </a>
                 </div>
               </td>
@@ -116,26 +83,13 @@
               </td>
               <td class="shadow-none lh-1 text-end pe-0">
                 <div class="button-group d-flex flex-wrap align-items-center">
-                  <a
-                    href="javascript:void(0)"
-                    class=""
-                    title="Edit"
-                    data-bs-toggle="modal"
-                    data-bs-target="#createModal"
-                  >
+                  <a href="javascript:void(0)" class="" title="Edit" data-bs-toggle="modal"
+                    data-bs-target="#createModal">
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
                   </a>
-                  <a
-                    class="delete-btn"
-                    data-bs-toggle="offcanvas"
-                    href="#deletePopup"
-                    role="button"
-                    aria-controls="deletePopup"
-                  >
-                    <img
-                      src="../../../assets/img/icons/close.svg"
-                      alt="Image"
-                    />
+                  <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
+                    aria-controls="deletePopup">
+                    <img src="../../../assets/img/icons/close.svg" alt="Image" />
                   </a>
                 </div>
               </td>
@@ -158,26 +112,13 @@
               </td>
               <td class="shadow-none lh-1 text-end pe-0">
                 <div class="button-group d-flex flex-wrap align-items-center">
-                  <a
-                    href="javascript:void(0)"
-                    class=""
-                    title="Edit"
-                    data-bs-toggle="modal"
-                    data-bs-target="#createModal"
-                  >
+                  <a href="javascript:void(0)" class="" title="Edit" data-bs-toggle="modal"
+                    data-bs-target="#createModal">
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
                   </a>
-                  <a
-                    class="delete-btn"
-                    data-bs-toggle="offcanvas"
-                    href="#deletePopup"
-                    role="button"
-                    aria-controls="deletePopup"
-                  >
-                    <img
-                      src="../../../assets/img/icons/close.svg"
-                      alt="Image"
-                    />
+                  <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
+                    aria-controls="deletePopup">
+                    <img src="../../../assets/img/icons/close.svg" alt="Image" />
                   </a>
                 </div>
               </td>
@@ -190,9 +131,7 @@
 
   <div class="row pb-45 align-items-center">
     <div class="col-sm-6">
-      <div
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-start page-unit"
-      >
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-start page-unit">
         <span class="fs-13">Showing product per page</span>
         <select class="text-title border-0 fs-14 bg-transparent">
           <option value="0">10</option>
@@ -205,10 +144,7 @@
       <ul class="page-nav list-style">
         <li>
           <a href="#">
-            <img
-              src="../../../assets/img/icons/left-arrow-purple.svg"
-              alt="Image"
-            />
+            <img src="../../../assets/img/icons/left-arrow-purple.svg" alt="Image" />
           </a>
         </li>
         <li><a href="#" class="active">1</a></li>
@@ -216,10 +152,7 @@
         <li><a href="#">3</a></li>
         <li>
           <a href="#">
-            <img
-              src="../../../assets/img/icons/right-arrow-purple.svg"
-              alt="Image"
-            />
+            <img src="../../../assets/img/icons/right-arrow-purple.svg" alt="Image" />
           </a>
         </li>
       </ul>

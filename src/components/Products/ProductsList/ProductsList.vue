@@ -22,30 +22,26 @@
             </tr>
           </thead>
           <tbody>
-             <tr v-for="item in allProducts" :key="item.id">
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                            {{ item.product?.id || item.accessory?.id || 'NA' }}
-                          </td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                            {{ item.product?.name || item.accessory?.name || 'NA' }}
-                          </td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                            {{ item.product?.category?.name || item.accessory?.category?.name || 'NA' }}
-                          </td>
-                          <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                            {{ item.inventory || 0 }} ({{ item.uom }})
-                          </td>
-                        </tr>
+            <tr v-for="item in filteredList" :key="item.id">
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ item.product?.id || item.accessory?.id || 'NA' }}
+              </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ item.product?.name || item.accessory?.name || 'NA' }}
+              </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ item.product?.category?.name || item.accessory?.category?.name || 'NA' }}
+              </td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                {{ item.inventory || 0 }} ({{ item.uom }})
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-  <div
-    class="delete-popup offcanvas offcanvas-end border-0"
-    tabindex="-1"
-    id="deletePopup"
-  >
+  <div class="delete-popup offcanvas offcanvas-end border-0" tabindex="-1" id="deletePopup">
     <div class="offcanvas-body p-0">
       <div class="delete-success">
         <img src="../../../assets/img/icons/tick-circle.svg" alt="Image" />
@@ -60,7 +56,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, computed } from "vue";
 import axios from "axios";
-import { formatDate, BASE_URL } from "@/utils/utils"; 
+import { formatDate, BASE_URL } from "@/utils/utils";
 import EventBus from '../../../events/event-bus';
 import stateStore from "../../../utils/store";
 
@@ -68,7 +64,7 @@ export default defineComponent({
   name: "ProductsList",
   data() {
     return {
-      currncySymbol:"₹"
+      currncySymbol: "₹"
     };
   },
   setup() {
@@ -82,7 +78,7 @@ export default defineComponent({
         loading.value = true; // Set loading to true before request
         const response = await axios.get(`${BASE_URL}/freezy/v1/inventory/all`);
         allProducts.value = response.data; // Assuming your API returns an array of products
-        
+
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -90,6 +86,20 @@ export default defineComponent({
       }
     };
 
+
+    const filteredList = computed({
+      get() {
+        return allProducts.value.filter((productItem) => {
+          const productName = productItem?.product?.name; // Safely accessing product and name
+          return productName
+            ? productName.toLowerCase().includes(searchTerm.value.toLowerCase())
+            : false;
+        });
+      },
+      set(newValue) {
+        allProducts.value = newValue;
+      }
+    });
 
     // Call fetchProducts when the component is mounted
     onMounted(() => {
@@ -102,8 +112,9 @@ export default defineComponent({
     // Return reactive variables and function
     return {
       allProducts,
-      loading
-      // filteredList
+      loading,
+      searchTerm,
+      filteredList
     };
   },
   methods: {

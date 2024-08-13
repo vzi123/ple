@@ -8,13 +8,18 @@
               <img class="logo-light" src="../../assets/img/logo.webp" alt="Image" />
               <img class="logo-dark" src="../../assets/img/logo-white.webp" alt="Image" />
             </router-link>
-            <button class="header-burger-menu transition position-relative lh-1 bg-transparent p-0 border-0"
+            <button v-if="isWideScreen"
+              class="header-burger-menu transition position-relative lh-1 bg-transparent p-0 border-0"
               id="header-burger-menu" title="Hide/Show" @click="toggleBurgerMenu">
-
-
-              <i class="menu ri-menu-line" @click="toggleButtonVisibility('openBtn')" v-show="showOpenBtn"></i>
-              <i class="close ri-close-line" @click="toggleButtonVisibility('closeBtn')" v-show="showCloseBtn"></i>
-              <!-- <img src="../../assets/img/icons/sidebar-menu.svg" alt="Image" /> -->
+              <!-- The icon changes based on the isBurgerMenu state -->
+              <i class="menu ri-menu-line" v-if="!isBurgerMenu"></i>
+              <i class="close ri-close-line" v-if="isBurgerMenu"></i>
+            </button>
+            <button v-else class="header-burger-menu transition position-relative lh-1 bg-transparent p-0 border-0"
+              id="header-burger-menu" title="Hide/Show" @click="toggleBurgerMenu">
+              <!-- The icon changes based on the isBurgerMenu state -->
+              <i class="menu ri-menu-line" v-if="isBurgerMenu"></i>
+              <i class="close ri-close-line" v-if="!isBurgerMenu"></i>
             </button>
           </div>
         </div>
@@ -65,9 +70,8 @@ export default defineComponent({
 
   data() {
     return {
-      isBurgerMenu: false,
-      showOpenBtn: true,
-      showCloseBtn: false,
+      isBurgerMenu: true,
+      width: window.innerWidth, // Store the current window width
       user: {
         displayName: "Vijay Y" // Dynamic display name
       }
@@ -75,26 +79,45 @@ export default defineComponent({
   },
   methods: {
     toggleBurgerMenu() {
-      this.isBurgerMenu = !this.isBurgerMenu;
-      document.body.classList.toggle("minimized", this.isBurgerMenu);
+      this.isBurgerMenu = !this.isBurgerMenu; // Toggle the menu state
+
+      // Add or remove the minimized class based on isBurgerMenu
+      if (this.isBurgerMenu) {
+        document.body.classList.remove("minimized");
+      } else {
+        document.body.classList.add("minimized");
+      }
+
+      // Store the state in local storage
       localStorage.setItem("minimized", this.isBurgerMenu.toString());
     },
-    toggleButtonVisibility(buttonId: string) {
-      if (buttonId === "openBtn") {
-        this.showOpenBtn = false;
-        this.showCloseBtn = true;
-        // Perform any other actions you want after clicking "open"
-      } else if (buttonId === "closeBtn") {
-        this.showOpenBtn = true;
-        this.showCloseBtn = false;
-        // Perform any other actions you want after clicking "close"
-      }
-    },
+    handleResize() {
+      this.width = window.innerWidth;
+    }
   },
+  computed: {
+    isWideScreen() {
+      return this.width > 1024; // Example condition for wide screen
+    }
+  },
+  mounted() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize(); // Set initial width
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
 });
 </script>
 
 <style lang="scss">
+.menu,
+.close {
+  cursor: pointer;
+  font-size: 24px;
+}
+
 .header-area {
   box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.03);
 

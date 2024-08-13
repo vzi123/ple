@@ -72,7 +72,7 @@
       </div>
     </div>
     <SelectedAccessories @remove-accessory="removeAccessory" :accessories="accessories" :showDiscounts="false" />
-    <div class="row mb-20">
+    <!-- <div class="row mb-20">
       <div class="col-12">
         <div class="form-group">
           <label class="d-block fs-14 text-black mb-2">Choose Services</label>
@@ -88,18 +88,18 @@
               }" style="font-size:inherit" v-for="(service, index) in services" :key="index">
                 {{ service.service }}
               </span>
-            </div>
+            </div> -->
 
             <!-- <input
                           type="text"
                           placeholder="Scan / Search Service by code"
                           class="w-100 h-55 bg_ash border-0 rounded-1 fs-14 text-black bg-white"
                         /> -->
-          </div>
+          <!-- </div>
         </div>
       </div>
-    </div>
-    <SelectedServices @remove-service="removeService" :services="services" :showDiscounts="false" />
+    </div> -->
+    <!-- <SelectedServices @remove-service="removeService" :services="services" :showDiscounts="false" /> -->
 
     <SubmitPurchase :filteredList="filteredList" :filteredAccessoriesList="filteredAccessoriesList"
       :filteredServicesList="filteredServicesList" @submit="submitFilteredList" />
