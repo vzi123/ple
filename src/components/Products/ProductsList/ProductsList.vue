@@ -24,13 +24,13 @@
           <tbody>
             <tr v-for="item in filteredList" :key="item.id">
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ item.product?.id || item.accessory?.id || 'NA' }}
+                {{ item.product?.id || item.accessory?.id }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ item.product?.name || item.accessory?.name || 'NA' }}
+                {{ item.product?.name || item.accessory?.name }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ item.product?.category?.name || item.accessory?.category?.name || 'NA' }}
+                {{ item.product?.category?.name || item.accessory?.category?.name }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ item.inventory || 0 }} ({{ item.uom }})
@@ -90,7 +90,7 @@ export default defineComponent({
     const filteredList = computed({
       get() {
         return allProducts.value.filter((productItem) => {
-          const productName = productItem?.product?.name; // Safely accessing product and name
+          const productName = productItem?.product?.name || productItem?.accessory?.name; // Safely accessing product and name
           return productName
             ? productName.toLowerCase().includes(searchTerm.value.toLowerCase())
             : false;
@@ -100,6 +100,8 @@ export default defineComponent({
         allProducts.value = newValue;
       }
     });
+
+    
 
     // Call fetchProducts when the component is mounted
     onMounted(() => {

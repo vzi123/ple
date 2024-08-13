@@ -83,7 +83,7 @@ export default defineComponent({
       currncySymbol: "₹",
     };
   },
-  setup() {
+  setup(props, { emit }) {
     const allProducts = ref([]); // Use ref to make it reactive
     const loading = ref(false);
     const currentPage = ref(1);
@@ -92,7 +92,6 @@ export default defineComponent({
     // Function to fetch products using Axios
     const fetchProducts = async () => {
       try {
-        loading.value = true; // Set loading to true before request
         const response = await axios.get(
           `${BASE_URL}/freezy/dashboard/receivables`
         );
@@ -101,13 +100,13 @@ export default defineComponent({
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        loading.value = false; // Set loading to false after request
+        emit('loading-complete'); // Emit event when loading is complete
       }
     };
 
     // Call fetchProducts when the component is mounted
-    onMounted(() => {
-      fetchProducts();
+    onMounted(async() => {
+      await fetchProducts();
     });
 
     // Computed properties for pagination

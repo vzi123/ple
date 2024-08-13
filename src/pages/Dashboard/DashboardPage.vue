@@ -43,19 +43,19 @@
 <!--      </div>-->
 
       <div class="card border-0 rounded-1 mb-40">
-        <InventoryLog />
+        <InventoryLog @loading-complete="onComponentLoaded" />
       </div>
 
 
 
 
       <div class="card border-0 rounded-1 mb-40">
-        <payables />
+        <payables @loading-complete="onComponentLoaded" />
       </div>
 
 
       <div class="card border-0 rounded-1 mb-40">
-        <receivables />
+        <receivables @loading-complete="onComponentLoaded" />
       </div>
 
       <!--
@@ -67,14 +67,14 @@
 
 
     <div class="card border-0 shadow-none rounded-1 mb-40">
-      <openQuotations />
+      <openQuotations @loading-complete="onComponentLoaded" />
     </div>
     <div class="card border-0 shadow-none rounded-1 mb-40">
-          <stock />
+          <stock @loading-complete="onComponentLoaded" />
         </div>
 
     <div class="card border-0 shadow-none rounded-1 mb-40">
-              <fulfillment />
+              <fulfillment @loading-complete="onComponentLoaded" />
          </div>
     <div class="flex-grow-1"></div>
     <MainFooter />
@@ -130,6 +130,21 @@ export default defineComponent({
     //RecentInvoices,
     //RecentSales,
     MainFooter,
+  },
+  data() {
+    return {
+      isLoading: true,
+      componentsLoaded: 0,
+      totalComponents: 7, // Total number of components making API calls
+    };
+  },
+  methods: {
+    onComponentLoaded() {
+      this.componentsLoaded += 1;
+      if (this.componentsLoaded === this.totalComponents) {
+        this.isLoading = false; // All components have loaded
+      }
+    },
   },
 });
 </script>
