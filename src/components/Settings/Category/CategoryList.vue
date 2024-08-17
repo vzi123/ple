@@ -93,9 +93,9 @@ export default defineComponent({
 
     onMounted(() => {
       fetchProducts();
-      eventBus.on('searchTermUpdated', (newSearchTerm: string) => {
+      eventBus.on('searchTermUpdated', (newSearchTerm: unknown) => {
         console.log('Received search term:', newSearchTerm); // Debug log
-        searchTerm.value = newSearchTerm;
+        searchTerm.value = (newSearchTerm as string).trim();;
       });
     });
 

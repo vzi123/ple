@@ -40,7 +40,7 @@
             </tr>
           </thead>
 
-          <tbody v-for="(userItem, index) in filteredList" :key="index">
+          <tbody v-if="!loading" v-for="(userItem, index) in filteredList" :key="index">
             <tr>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ userItem.id }}
@@ -82,6 +82,14 @@
                     <img src="../../../assets/img/icons/close.svg" alt="Image" />
                   </a>
                 </div>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td colspan="7" class="text-center py-5">
+                <div class="custom-spinner"></div>
+                <p>Loading Products and Stocks...</p>
               </td>
             </tr>
           </tbody>
@@ -129,6 +137,7 @@ import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
 import EventBus from '../../../events/event-bus';
 import FilterContent from './FilterContent.vue';
+import '@/assets/css/CustomSpinner.css'; 
 
 export default defineComponent({
   name: "SupplierList",
@@ -195,6 +204,7 @@ export default defineComponent({
     });
 
     return {
+      loading,
       purchaseListData,
       filteredList,
       updateSearchTerm

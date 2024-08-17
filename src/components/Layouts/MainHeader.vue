@@ -58,6 +58,15 @@ import NotificationDropdown from "./HeaderContent/NotificationDropdown.vue";
 import ProfileDropdown from "./HeaderContent/ProfileDropdown.vue";
 import SettingsBarBtn from "./HeaderContent/SettingsBarBtn.vue";
 
+// Define a type for the component's data properties
+interface MainHeaderData {
+  isBurgerMenu: boolean;
+  width: number;
+  user: {
+    displayName: string;
+  };
+}
+
 export default defineComponent({
   name: "MainHeader",
   components: {
@@ -68,7 +77,7 @@ export default defineComponent({
     SettingsBarBtn,
   },
 
-  data() {
+  data(): MainHeaderData {
     return {
       isBurgerMenu: true,
       width: window.innerWidth, // Store the current window width
@@ -77,6 +86,7 @@ export default defineComponent({
       }
     };
   },
+
   methods: {
     toggleBurgerMenu() {
       this.isBurgerMenu = !this.isBurgerMenu; // Toggle the menu state
@@ -91,25 +101,29 @@ export default defineComponent({
       // Store the state in local storage
       localStorage.setItem("minimized", this.isBurgerMenu.toString());
     },
+
     handleResize() {
       this.width = window.innerWidth;
     }
   },
+
   computed: {
-    isWideScreen() {
+    isWideScreen(): boolean {
       return this.width > 1024; // Example condition for wide screen
     }
   },
+
   mounted() {
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener("resize", this.handleResize);
     this.handleResize(); // Set initial width
   },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.handleResize);
-  }
 
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize);
+  }
 });
 </script>
+
 
 <style lang="scss">
 .menu,

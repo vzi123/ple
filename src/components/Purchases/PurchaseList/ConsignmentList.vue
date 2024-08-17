@@ -26,14 +26,14 @@
                 Customer Name
                 <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
               </th>
-              <!--              <th scope="col" class="text-title fw-normal fs-14 pt-0">-->
-              <!--                PERSONA-->
-              <!--                <img-->
-              <!--                  class="ms-2"-->
-              <!--                  src="../../../assets/img/icons/up-down-aroow.svg"-->
-              <!--                  alt="Image"-->
-              <!--                />-->
-              <!--              </th>-->
+              <!-- <th scope="col" class="text-title fw-normal fs-14 pt-0">
+                PERSONA
+                <img
+                  class="ms-2"
+                  src="../../../assets/img/icons/up-down-aroow.svg"
+                  alt="Image"
+                />
+              </th> -->
               <th scope="col" class="text-title fw-normal fs-14 pt-0">
                 In/Out
                 <img class="ms-2" src="../../../assets/img/icons/up-down-aroow.svg" alt="Image" />
@@ -57,11 +57,8 @@
             </tr>
           </thead>
 
-          <tbody v-for="(consignmentItem, index) in filteredList" :key="index">
-
-
-
-            <tr>
+          <tbody v-if="!loading">
+            <tr v-for="(consignmentItem, index) in filteredList" :key="index">
               <!-- <td class="shadow-none fw-normal text-black title ps-0">
                 <div class="d-flex align-items-center">
                   <div class="form-check checkbox style-three">
@@ -111,8 +108,14 @@
                 </div>
               </td>
             </tr>
-
-
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td colspan="7" class="text-center py-5">
+                <div class="custom-spinner"></div>
+                <p>Loading consignments...</p>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -151,18 +154,19 @@
 </template>
 
 <script lang="ts">
-
 import { ref, computed, onMounted, defineComponent } from 'vue';
 import axios from "axios";
 import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
 import EventBus from '../../../events/event-bus';
+import '@/assets/css/CustomSpinner.css'; 
 
 export default defineComponent({
   name: "ConsignmentList",
   data() {
     return {
       currncySymbol: "₹",
+      loading: true,
     };
   },
   setup() {
@@ -170,35 +174,28 @@ export default defineComponent({
     const searchTerm = ref('');
     const consignmentListData = ref([]);
 
-    // Function to fetch products using Axios
+    // Function to fetch consignment data using Axios
     const fetchConsignmentListData = async () => {
       try {
         loading.value = true; // Set loading to true before request
         const response = await axios.get(`${BASE_URL}/freezy/v1/inventoryLog/consignments`);
-        consignmentListData.value = response.data; // Assuming your API returns an array of products
+        consignmentListData.value = response.data;
 
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching consignments:", error);
       } finally {
         loading.value = false; // Set loading to false after request
       }
     };
 
-    const filteredList = computed({
-      // getter
-      get() {
-        return consignmentListData.value.filter((consignmentItem: any) => {
-          const userName = consignmentItem?.createdFor.first_name + " " + consignmentItem?.createdFor.last_name;
-          return userName.toLowerCase().includes(searchTerm.value.toLowerCase());
-        });
-      },
-      // setter
-      set(newValue: any) {
-        // Note: we are using destructuring assignment syntax here.
-        consignmentListData.value = newValue;
-      }
-    })
-    // Call fetchProducts when the component is mounted
+    const filteredList = computed(() => {
+      return consignmentListData.value.filter((consignmentItem: any) => {
+        const userName = consignmentItem?.createdFor.first_name + " " + consignmentItem?.createdFor.last_name;
+        return userName.toLowerCase().includes(searchTerm.value.toLowerCase());
+      });
+    });
+
+    // Call fetchConsignmentListData when the component is mounted
     onMounted(() => {
       fetchConsignmentListData();
       EventBus.on('searchTermUpdated', (updatedSearchTerm: any) => {
@@ -208,24 +205,22 @@ export default defineComponent({
 
     return {
       consignmentListData,
-      filteredList
+      filteredList,
+      loading,
     };
   },
   methods: {
     formatDate,
     getUserName(user: any) {
-      return user.first_name;
+      return user.first_name + " " + user.last_name;
     },
 
     onViewPurchase(consignmentItem: any) {
       stateStore.consignmentDetails = consignmentItem;
       console.log(stateStore.consignmentDetails);
-
-
+      // Emit an event with the consignment details
+      EventBus.emit('consignmentSelected', consignmentItem);
     },
   },
 });
-
-
-
 </script>

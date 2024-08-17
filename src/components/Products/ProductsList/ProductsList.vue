@@ -21,7 +21,7 @@
 
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="!loading">
             <tr v-for="item in filteredList" :key="item.id">
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ item.product?.id || item.accessory?.id }}
@@ -34,6 +34,14 @@
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ item.inventory || 0 }} ({{ item.uom }})
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td colspan="7" class="text-center py-5">
+                <div class="custom-spinner"></div>
+                <p>Loading Products and Stocks...</p>
               </td>
             </tr>
           </tbody>
@@ -59,26 +67,35 @@ import axios from "axios";
 import { formatDate, BASE_URL } from "@/utils/utils";
 import EventBus from '../../../events/event-bus';
 import stateStore from "../../../utils/store";
+import '@/assets/css/CustomSpinner.css';
+
+interface ProductItem {
+  product?: {
+    name: string;
+  };
+  accessory?: {
+    name: string;
+  };
+}
 
 export default defineComponent({
   name: "ProductsList",
   data() {
     return {
-      currncySymbol: "₹"
+      currncySymbol: "₹",
     };
   },
   setup() {
-    const allProducts = ref([]); // Use ref to make it reactive
-    const loading = ref(false);
-    const searchTerm = ref('');
+    const allProducts = ref<ProductItem[]>([]); // Use ref with type annotation
+    const loading = ref<boolean>(false);
+    const searchTerm = ref<string>('');
 
     // Function to fetch products using Axios
     const fetchProducts = async () => {
       try {
         loading.value = true; // Set loading to true before request
-        const response = await axios.get(`${BASE_URL}/freezy/v1/inventory/all`);
+        const response = await axios.get<ProductItem[]>(`${BASE_URL}/freezy/v1/inventory/all`);
         allProducts.value = response.data; // Assuming your API returns an array of products
-
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -86,28 +103,25 @@ export default defineComponent({
       }
     };
 
-
     const filteredList = computed({
       get() {
         return allProducts.value.filter((productItem) => {
-          const productName = productItem?.product?.name || productItem?.accessory?.name; // Safely accessing product and name
+          const productName = productItem.product?.name || productItem.accessory?.name; // Safely accessing product and name
           return productName
             ? productName.toLowerCase().includes(searchTerm.value.toLowerCase())
             : false;
         });
       },
-      set(newValue) {
+      set(newValue: ProductItem[]) {
         allProducts.value = newValue;
       }
     });
 
-    
-
     // Call fetchProducts when the component is mounted
     onMounted(() => {
       fetchProducts();
-      EventBus.on('searchTermUpdated', (updatedSearchTerm: any) => {
-        searchTerm.value = updatedSearchTerm.trim();
+      EventBus.on('searchTermUpdated', (updatedSearchTerm: unknown) => {
+        searchTerm.value = (updatedSearchTerm as string).trim();
       });
     });
 
@@ -121,10 +135,10 @@ export default defineComponent({
   },
   methods: {
     formatDate,
-    getUserName(user: any) {
-      return user.first_name + " " + user.last_name;
+    getUserName(user: { first_name: string; last_name: string }) {
+      return `${user.first_name} ${user.last_name}`;
     },
-    getProjectName(project: any) {
+    getProjectName(project: { name: string }) {
       return project.name;
     },
     onViewPurchase(stock: any) {

@@ -108,6 +108,7 @@ import openQuotations from "../../components/Dashboard/openQuotations.vue";
 //import RecentInvoices from "../../components/Dashboard/RecentInvoices.vue";
 import RecentSales from "../../components/Dashboard/RecentSales.vue";
 import MainFooter from "../../components/Layouts/MainFooter.vue";
+import PreLoader from "@/components/Layouts/PreLoader.vue";
 
 export default defineComponent({
   name: "DashboardPage",

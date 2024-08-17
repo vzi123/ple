@@ -16,7 +16,7 @@
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="!loading">
           <tr v-for="(purchaseItem, index) in paginatedProducts" :key="index">
             <td class="shadow-none fw-normal text-black title ps-0">
               <span class="text-optional fs-14">{{ purchaseItem.product.id }}</span>
@@ -26,6 +26,14 @@
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
               {{ purchaseItem.inventory }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td colspan="7" class="text-center py-5">
+              <div class="custom-spinner"></div>
+              <p>Loading...</p>
             </td>
           </tr>
         </tbody>
@@ -57,6 +65,7 @@
 import { defineComponent, ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { formatDate, BASE_URL } from "@/utils/utils";
+import '@/assets/css/CustomSpinner.css'; 
 
 export default defineComponent({
   name: "StockLog",

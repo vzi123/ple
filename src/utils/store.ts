@@ -4,12 +4,15 @@ interface StateStore {
   open: boolean;
   onChange: () => void;
   consignmentDetails: any;
-
+  quotationDetails: any;
+  purchaseDetails: any;
+  salesOrderDetails: any;
+  productDetails: any;
 }
 
 const stateStore: StateStore = reactive({
   open: false,
-  onChange ()  {
+  onChange() {
     stateStore.open = !stateStore.open
   },
   consignmentDetails: {
@@ -84,6 +87,10 @@ const stateStore: StateStore = reactive({
       }
     ]
   },
+  quotationDetails: {},
+  salesOrderDetails: {},
+  purchaseDetails:{},
+  productDetails:{},
 })
 
 export default stateStore

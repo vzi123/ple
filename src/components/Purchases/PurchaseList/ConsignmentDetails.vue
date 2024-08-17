@@ -12,18 +12,18 @@
         </div>
         <div class="modal-body pb-40">
           <ul class="nav nav-tabs" id="detailsTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="Product-tab" data-bs-toggle="tab" href="#Product" role="tab"
+            <li class="nav-item" role="presentation" v-if="showProductDetailsTab">
+              <a :class="{'nav-link': true, active: currentTab === 'Product'}" id="Product-tab" data-bs-toggle="tab" href="#Product" role="tab"
                 aria-controls="Product" aria-selected="false" @click="currentTab = 'Product'">Product
                 Details</a>
             </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="accessories-tab" data-bs-toggle="tab" href="#accessories" role="tab"
+            <li class="nav-item" role="presentation" v-if="showAccessoryDetailsTab">
+              <a :class="{'nav-link': true, active: currentTab === 'accessories'}" id="accessories-tab" data-bs-toggle="tab" href="#accessories" role="tab"
                 aria-controls="accessories" aria-selected="false" @click="currentTab = 'accessories'">Accessory
                 Details</a>
             </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="Service-tab" data-bs-toggle="tab" href="#Service" role="tab"
+            <li class="nav-item" role="presentation" v-if="showServiceDetailsTab">
+              <a :class="{'nav-link': true, active: currentTab === 'Service'}" id="Service-tab" data-bs-toggle="tab" href="#Service" role="tab"
                 aria-controls="Service" aria-selected="false" @click="currentTab = 'Service'">Service Details</a>
             </li>
           </ul>
@@ -47,7 +47,7 @@
                     <li class="fs-14 fw-semibold text-title lh-1">
                       ID :<span class="text-optional ms-1">{{ consignmentDetail?.products[0]?.id }}</span>
                     </li>
-                    
+
                   </ul>
                 </div>
                 <div class="col-lg-4 ps-xxl-6">
@@ -91,8 +91,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(prod, index) in consignmentDetail?.products" :key="index"
-                      class="br-s-1">
+                    <tr v-for="(prod, index) in consignmentDetail?.products" :key="index" class="br-s-1">
                       <td class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1">
                         {{ prod?.id }}
                       </td>
@@ -106,23 +105,31 @@
                         {{ prod?.hsnNo }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
+                          type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                           {{ prod?.category?.name }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.category?.id }}</label >
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.category?.name }}</label >
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.category?.description }}</label >
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
+                            prod?.category?.id }}</label>
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
+                            prod?.category?.name }}</label>
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
+                            prod?.category?.description }}</label>
                         </ul>
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
+                          type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                           {{ prod?.brand?.name }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.brand?.id }}</label >
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.brand?.name }}</label >
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.brand?.description }}</label >
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
+                            prod?.brand?.id }}</label>
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
+                            prod?.brand?.name }}</label>
+                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
+                            prod?.brand?.description }}</label>
                         </ul>
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
@@ -152,9 +159,10 @@
                         consignmentDetail?.accessories[0]?.name }}</span>
                     </li>
                     <li class="fs-14 fw-semibold text-title lh-1">
-                      Accessory Code :<span class="ms-1 text-optional">{{ consignmentDetail?.accessories[0]?.id }}</span>
+                      Accessory Code :<span class="ms-1 text-optional">{{ consignmentDetail?.accessories[0]?.id
+                        }}</span>
                     </li>
-                    
+
                   </ul>
                 </div>
                 <div class="col-lg-4 ps-xxl-6">
@@ -169,7 +177,7 @@
                     </li>
                   </ul>
                 </div>
-            
+
                 <div class="table-responsive pb-75">
                   <table class="table text-nowrap table-bordered table-hover align-middle mb-0">
                     <thead>
@@ -195,8 +203,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(prod, index) in consignmentDetail?.accessories" :key="index"
-                        class="br-s-1">
+                      <tr v-for="(prod, index) in consignmentDetail?.accessories" :key="index" class="br-s-1">
                         <td class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1">
                           {{ prod?.id }}
                         </td>
@@ -210,28 +217,25 @@
                           {{ prod?.cost }}
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                          <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
+                            type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ prod?.category?.name }}
                           </button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.category?.id }}</li>
-                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.category?.name }}</li>
-                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.category?.description }}</li>
+                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
+                              prod?.category?.id }}</li>
+                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
+                              prod?.category?.name }}</li>
+                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
+                              prod?.category?.description }}</li>
                           </ul>
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                          <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ prod?.brand?.name }}
-                          </button>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.brand?.id }}</li>
-                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.brand?.name }}</li>
-                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.brand?.description }}</li>
-                          </ul>
+                          <p>NA</p>
                         </td>
                       </tr>
-  
-  
+
+
                     </tbody>
                   </table>
                 </div>
@@ -257,7 +261,7 @@
                     <li class="fs-14 fw-semibold text-title lh-1">
                       Service Code :<span class="ms-1 text-optional">{{ consignmentDetail?.services[0]?.id }}</span>
                     </li>
-                   
+
                   </ul>
                 </div>
                 <div class="col-lg-4 ps-xxl-6">
@@ -272,7 +276,7 @@
                     </li>
                   </ul>
                 </div>
-               
+
               </div>
               <div class="table-responsive pb-75">
                 <table class="table text-nowrap table-bordered table-hover align-middle mb-0">
@@ -299,8 +303,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(prod, index) in consignmentDetail?.services" :key="index"
-                      class="br-s-1">
+                    <tr v-for="(prod, index) in consignmentDetail?.services" :key="index" class="br-s-1">
                       <td class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1">
                         {{ prod?.id }}
                       </td>
@@ -314,24 +317,33 @@
                         {{ prod?.cost }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
+                          type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                           {{ prod?.category?.name }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.category?.id }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.category?.name }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.category?.description }}</li>
+                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
+                            prod?.category?.id }}</li>
+                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
+                            prod?.category?.name }}</li>
+                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
+                            prod?.category?.description }}</li>
                         </ul>
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
+                          type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                           {{ prod?.serviceTier?.name }}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{ prod?.serviceTier?.id }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{ prod?.serviceTier?.name }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{ prod?.serviceTier?.description }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Type: {{ prod?.serviceTier?.type }}</li>
+                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
+                            prod?.serviceTier?.id }}</li>
+                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
+                            prod?.serviceTier?.name }}</li>
+                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
+                            prod?.serviceTier?.description }}</li>
+                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Type: {{
+                            prod?.serviceTier?.type }}</li>
                         </ul>
                       </td>
                     </tr>
@@ -351,16 +363,21 @@
 
 
 <script>
+import { ref, onMounted } from 'vue';
 import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
+import EventBus from '../../../events/event-bus'; // Make sure EventBus is properly set up
+
 export default {
-  name: "consignmentListDetails",
+  name: "ConsignmentListDetails",
   data() {
     return {
       currncySymbol: "₹",
-      stateStore,
-      loading: true, // Add this line
-      currentTab: 'Product'
+      loading: true,
+      currentTab: '',
+      showProductDetailsTab: false,
+      showAccessoryDetailsTab: false,
+      showServiceDetailsTab: false,
     };
   },
   computed: {
@@ -375,8 +392,41 @@ export default {
     },
   },
   methods: {
-    formatDate
-  }
+    formatDate,
+
+    updateTabVisibility(consignmentItem) {
+      // Ensure properties are arrays and check if they have items
+      this.showProductDetailsTab = Array.isArray(consignmentItem.products) && consignmentItem.products.length > 0;
+      this.showAccessoryDetailsTab = Array.isArray(consignmentItem.accessories) && consignmentItem.accessories.length > 0;
+      this.showServiceDetailsTab = Array.isArray(consignmentItem.services) && consignmentItem.services.length > 0;
+
+      if (this.showProductDetailsTab) {
+        this.currentTab = 'Product'
+      } else if (this.showAccessoryDetailsTab) {
+        this.currentTab = 'accessories'
+      } else {
+        this.currentTab = 'Service'
+      }
+
+    },
+
+  },
+  mounted() {
+    EventBus.on('consignmentSelected', (consignmentItem) => {
+      this.updateTabVisibility(consignmentItem);
+    });
+
+    // Optionally, if you want to handle cases where the consignmentDetails might change on the fly
+    this.$watch(
+      () => this.stateStore?.consignmentDetails,
+      (newDetails) => {
+        if (newDetails) {
+          this.updateTabVisibility(newDetails);
+        }
+      },
+      { immediate: true }
+    );
+  },
 };
 </script>
 <style>

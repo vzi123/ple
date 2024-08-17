@@ -18,7 +18,11 @@
             </th>
 
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-              Serial Number
+              IDU Serial Number
+            </th>
+
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              ODU Serial Number
             </th>
 
             <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
@@ -50,7 +54,10 @@
                 class="form-control" />
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              <input type="text" v-model.number="product.serialNo" class="form-control" />
+              <input type="text" v-model.number="product.iduSerialNo" class="form-control" />
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              <input type="text" v-model.number="product.oduSerialNo" class="form-control" />
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph" style="width: 18%;">
               <v-select v-model="product.gstValue" :options="gst" label="gstRate" v-on:change="calculateSubtotal(index)"
@@ -151,7 +158,8 @@ export default defineComponent({
           discountAmount: 0,
           subTotal: (product.cost - 0) * 1,
           effectivePrice: (product.cost - 0) * 1,
-          serialNo: "",
+          iduSerialNo: "",
+          oduSerialNo: "",
           gstValue: 0
         }));
         EventBus.emit('onAllProducts', allProducts.value);
