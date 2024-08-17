@@ -150,7 +150,7 @@ export default defineComponent({
     computed: {
         isCategoryAC(): boolean {
           const selectedCategory = this.categories.find(category => category.categoryId === this.form.categoryId);
-          return selectedCategory ? selectedCategory.name === "ACs" : false;
+          return selectedCategory ? (selectedCategory.name !== "Accessories" && selectedCategory.name !== "Services") : false;
         }
       },
     methods: {
