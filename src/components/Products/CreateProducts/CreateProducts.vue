@@ -156,7 +156,7 @@ export default defineComponent({
     methods: {
         async fetchCategories() {
               try {
-                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/categories/all");
+                const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/v1/categories/all");
 
                 this.categories = response.data.map((category: any) => ({
                                   categoryId: category.id,
@@ -171,7 +171,7 @@ export default defineComponent({
 
         async fetchBrands() {
                       try {
-                        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/brands/all");
+                        const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/v1/brands/all");
 
                         this.brands = response.data.map((brand: any) => ({
                                           brandId: brand.id,
@@ -199,7 +199,7 @@ export default defineComponent({
            description: this.form.name ,
           };
           try {
-            const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/products/save", requestData, {
+            const response = await axios.post("https://freezy-prod-dew-912.fly.dev/freezy/v1/products/save", requestData, {
               headers: {
                 "Content-Type": "application/json",
               },

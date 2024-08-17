@@ -252,7 +252,7 @@ export default defineComponent({
         },
     async fetchCustomers() {
           try {
-            const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/users/filter?type=customer");
+            const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/v1/users/filter?type=customer");
 
             this.customers = response.data.map((customer: any) => ({
                               code: customer.id,
@@ -266,7 +266,7 @@ export default defineComponent({
         },
     async fetchProjects() {
               try {
-                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/projects/all");
+                const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/projects/all");
 
                 this.projects = response.data.map((project: any) => ({
                                   code: project.id,
@@ -320,7 +320,7 @@ async printPdf(response : any) {
         total: submitData.total,
       };
       try {
-        const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/inventory/outward", requestData, {
+        const response = await axios.post("https://freezy-prod-dew-912.fly.dev/freezy/v1/inventory/outward", requestData, {
                 responseType: 'blob',
 
 

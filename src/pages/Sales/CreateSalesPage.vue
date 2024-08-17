@@ -271,7 +271,7 @@ export default defineComponent({
         },
     async fetchCustomers() {
           try {
-            const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/users/all");
+            const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/users/all");
 
             this.customers = response.data.map((customer: any) => ({
                               code: customer.id,
@@ -285,7 +285,7 @@ export default defineComponent({
         },
     async fetchProjects() {
               try {
-                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/projects/all");
+                const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/projects/all");
 
                 this.projects = response.data.map((project: any) => ({
                                   code: project.id,
@@ -314,7 +314,7 @@ export default defineComponent({
         total: submitData.total,
       };
       try {
-        const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/quotations/save", requestData, {
+        const response = await axios.post("https://freezy-prod-dew-912.fly.dev/freezy/quotations/save", requestData, {
           headers: {
             "Content-Type": "application/json",
           },

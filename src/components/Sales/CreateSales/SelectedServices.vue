@@ -168,7 +168,7 @@ export default defineComponent({
 
         const fetchServices = async () => {
               try {
-                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/services/all");
+                const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/v1/services/all");
                 // Transform the response data
                 allServices.value = response.data.map((service: any) => ({
                   serviceId: service.id,

@@ -139,7 +139,7 @@ export default defineComponent({
 
     const fetchAccessories = async () => {
       try {
-        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/accessories/all");
+        const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/v1/accessories/all");
         // Transform the response data
         allAccessories.value = response.data.map((accessory: any) => ({
           accessoryId: accessory.id,

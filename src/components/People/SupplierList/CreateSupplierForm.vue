@@ -175,7 +175,7 @@ export default defineComponent({
                                        pincode:this.form.pincode,
                   };
                   try {
-                    const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/users/supplier", requestData, {
+                    const response = await axios.post("https://freezy-prod-dew-912.fly.dev/freezy/v1/users/supplier", requestData, {
                       headers: {
                         "Content-Type": "application/json",
                       },

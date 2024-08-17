@@ -199,7 +199,7 @@ export default defineComponent({
 
     async printPdf() {
       try {
-        const response = await axios.get('https://freezy-small-dew-912.fly.dev/freezy/v1/consignments/dc/DC2405767746', {
+        const response = await axios.get('https://freezy-prod-dew-912.fly.dev/freezy/v1/consignments/dc/DC2405767746', {
           responseType: 'blob', // Important to get the response as a Blob
           headers: {
             'Content-Type': 'application/pdf',
@@ -255,7 +255,7 @@ export default defineComponent({
     },
     async fetchCustomers() {
       try {
-        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/users/filter?type=supplier");
+        const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/v1/users/filter?type=supplier");
 
         this.customers = response.data.map((customer: any) => ({
           code: customer.id,
@@ -269,7 +269,7 @@ export default defineComponent({
     },
     async fetchProjects() {
       try {
-        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/projects/all");
+        const response = await axios.get("https://freezy-prod-dew-912.fly.dev/freezy/projects/all");
 
         this.projects = response.data.map((project: any) => ({
           code: project.id,
@@ -297,7 +297,7 @@ export default defineComponent({
         total: submitData.total,
       };
       try {
-        const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/inventory/inward", requestData, {
+        const response = await axios.post("https://freezy-prod-dew-912.fly.dev/freezy/v1/inventory/inward", requestData, {
           headers: {
             "Content-Type": "application/json",
           },
