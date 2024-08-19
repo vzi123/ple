@@ -2,23 +2,6 @@
   <div class="row mb-40">
     <div class="col-xxl-10 col-lg-8 pe-xxl-8">
       <div class="row">
-      <!--
-        <div class="col-md-6">
-          <div class="form-group mb-25">
-            <label class="d-block fs-14 text-black mb-2">Order Tax</label>
-            <input
-              type="number"
-              class="w-100 d-block shadow-none fs-14 bg-white rounded-1 text-title"
-              placeholder="0"
-            />
-            <span
-              class="percent-sign position-absolute rounded-1 text-center d-flex flex-column justify-content-center"
-            >
-              %
-            </span>
-          </div>
-        </div>
-        -->
         <div class="col-md-6">
           <div class="form-group mb-25">
             <label class="d-block fs-14 text-black mb-2">Discount</label>
@@ -30,25 +13,10 @@
             <span
               class="percent-sign position-absolute rounded-1 text-center d-flex flex-column justify-content-center fw-semibold fs-16"
             >
-              {{currncySymbol}}
+              {{ currncySymbol }}
             </span>
           </div>
         </div>
-       <!-- <div class="col-md-6">
-          <div class="form-group mb-25">
-            <label class="d-block fs-14 text-black mb-2">Shipping Cost</label>
-            <input
-              type="number"
-              class="w-100 d-block shadow-none fs-14 bg-white rounded-1 text-title"
-              placeholder="0"
-            />
-            <span
-              class="percent-sign position-absolute rounded-1 text-center d-flex flex-column justify-content-center fw-semibold fs-16"
-            >
-              {{currncySymbol}}
-            </span>
-          </div>
-        </div> -->
         <div class="col-md-6">
           <div class="form-group mb-25">
             <label class="d-block fs-14 text-black mb-2">Status</label>
@@ -62,44 +30,32 @@
         </div>
       </div>
     </div>
+
     <div class="col-xxl-2 col-lg-4">
       <div class="card border-0 rounded-1 w-xxl-5 pt-12 pb-12 mb-md-25">
-        <table  id="submitQutation" class="table style-two">
+        <table id="submitQutation" class="table style-two">
           <tbody>
-            <!-- <tr>
-              <th scope="row" class="fs-14 text-title lh-1 ls-1 fw-normal">
-                ORDER TAX :
-              </th>
-              <td class="fs-14 fw-semibold lh-1 text-optional text-end">
-                {{currncySymbol}} 00.00
-              </td>
-            </tr> -->
             <tr>
               <th scope="row" class="fs-14 text-title lh-1 ls-1 fw-normal">
                 DISCOUNT :
               </th>
               <td class="fs-14 fw-semibold lh-1 text-optional text-end">
-                {{currncySymbol}} 150.00
+                {{ currncySymbol }} 150.00
               </td>
             </tr>
-            <!-- <tr>
-              <th scope="row" class="fs-14 text-title lh-1 ls-1 fw-normal">
-                SHIPPING :
-              </th>
-              <td class="fs-14 fw-semibold lh-1 text-optional text-end">
-                {{currncySymbol}} 50.00
-              </td>
-            </tr> -->
             <tr>
               <th scope="row" class="fs-14 text-title lh-1 ls-1 fw-semibold">
                 GRAND TOTAL :
               </th>
-              <td class="fs-14 fw-bold lh-1 text-purple text-end ">{{currncySymbol}} 200.00</td>
+              <td class="fs-14 fw-bold lh-1 text-purple text-end">
+                {{ currncySymbol }} 200.00
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+
     <div class="col-12">
       <div class="form-group mb-25">
         <label class="d-block fs-14 text-black mb-2">Notes</label>
@@ -111,24 +67,53 @@
         ></textarea>
       </div>
     </div>
+
     <div class="col-xl-4">
       <button
         class="btn style-one d-inline-block transition border-0 fw-medium text-white rounded-1 fs-md-15 fs-lg-16 mb-20"
-        type="submit"
+        :disabled="loading"
+        @click="handleSubmit"
       >
-        Submit Quotation
+        <span v-if="loading">
+          Loading...
+        </span>
+        <span v-else>
+          Submit Quotation
+        </span>
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   name: "SubmitQuotation",
-   data() {
+  data() {
     return {
-      currncySymbol:"₹",
-    }
-   }
+      currncySymbol: "₹",
+    };
+  },
+  setup() {
+    const loading = ref(false);
+
+    const handleSubmit = () => {
+      loading.value = true;
+
+      setTimeout(() => {
+        loading.value = false;
+      }, 3000);
+    };
+
+    return {
+      loading,
+      handleSubmit,
+    };
+  },
 };
 </script>
+
+<style>
+/* Add your styles here, if needed */
+</style>
