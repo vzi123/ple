@@ -83,7 +83,6 @@ import OfferPage from "../pages/BestElectronicsShop/OfferPage.vue";
 import FaqPage from "../pages/BestElectronicsShop/FaqPage.vue";
 import ContactPage from "../pages/BestElectronicsShop/ContactPage.vue";
 
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",

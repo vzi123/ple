@@ -98,7 +98,7 @@
                     @click="onViewPurchase(consignmentItem)">
                     <img src="../../../assets/img/icons/eye.svg" alt="Image" />
                   </a>
-                  <router-link to="/edit-purchase" title="Edit">
+                  <router-link to="/inEdit" title="Edit" @click="onViewPurchase(consignmentItem)">
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
                   </router-link>
                   <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"

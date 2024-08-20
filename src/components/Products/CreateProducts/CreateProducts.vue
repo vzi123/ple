@@ -49,10 +49,10 @@
           </div>
         </div>
         <a class="delete-btn" data-bs-toggle="offcanvas" href="#loadingPopup" role="button" aria-controls="loadingPopup"
-          ref="myBtn">
+          ref="myBtn" style="display: none;">
         </a>
       </div>
-      <div class="created-popup offcanvas offcanvas-end border-0" tabindex="-1" id="loadingPopup">
+      <div class="created-popup offcanvas offcanvas-end border-0" tabindex="-1" id="loadingPopup" v-if="showSuccessMessage">
         <div class="offcanvas-body p-0">
           <div class="delete-success">
             <img src="../../../assets/img/icons/tick-circle.svg" alt="Image" />
@@ -103,6 +103,7 @@ export default defineComponent({
       categories: [] as Category[],
       brands: [] as Brand[],
       loading: false,
+      showSuccessMessage: false, // State to control success message visibility
     };
   },
   computed: {
@@ -155,21 +156,25 @@ export default defineComponent({
         });
         console.log("Response:", response.data);
         EventBus.emit('loadingCompleted');
+        this.showSuccessMessage = true; // Show success message
+
+        // Ensure DOM updates before triggering the popup
+        await this.$nextTick();
+        const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+        if (elem) {
+          elem.click();
+        }
+
+        // Hide success message after 3 seconds and navigate
+        setTimeout(() => {
+          this.showSuccessMessage = false;
+          this.$router.push({ name: 'ProductsListPage' });
+        }, 3000);
+
       } catch (error) {
         console.error("Error submitting the list:", error);
       } finally {
         this.loading = false;
-        const loadingPopupElement = document.getElementById('loadingPopup');
-        if (loadingPopupElement) {
-          (loadingPopupElement as any).press = true;
-          const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
-          if (elem) {
-            elem.click();
-          }
-          setTimeout(() => {
-            this.$router.push({ name: 'ProductsListPage' });
-          }, 3000);
-        }
       }
     },
   },

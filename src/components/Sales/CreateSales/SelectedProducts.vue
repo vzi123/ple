@@ -96,6 +96,7 @@ import QuantityCounter from "./QuantityCounter.vue";
 import EventBus from '@/events/event-bus';
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import stateStore from "@/utils/store";
 
 export default defineComponent({
   name: "SelectedProducts",
@@ -120,21 +121,21 @@ export default defineComponent({
       selectedProduct: "",
       gst: [
         {
-          gstRate: "IGST-14%",
-          gstValue: 0.14,
+          gstRate: "GST18P",
+          gstValue: 0.18,
         },
         {
-          gstRate: "IGST-28%",
+          gstRate: "GST28P",
           gstValue: 0.28,
         },
-        {
-          gstRate: "CGST-14%",
-          gstValue: 0.14,
-        },
-        {
-          gstRate: "CGST-28%",
-          gstValue: 0.28,
-        },
+        // {
+        //   gstRate: "CGST-14%",
+        //   gstValue: 0.14,
+        // },
+        // {
+        //   gstRate: "CGST-28%",
+        //   gstValue: 0.28,
+        // },
 
       ],
     };
@@ -146,7 +147,9 @@ export default defineComponent({
 
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/products/all");
+        const pro = stateStore.consignmentDetails.product;
+        
+        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/products/all", pro);
         // Transform the response data
         allProducts.value = response.data.map((product: any) => ({
           productId: product.id,
