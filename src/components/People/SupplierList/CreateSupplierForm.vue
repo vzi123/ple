@@ -132,6 +132,7 @@ import { defineComponent, ref, computed, onMounted } from "vue";
 import axios from "axios";
 
 import EventBus from '@/events/event-bus';
+import { BASE_URL } from "@/utils/utils";
 export default defineComponent({
   name: "CreateSupplierForm",
    components: {
@@ -175,7 +176,7 @@ export default defineComponent({
                                        pincode:this.form.pincode,
                   };
                   try {
-                    const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/users/supplier", requestData, {
+                    const response = await axios.post(`${BASE_URL}/freezy/v1/users/supplier`, requestData, {
                       headers: {
                         "Content-Type": "application/json",
                       },

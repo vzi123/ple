@@ -3,10 +3,16 @@
 -------------------------------*/
 .logo-dark {
   display: none !important;
+  height: 53px;
+  width: 97px;
+  filter: brightness(2) invert(0);
 }
 
 .logo-light {
   display: block !important;
+  height: 53px;
+  width: 97px;
+
 }
 
 .theme-dark {

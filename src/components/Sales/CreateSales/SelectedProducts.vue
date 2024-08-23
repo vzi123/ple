@@ -42,7 +42,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(product, index) in filteredList" :key="product.id">
+          <tr v-for="(product, index) in filteredList" :key="filteredList.productId">
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
               {{ product.product }}
             </td>
@@ -50,8 +50,9 @@
               {{ product.productId }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              <input type="number" v-model.number="product.cost" @input="calculateSubtotal(index)"
+              <input type="number" v-model.number="product.unitPrice" @input="calculateSubtotal(index)"
                 class="form-control" />
+
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
               <input type="text" v-model.number="product.iduSerialNo" class="form-control" />
@@ -63,8 +64,11 @@
               <v-select v-model="product.gstValue" :options="gst" label="gstRate" v-on:change="calculateSubtotal(index)"
                 v-on:input="calculateSubtotal(index)" v-on:select="calculateSubtotal(index)"
                 v-on:search="calculateSubtotal(index)" class="bg-white border-0 rounded-1 fs-14 text-optional"
-                placeholder="Select gstRate" @update:modelValue="calculateSubtotal(index)"
-                 />
+                placeholder="Select gstRate" @update:modelValue="calculateSubtotal(index)" />
+
+
+
+
             </td>
             <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
               <input type="number" v-model.number="product.discountAmount" @input="calculateSubtotal(index)"
@@ -97,6 +101,24 @@ import EventBus from '@/events/event-bus';
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import stateStore from "@/utils/store";
+import { BASE_URL } from "@/utils/utils";
+
+
+interface Product {
+  productId: string;
+  product: string;
+  description: string;
+  quantity: number;
+  cost: number | null;
+  unitPrice: number;
+  discountAmount: number;
+  subTotal: string | null;
+  effectivePrice: number;
+  iduSerialNo: string;
+  oduSerialNo: string;
+  gstValue: { gstValue: number };
+}
+
 
 export default defineComponent({
   name: "SelectedProducts",
@@ -106,7 +128,7 @@ export default defineComponent({
       default: true
     },
     products: {
-      type: Array,
+      type: Array as () => Product[],
       required: true
     }
   },
@@ -120,56 +142,43 @@ export default defineComponent({
       currncySymbol: "₹",
       selectedProduct: "",
       gst: [
-        {
-          gstRate: "GST18P",
-          gstValue: 0.18,
-        },
-        {
-          gstRate: "GST28P",
-          gstValue: 0.28,
-        },
-        // {
-        //   gstRate: "CGST-14%",
-        //   gstValue: 0.14,
-        // },
-        // {
-        //   gstRate: "CGST-28%",
-        //   gstValue: 0.28,
-        // },
-
-      ],
+        { gstRate: "GST18P", gstValue: 0.18 },
+        { gstRate: "GST28P", gstValue: 0.28 }
+      ]
     };
   },
 
-  setup() {
+  setup(props) {
     const allProducts = ref([]);
 
 
     const fetchProducts = async () => {
       try {
-        const pro = stateStore.consignmentDetails.product;
-        
-        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/products/all", pro);
-        // Transform the response data
+        const response = await axios.get(`${BASE_URL}/freezy/v1/products/all`);
+
         allProducts.value = response.data.map((product: any) => ({
-          productId: product.id,
-          product: product.name, // Change 'name' to 'product'
-          description: product.description,
-          quantity: 1, // Default quantity
-          cost: product.cost,
-          unitPrice: product.cost,
+          productId: product.id || '',
+          product: product.name || '',
+          description: product.description || '',
+          quantity: 1,
+          cost: product.cost || 0,
+          unitPrice: product.cost || 0,
           discountAmount: 0,
-          subTotal: (product.cost - 0) * 1,
-          effectivePrice: (product.cost - 0) * 1,
+          subTotal: (product.cost || 0) * 1,
+          effectivePrice: (product.cost || 0) * 1,
           iduSerialNo: "",
           oduSerialNo: "",
           gstValue: 0
         }));
+
         EventBus.emit('onAllProducts', allProducts.value);
+
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
+
+
     const searchTerm = ref([]);
 
     const submitFilteredList = async () => {
@@ -187,18 +196,14 @@ export default defineComponent({
       }
     };
 
-    const filteredList = computed({
-      // getter
-      get() {
-        return searchTerm.value?.length ? allProducts.value.filter((item: any) => {
-          return searchTerm.value?.some((sItem: string) => item.product.toLowerCase().includes(sItem.toLowerCase()))
-        }) : [];
-      },
-      // setter
-      set(newValue: any) {
-        allProducts.value = newValue;
-      }
-    })
+    const filteredList = computed(() => {
+      // Ensure that 'products' is not null or undefined
+      if (!props.products) return [];
+
+      // Filter products based on the presence of 'product' and 'productId'
+      return props.products.filter(p => p.product && p.productId);
+    });
+
 
     const updateQuantity = ({ index, quantity }: { index: number, quantity: number }) => {
       console.log(index, 'Finished successfully!');
@@ -221,29 +226,45 @@ export default defineComponent({
 
     const updateDiscount = (index: number, discount: number) => {
       if (index >= 0 && index < filteredList.value.length) {
-        filteredList.value[index].discount = discount;
+        filteredList.value[index].discountAmount = discount;
         calculateSubtotal(index);
         EventBus.emit('onFilteredProducts', filteredList.value); // Emit the updated product data
       }
     };
 
+
     const calculateSubtotal = (index: number) => {
-      console.log(index, 'calculateSubtotal successfully!');
       if (index >= 0 && index < filteredList.value.length) {
         const product = filteredList.value[index];
-        product.effectivePrice = product.cost - product.discountAmount;
-        if (product.gstValue !== undefined && product.gstValue !== null && product.gstValue.gstValue !== undefined && product.gstValue.gstValue !== null) {
-          console.log("before:", product.effectivePrice);
-          const gstRate = parseFloat(product.gstValue.gstValue) || 0;
-          product.effectivePrice = product.effectivePrice + (gstRate * product.effectivePrice);
 
-          console.log("after:", product.effectivePrice);
+        // Ensure unitPrice and discountAmount are valid numbers
+        const unitPrice = parseFloat(product.unitPrice?.toString() || '0');
+        const discountAmount = parseFloat(product.discountAmount?.toString() || '0');
+
+        // Calculate effective price after discount
+        product.effectivePrice = unitPrice - discountAmount;
+
+        // Ensure gstValue is a valid number
+        let gstValue = product.gstValue?.gstValue;
+        gstValue = typeof gstValue === 'number' && !isNaN(gstValue) ? gstValue : 0;
+
+        // Apply GST if applicable
+        if (gstValue > 0) {
+          product.effectivePrice += product.effectivePrice * gstValue;
         }
-        product.subTotal = (product.effectivePrice) * product.quantity;
-        product.subTotal = parseFloat(product.subTotal).toFixed(2);
-        product.unitPrice = product.cost;
+
+        // Calculate subtotal
+        const quantity = product.quantity || 1;
+        product.subTotal = (product.effectivePrice * quantity).toFixed(2);
       }
     };
+
+
+
+
+
+
+
 
     onMounted(async () => {
       await fetchProducts();
@@ -259,6 +280,7 @@ export default defineComponent({
       // Emit the allProducts list when a request is received
       EventBus.emit('onAllProducts', allProducts.value);
     });
+    console.log(allProducts.value);
 
 
     return {
@@ -270,7 +292,6 @@ export default defineComponent({
       updateCost,
       updateDiscount,
       calculateSubtotal,
-
     };
   },
 });

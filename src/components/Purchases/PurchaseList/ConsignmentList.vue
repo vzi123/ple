@@ -98,9 +98,11 @@
                     @click="onViewPurchase(consignmentItem)">
                     <img src="../../../assets/img/icons/eye.svg" alt="Image" />
                   </a>
-                  <router-link to="/inEdit" title="Edit" @click="onViewPurchase(consignmentItem)">
+                  <router-link :to="consignmentItem.inOut.toLowerCase() === 'in' ? '/in' : '/out'" title="Edit"
+                    @click="onViewPurchase(consignmentItem)">
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
                   </router-link>
+
                   <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
                     aria-controls="deletePopup">
                     <img src="../../../assets/img/icons/close.svg" alt="Image" />
@@ -159,7 +161,7 @@ import axios from "axios";
 import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
 import EventBus from '../../../events/event-bus';
-import '@/assets/css/CustomSpinner.css'; 
+import '@/assets/css/CustomSpinner.css';
 
 export default defineComponent({
   name: "ConsignmentList",
@@ -212,7 +214,7 @@ export default defineComponent({
   methods: {
     formatDate,
     getUserName(user: any) {
-      return user.first_name + " " + user.last_name;
+      return user.first_name;
     },
 
     onViewPurchase(consignmentItem: any) {

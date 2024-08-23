@@ -4,111 +4,83 @@
       <h6 class="fs-18 mb-35 text-title fw-semibold">
         Selected Services For Entry
       </h6>
-        <table class="table text-nowrap align-middle mb-0">
-          <thead>
-            <tr>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
-                Service
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                Service Code
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                Unit Cost
-              </th>
+      <table class="table text-nowrap align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
+              Service
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              Service Code
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              Unit Cost
+            </th>
 
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                Quantity
-              </th>
-               <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                                                                        GST-%
-                                                                      </th>
-              <th v-if="showDiscounts" scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                <th >DISCOUNT</th>
-              </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              Quantity
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              GST-%
+            </th>
+            <th v-if="showDiscounts" scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+            <th>DISCOUNT</th>
+            </th>
 
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                Sub Total
-              </th>
-              <th
-                scope="col"
-                class="text-title fw-normal fs-14 pt-0 ls-1 text-end pe-0"
-              >
-                Delete
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(service, index) in filteredServiceList" :key="service.id">
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
-                {{ service.service }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ service.serviceId }}
-              </td>
-            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                            <input
-                              type="number"
-                              v-model.number="service.cost"
-                              @input="calculateServicesSubtotal(index)"
-                              class="form-control"
-                            />
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              Sub Total
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1 text-end pe-0">
+              Delete
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(service, index) in filteredServiceList" :key="service.productId">
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
+              {{ service.product }}
             </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                            <QuantityCounter :initialQuantity="service.quantity ?? 1" :index="index" @quantity-change="updateServicesQuantity" @input="calculateServicesSubtotal(index)" />
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                         <v-select
-                                  v-model="service.gstValue"
-                                  :options="gst"
-                                  label="gstRate"
-                                  v-on:change="calculateServicesSubtotal(index)"
-                                  v-on:input="calculateServicesSubtotal(index)"
-                                  v-on:select="calculateServicesSubtotal(index)"
-                                  v-on:search="calculateServicesSubtotal(index)"
-                                  class="bg-white border-0 rounded-1 fs-14 text-optional"
-                                  placeholder="Select gstRate"
-                                  @update:modelValue="calculateServicesSubtotal(index)"
-                           />
-                        </td>
-              <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                            <input
-                              type="number"
-                              v-model.number="service.discountAmount"
-                              @input="calculateServicesSubtotal(index)"
-                              class="form-control"
-                            />
-              </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ service.productId }}
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              <input type="number" v-model.number="service.cost" @input="calculateServicesSubtotal(index)"
+                class="form-control" />
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              <QuantityCounter :initialQuantity="service.quantity ?? 1" :index="index"
+                @quantity-change="updateServicesQuantity" @input="calculateServicesSubtotal(index)" />
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              <v-select v-model="service.gstValue" :options="gst" label="gstRate"
+                v-on:change="calculateServicesSubtotal(index)" v-on:input="calculateServicesSubtotal(index)"
+                v-on:select="calculateServicesSubtotal(index)" v-on:search="calculateServicesSubtotal(index)"
+                class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select gstRate"
+                @update:modelValue="calculateServicesSubtotal(index)" />
+            </td>
+            <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              <input type="number" v-model.number="service.discountAmount" @input="calculateServicesSubtotal(index)"
+                class="form-control" />
+            </td>
 
 
 
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ currncySymbol }} {{ service.subTotal }}
-              </td>
-              <td class="shadow-none lh-1 text-end pe-0">
-                <div
-                  class="button-group style-two ms-auto d-flex flex-wrap align-items-center"
-                >
-                  <a
-                    class="delete-btn"
-                    data-bs-toggle="offcanvas"
-                    href="#deletePopup"
-                    role="button"
-                    aria-controls="deletePopup"
-                    @click.prevent="$emit('remove-service', index)"
-                  >
-                    <img
-                      src="../../../assets/img/icons/close.svg"
-                      alt="Image"
-                    />
-                  </a>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ currncySymbol }} {{ service.subTotal }}
+            </td>
+            <td class="shadow-none lh-1 text-end pe-0">
+              <div class="button-group style-two ms-auto d-flex flex-wrap align-items-center">
+                <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
+                  aria-controls="deletePopup" @click.prevent="$emit('remove-service', index)">
+                  <img src="../../../assets/img/icons/close.svg" alt="Image" />
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-      </div>
+    </div>
   </div>
 </template>
 
@@ -119,163 +91,177 @@ import QuantityCounter from "./QuantityCounter.vue";
 import EventBus from '@/events/event-bus';
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import { BASE_URL } from "@/utils/utils";
+
+
+interface Service {
+  productId: string;
+  product: string;
+  description: string;
+  quantity: number;
+  cost: number | null;
+  unitPrice: number;
+  discountAmount: number;
+  discount: number;
+  subTotal: string;
+  effectivePrice: number;
+  iduSerialNo: string;
+  oduSerialNo: string;
+  gstValue: { gstValue: number };
+}
+
 
 export default defineComponent({
   name: "SelectedServices",
-   props: {
-      showDiscounts: {
-        type: Boolean,
-        default: true
-      },
-      services: {
-        type: Array,
-        required: true
-      }
+  props: {
+    showDiscounts: {
+      type: Boolean,
+      default: true
     },
+    services: {
+      type: Array as () => Service[],
+      required: true
+    }
+  },
   components: {
     QuantityCounter,
     vSelect,
   },
   data() {
     return {
-      currncySymbol:"₹",
+      currncySymbol: "₹",
       selectedService: "",
-       gst :[
-      {
-       gstRate: "IGST-14%",
-       gstValue: 0.14,
-      },
-       {
-             gstRate: "IGST-28%",
-             gstValue: 0.28,
-            },
-             {
-                   gstRate: "CGST-14%",
-                   gstValue: 0.14,
-                  },
-                   {
-                         gstRate: "CGST-28%",
-                         gstValue: 0.28,
-                        },
-
+      gst: [
+        {
+          gstRate: "GST18P",
+          gstValue: 0.18,
+        },
+        {
+          gstRate: "GST28P",
+          gstValue: 0.28,
+        },
       ],
     };
   },
 
-  setup() {
+  setup(props) {
     const allServices = ref([]);
 
 
-        const fetchServices = async () => {
-              try {
-                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/services/all");
-                // Transform the response data
-                allServices.value = response.data.map((service: any) => ({
-                  serviceId: service.id,
-                  service: service.name, // Change 'name' to 'service'
-                  description: service.description,
-                  quantity: 1, // Default quantity
-                  cost: service.cost,
-                  unitPrice:service.cost,
-                  discountAmount: 0,
-                  subTotal: (service.cost - 0) * 1,
-                  effectivePrice: (service.cost - 0) * 1,
-		  serialNo: "",
-                  gstValue:0
-                }));
-                EventBus.emit('onAllServices', allServices.value);
-              } catch (error) {
-                console.error("Error fetching services:", error);
-              }
-            };
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/freezy/v1/services/all`);
+        // Transform the response data
+        allServices.value = response.data.map((service: any) => ({
+          productId: service.id,
+          product: service.name, // Change 'name' to 'service'
+          description: service.description,
+          quantity: 1, // Default quantity
+          cost: service.cost,
+          unitPrice: service.cost,
+          discountAmount: 0,
+          subTotal: (service.cost - 0) * 1,
+          effectivePrice: (service.cost - 0) * 1,
+          serialNo: "",
+          gstValue: 0
+        }));
+        EventBus.emit('onAllServices', allServices.value);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
     const searchTerm = ref([]);
 
     const submitfilteredServiceList = async () => {
-          try {
-            const response = await axios.post("http://localhost:8080/freezy/quotations/save", {
-              services: filteredServiceList.value,
-            }, {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            console.log("Response:", response.data);
-          } catch (error) {
-            console.error("Error submitting the list:", error);
-          }
-        };
-
-    const filteredServiceList = computed({
-      // getter
-      get() {
-        return searchTerm.value?.length ? allServices.value.filter((item: any) => {
-          return searchTerm.value?.some((sItem: string) => item.service.toLowerCase().includes(sItem.toLowerCase()))
-        }) : [];
-      },
-      // setter
-      set(newValue: any) {
-        allServices.value = newValue;
+      try {
+        const response = await axios.post("http://localhost:8080/freezy/quotations/save", {
+          services: filteredServiceList.value,
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.error("Error submitting the list:", error);
       }
-    })
+    };
+
+    const filteredServiceList = computed(() => {
+      // Ensure that 'services' is not null or undefined
+      if (!props.services) return [];
+
+      // Filter services based on the presence of 'product' and 'productId'
+      return props.services.filter(p => p.product && p.productId);
+    });
 
     const updateServicesQuantity = ({ index, quantity }: { index: number, quantity: number }) => {
-          console.log(index, 'Finished successfully!');
-          if (index >= 0 && index < filteredServiceList.value.length) {
+      console.log(index, 'Finished successfully!');
+      if (index >= 0 && index < filteredServiceList.value.length) {
 
-          console.log(index , 'Finished successfully inside!');
-            filteredServiceList.value[index].quantity = quantity;
-            calculateServicesSubtotal(index);
-            EventBus.emit('onFilteredServices', filteredServiceList.value); // Emit the updated service data
-          }
-        };
+        console.log(index, 'Finished successfully inside!');
+        filteredServiceList.value[index].quantity = quantity;
+        calculateServicesSubtotal(index);
+        EventBus.emit('onFilteredServices', filteredServiceList.value); // Emit the updated service data
+      }
+    };
 
-     const updateServicesCost = (index: number, cost: number) => {
-          if (index >= 0 && index < filteredServiceList.value.length) {
-            filteredServiceList.value[index].cost = cost;
-            calculateServicesSubtotal(index);
-            EventBus.emit('onFilteredServices', filteredServiceList.value); // Emit the updated service data
-          }
-        };
+    const updateServicesCost = (index: number, cost: number) => {
+      if (index >= 0 && index < filteredServiceList.value.length) {
+        filteredServiceList.value[index].cost = cost;
+        calculateServicesSubtotal(index);
+        EventBus.emit('onFilteredServices', filteredServiceList.value); // Emit the updated service data
+      }
+    };
 
-     const updateServicesDiscount = (index: number, discount: number) => {
-               if (index >= 0 && index < filteredServiceList.value.length) {
-                 filteredServiceList.value[index].discount = discount;
-                 calculateServicesSubtotal(index);
-                 EventBus.emit('onFilteredServices', filteredServiceList.value); // Emit the updated service data
-               }
-             };
+    const updateServicesDiscount = (index: number, discount: number) => {
+      if (index >= 0 && index < filteredServiceList.value.length) {
+        filteredServiceList.value[index].discount = discount;
+        calculateServicesSubtotal(index);
+        EventBus.emit('onFilteredServices', filteredServiceList.value); // Emit the updated service data
+      }
+    };
 
-      const calculateServicesSubtotal =  (index: number) => {
-       console.log(index, 'calculateServicesSubtotal successfully!');
-                    if (index >= 0 && index < filteredServiceList.value.length) {
-                           const service = filteredServiceList.value[index];
-                           service.subTotal = (service.cost - service.discountAmount) * service.quantity;
-				service.effectivePrice = service.cost - service.discountAmount;
-                             if (  service.gstValue !== undefined && service.gstValue !== null && service.gstValue.gstValue !== undefined && service.gstValue.gstValue !== null) {
-                                        console.log("before:", service.effectivePrice);
-                                       const gstRate = parseFloat(service.gstValue.gstValue) || 0;
-                                       service.effectivePrice = service.effectivePrice + ( gstRate * service.effectivePrice);
+    const calculateServicesSubtotal = (index: number) => {
+      if (index >= 0 && index < filteredServiceList.value.length) {
+        const service = filteredServiceList.value[index];
 
-                                      console.log("after:", service.effectivePrice);
-                             }
-                            service.subTotal = (service.effectivePrice) * service.quantity ;
-                             service.subTotal = parseFloat(service.subTotal).toFixed(2);
-                           service.unitPrice = service.cost;
+        // Ensure cost, discountAmount, and quantity are valid numbers
+        const cost = parseFloat(service.cost?.toString() || '0');
+        const discountAmount = parseFloat(service.discountAmount?.toString() || '0');
+        const quantity = parseFloat(service.quantity?.toString() || '1');
 
-                         }
-                };
+        // Calculate effective price after discount
+        let effectivePrice = cost - discountAmount;
+
+        // Ensure gstValue is a valid number
+        let gstRate = service.gstValue?.gstValue;
+        gstRate = typeof gstRate === 'number' && !isNaN(gstRate) ? gstRate : 0;
+
+        // Apply GST if applicable
+        if (gstRate > 0) {
+          effectivePrice += effectivePrice * gstRate;
+        }
+
+        // Calculate subtotal
+        service.subTotal = (effectivePrice * quantity).toFixed(2);
+        service.effectivePrice = effectivePrice;
+        service.unitPrice = cost; // Ensure this is updated correctly
+      }
+    };
+
 
     onMounted(async () => {
-                    await fetchServices();
+      await fetchServices();
       EventBus.on('onUpdateServices', (services: any) => {
-              searchTerm.value = services;
-              EventBus.emit('onFilteredServices', filteredServiceList.value); // Emit the detailed service data
-            });
+        searchTerm.value = services;
+        EventBus.emit('onFilteredServices', filteredServiceList.value); // Emit the detailed service data
+      });
 
-            // Emit the allServices list when the component is mounted
-            EventBus.emit('onAllServices', allServices.value);
+      // Emit the allServices list when the component is mounted
+      EventBus.emit('onAllServices', allServices.value);
     });
-EventBus.on('requestAllServices', () => {
+    EventBus.on('requestAllServices', () => {
       // Emit the allServices list when a request is received 
       EventBus.emit('onAllServices', allServices.value);
     });
@@ -283,13 +269,13 @@ EventBus.on('requestAllServices', () => {
 
     return {
 
-            allServices,
-            filteredServiceList,
-            submitfilteredServiceList,
-            updateServicesQuantity,
-            updateServicesCost,
-            updateServicesDiscount,
-            calculateServicesSubtotal,
+      allServices,
+      filteredServiceList,
+      submitfilteredServiceList,
+      updateServicesQuantity,
+      updateServicesCost,
+      updateServicesDiscount,
+      calculateServicesSubtotal,
 
     };
   },

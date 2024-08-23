@@ -4,83 +4,83 @@
       <h6 class="fs-18 mb-35 text-title fw-semibold">
         Selected Accessories For Entry
       </h6>
-        <table class="table text-nowrap align-middle mb-0">
-          <thead>
-            <tr>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
-                Accessory
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                Accessory Code
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                Unit Cost
-              </th>
+      <table class="table text-nowrap align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ps-0 ls-1">
+              Accessory
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              Accessory Code
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              Unit Cost
+            </th>
 
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                Quantity
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                GST-%
-              </th>
-              <th v-if="showDiscounts" scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-              <th>DISCOUNT</th>
-              </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              Quantity
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              GST-%
+            </th>
+            <th v-if="showDiscounts" scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+            <th>DISCOUNT</th>
+            </th>
 
 
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
-                Sub Total
-              </th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1 text-end pe-0">
-                Delete
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(accessory, index) in filteredAccessoriesList" :key="accessory.id">
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
-                {{ accessory.accessory }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ accessory.accessoryId }}
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                <input type="number" v-model.number="accessory.cost" @input="calculateAccessoriesSubtotal(index)"
-                  class="form-control" />
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                <QuantityCounter :initialQuantity="accessory.quantity ?? 1" :index="index"
-                  @quantity-change="updateAccessoriesQuantity" @input="calculateAccessoriesSubtotal(index)" />
-              </td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                <v-select v-model="accessory.gstValue" :options="gst" label="gstRate"
-                  v-on:change="calculateAccessoriesSubtotal(index)" v-on:input="calculateAccessoriesSubtotal(index)"
-                  v-on:select="calculateAccessoriesSubtotal(index)" v-on:search="calculateAccessoriesSubtotal(index)"
-                  class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select gstRate"
-                  @update:modelValue="calculateAccessoriesSubtotal(index)" />
-              </td>
-              <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                <input type="number" v-model.number="accessory.discountAmount"
-                  @input="calculateAccessoriesSubtotal(index)" class="form-control" />
-              </td>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1">
+              Sub Total
+            </th>
+            <th scope="col" class="text-title fw-normal fs-14 pt-0 ls-1 text-end pe-0">
+              Delete
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(accessory, index) in filteredAccessoriesList" :key="accessory.productId">
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
+              {{ accessory.product }}
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ accessory.productId }}
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              <input type="number" v-model.number="accessory.unitPrice" @input="calculateAccessoriesSubtotal(index)"
+                class="form-control" />
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              <QuantityCounter :initialQuantity="accessory.quantity ?? 1" :index="index"
+                @quantity-change="updateAccessoriesQuantity" @input="calculateAccessoriesSubtotal(index)" />
+            </td>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              <v-select v-model="accessory.gstValue" :options="gst" label="gstRate"
+                v-on:change="calculateAccessoriesSubtotal(index)" v-on:input="calculateAccessoriesSubtotal(index)"
+                v-on:select="calculateAccessoriesSubtotal(index)" v-on:search="calculateAccessoriesSubtotal(index)"
+                class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select gstRate"
+                @update:modelValue="calculateAccessoriesSubtotal(index)" />
+            </td>
+            <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              <input type="number" v-model.number="accessory.discountAmount"
+                @input="calculateAccessoriesSubtotal(index)" class="form-control" />
+            </td>
 
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ currncySymbol }} {{ accessory.subTotal }}
-              </td>
-              <td class="shadow-none lh-1 text-end pe-0">
-                <div class="button-group style-two ms-auto d-flex flex-wrap align-items-center">
-                  <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
-                    aria-controls="deletePopup" @click.prevent="$emit('remove-accessory', index)">
-                    <img src="../../../assets/img/icons/close.svg" alt="Image" />
-                  </a>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+              {{ currncySymbol }} {{ accessory.subTotal }}
+            </td>
+            <td class="shadow-none lh-1 text-end pe-0">
+              <div class="button-group style-two ms-auto d-flex flex-wrap align-items-center">
+                <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
+                  aria-controls="deletePopup" @click.prevent="$emit('remove-accessory', index)">
+                  <img src="../../../assets/img/icons/close.svg" alt="Image" />
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -90,6 +90,23 @@ import QuantityCounter from "./QuantityCounter.vue";
 import EventBus from '@/events/event-bus';
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import { BASE_URL } from "@/utils/utils";
+
+interface Accessory {
+  productId: string;
+  product: string;
+  description: string;
+  quantity: number;
+  cost: number | null;
+  unitPrice: number;
+  discountAmount: number; // Update to reflect the correct property
+  discount: number; // Update to reflect the correct property
+  subTotal: string | null;
+  effectivePrice: number;
+  iduSerialNo: string;
+  oduSerialNo: string;
+  gstValue: { gstValue: number };
+}
 
 export default defineComponent({
   name: "SelectedAccessories",
@@ -99,7 +116,7 @@ export default defineComponent({
       default: true
     },
     accessories: {
-      type: Array,
+      type: Array as () => Accessory[],
       required: true
     }
   },
@@ -113,37 +130,28 @@ export default defineComponent({
       selectedAccessory: "",
       gst: [
         {
-          gstRate: "IGST-14%",
-          gstValue: 0.14,
+          gstRate: "GST18P",
+          gstValue: 0.18,
         },
         {
-          gstRate: "IGST-28%",
+          gstRate: "GST28P",
           gstValue: 0.28,
         },
-        {
-          gstRate: "CGST-14%",
-          gstValue: 0.14,
-        },
-        {
-          gstRate: "CGST-28%",
-          gstValue: 0.28,
-        },
-
       ],
     };
   },
 
-  setup() {
+  setup(props) {
     const allAccessories = ref([]);
 
 
     const fetchAccessories = async () => {
       try {
-        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/accessories/all");
+        const response = await axios.get(`${BASE_URL}/freezy/v1/accessories/all`);
         // Transform the response data
         allAccessories.value = response.data.map((accessory: any) => ({
-          accessoryId: accessory.id,
-          accessory: accessory.name, // Change 'name' to 'accessory'
+          productId: accessory.id,
+          product: accessory.name, // Change 'name' to 'accessory'
           description: accessory.description,
           quantity: 1, // Default quantity
           cost: accessory.cost,
@@ -176,18 +184,14 @@ export default defineComponent({
       }
     };
 
-    const filteredAccessoriesList = computed({
-      // getter
-      get() {
-        return searchTerm.value?.length ? allAccessories.value.filter((item: any) => {
-          return searchTerm.value?.some((sItem: string) => item.accessory.toLowerCase().includes(sItem.toLowerCase()))
-        }) : [];
-      },
-      // setter
-      set(newValue: any) {
-        allAccessories.value = newValue;
-      }
-    })
+    const filteredAccessoriesList = computed(() => {
+      // Ensure that 'accessories' is not null or undefined
+      if (!props.accessories) return [];
+
+      // Filter accessories based on the presence of 'product' and 'productId'
+      return props.accessories.filter(p => p.product && p.productId);
+    });
+
 
     const updateAccessoriesQuantity = ({ index, quantity }: { index: number, quantity: number }) => {
       console.log(index, 'Finished successfully!');
@@ -217,25 +221,34 @@ export default defineComponent({
     };
 
     const calculateAccessoriesSubtotal = (index: number) => {
-      console.log(index, 'calculateAccessoriesSubtotal successfully!');
       if (index >= 0 && index < filteredAccessoriesList.value.length) {
         const accessory = filteredAccessoriesList.value[index];
-        accessory.subTotal = (accessory.cost - accessory.discountAmount) * accessory.quantity;
-        accessory.effectivePrice = accessory.cost - accessory.discountAmount;
-        if (accessory.gstValue !== undefined && accessory.gstValue !== null && accessory.gstValue.gstValue !== undefined && accessory.gstValue.gstValue !== null) {
-          console.log("before:", accessory.effectivePrice);
-          const gstRate = parseFloat(accessory.gstValue.gstValue) || 0;
-          accessory.effectivePrice = accessory.effectivePrice + (gstRate * accessory.effectivePrice);
 
-          console.log("after:", accessory.effectivePrice);
+        // Ensure cost, discountAmount, and quantity are valid numbers
+        const cost = parseFloat(accessory.unitPrice?.toString() || '0');
+        const discountAmount = parseFloat(accessory.discountAmount?.toString() || '0');
+        const quantity = parseFloat(accessory.quantity?.toString() || '1');
+
+        // Calculate effective price after discount
+        let effectivePrice = cost - discountAmount;
+
+        // Ensure gstValue is a valid number
+        let gstRate = accessory.gstValue?.gstValue;
+        gstRate = typeof gstRate === 'number' && !isNaN(gstRate) ? gstRate : 0;
+
+        // Apply GST if applicable
+        if (gstRate > 0) {
+          effectivePrice += effectivePrice * gstRate;
         }
-        accessory.subTotal = (accessory.effectivePrice) * accessory.quantity;
-        accessory.subTotal = parseFloat(accessory.subTotal).toFixed(2);
-        accessory.unitPrice = accessory.cost;
-        accessory.effectivePrice = accessory.cost - accessory.discountAmount;
-        accessory.unitPrice = accessory.cost;
+
+        // Calculate subtotal
+        accessory.subTotal = (effectivePrice * quantity).toFixed(2);
+        accessory.effectivePrice = effectivePrice;
+        accessory.unitPrice = cost; // Ensure this is updated correctly
       }
     };
+
+
 
     onMounted(async () => {
       await fetchAccessories();

@@ -73,6 +73,7 @@ import axios from "axios";
 import EventBus from '@/events/event-bus';
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import { BASE_URL } from "@/utils/utils";
 
 interface Category {
   categoryId: number;
@@ -115,7 +116,7 @@ export default defineComponent({
   methods: {
     async fetchCategories() {
       try {
-        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/categories/all");
+        const response = await axios.get(`${BASE_URL}/freezy/v1/categories/all`);
         this.categories = response.data.map((category: any) => ({
           categoryId: category.id,
           name: category.name,
@@ -128,7 +129,7 @@ export default defineComponent({
 
     async fetchBrands() {
       try {
-        const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/v1/brands/all");
+        const response = await axios.get(`${BASE_URL}/freezy/v1/brands/all`);
         this.brands = response.data.map((brand: any) => ({
           brandId: brand.id,
           name: brand.name,
@@ -149,7 +150,7 @@ export default defineComponent({
         description: this.form.name,
       };
       try {
-        const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/v1/products/save", requestData, {
+        const response = await axios.post(`${BASE_URL}/freezy/v1/products/save`, requestData, {
           headers: {
             "Content-Type": "application/json",
           },

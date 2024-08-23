@@ -200,6 +200,7 @@ import Typeahead from "../../components/Common/TypeAhead.vue";
 import EventBus from '@/events/event-bus';
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import { BASE_URL } from "@/utils/utils";
 
 export default defineComponent({
   name: "CreateSalesPage",
@@ -271,7 +272,7 @@ export default defineComponent({
         },
     async fetchCustomers() {
           try {
-            const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/users/all");
+            const response = await axios.get(`${BASE_URL}/freezy/users/all`);
 
             this.customers = response.data.map((customer: any) => ({
                               code: customer.id,
@@ -285,7 +286,7 @@ export default defineComponent({
         },
     async fetchProjects() {
               try {
-                const response = await axios.get("https://freezy-small-dew-912.fly.dev/freezy/projects/all");
+                const response = await axios.get(`${BASE_URL}/freezy/projects/all`);
 
                 this.projects = response.data.map((project: any) => ({
                                   code: project.id,
@@ -314,7 +315,7 @@ export default defineComponent({
         total: submitData.total,
       };
       try {
-        const response = await axios.post("https://freezy-small-dew-912.fly.dev/freezy/quotations/save", requestData, {
+        const response = await axios.post(`${BASE_URL}/freezy/quotations/save`, requestData, {
           headers: {
             "Content-Type": "application/json",
           },

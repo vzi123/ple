@@ -13,18 +13,21 @@
         <div class="modal-body pb-40">
           <ul class="nav nav-tabs" id="detailsTab" role="tablist">
             <li class="nav-item" role="presentation" v-if="showProductDetailsTab">
-              <a :class="{'nav-link': true, active: currentTab === 'Product'}" id="Product-tab" data-bs-toggle="tab" href="#Product" role="tab"
-                aria-controls="Product" aria-selected="false" @click="currentTab = 'Product'">Product
+              <a :class="{ 'nav-link': true, active: currentTab === 'Product' }" id="Product-tab" data-bs-toggle="tab"
+                href="#Product" role="tab" aria-controls="Product" aria-selected="false"
+                @click="currentTab = 'Product'">Product
                 Details</a>
             </li>
             <li class="nav-item" role="presentation" v-if="showAccessoryDetailsTab">
-              <a :class="{'nav-link': true, active: currentTab === 'accessories'}" id="accessories-tab" data-bs-toggle="tab" href="#accessories" role="tab"
-                aria-controls="accessories" aria-selected="false" @click="currentTab = 'accessories'">Accessory
+              <a :class="{ 'nav-link': true, active: currentTab === 'accessories' }" id="accessories-tab"
+                data-bs-toggle="tab" href="#accessories" role="tab" aria-controls="accessories" aria-selected="false"
+                @click="currentTab = 'accessories'">Accessory
                 Details</a>
             </li>
             <li class="nav-item" role="presentation" v-if="showServiceDetailsTab">
-              <a :class="{'nav-link': true, active: currentTab === 'Service'}" id="Service-tab" data-bs-toggle="tab" href="#Service" role="tab"
-                aria-controls="Service" aria-selected="false" @click="currentTab = 'Service'">Service Details</a>
+              <a :class="{ 'nav-link': true, active: currentTab === 'Service' }" id="Service-tab" data-bs-toggle="tab"
+                href="#Service" role="tab" aria-controls="Service" aria-selected="false"
+                @click="currentTab = 'Service'">Service Details</a>
             </li>
           </ul>
           <div class="tab-content" id="detailsTabContent">
@@ -45,7 +48,7 @@
                         consignmentDetail?.inOut }}</span>
                     </li>
                     <li class="fs-14 fw-semibold text-title lh-1">
-                      ID :<span class="text-optional ms-1">{{ consignmentDetail?.products[0]?.id }}</span>
+                      ID :<span class="text-optional ms-1">{{ consignmentDetail?.products[0]?.productId }}</span>
                     </li>
 
                   </ul>
@@ -53,12 +56,8 @@
                 <div class="col-lg-4 ps-xxl-6">
                   <ul class="details-title list-style mb-40">
                     <li class="fs-14 fw-semibold text-title lh-1">
-                      PERSONA :<span class="text-optional ms-1">{{ consignmentDetail?.products[0]?.category?.name
-                        }}</span>
-                    </li>
-                    <li class="fs-14 fw-semibold text-title lh-1">
                       BUDGET :<span class="text-optional ms-1">{{ currncySymbol }}
-                        {{ consignmentDetail?.products[0]?.cost }}</span>
+                        {{ consignmentDetail?.totalAmount }}</span>
                     </li>
                   </ul>
                 </div>
@@ -77,10 +76,10 @@
                         Unit Price
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                        HSN No.
+                        IDU Serial No.
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                        Category
+                        ODU Serial No.
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
                         Type
@@ -93,48 +92,27 @@
                   <tbody>
                     <tr v-for="(prod, index) in consignmentDetail?.products" :key="index" class="br-s-1">
                       <td class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1">
-                        {{ prod?.id }}
+                        {{ prod?.productId === "" || prod?.productId == null ? "-" : prod?.productId }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.name }}
+                        {{ prod?.product === "" || prod?.product == null ? "-" : prod?.product }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.cost }}
+                        {{ prod?.unitPrize === "" || prod?.unitPrize == null ? "-" : prod?.unitPrize }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.hsnNo }}
-                      </td>
-                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
-                          type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                          {{ prod?.category?.name }}
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
-                            prod?.category?.id }}</label>
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
-                            prod?.category?.name }}</label>
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
-                            prod?.category?.description }}</label>
-                        </ul>
-                      </td>
-                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
-                          type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                          {{ prod?.brand?.name }}
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
-                            prod?.brand?.id }}</label>
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
-                            prod?.brand?.name }}</label>
-                          <label class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
-                            prod?.brand?.description }}</label>
-                        </ul>
+                        {{ prod?.iduSerialNo === "" || prod?.iduSerialNo == null ? "-" : prod?.iduSerialNo }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.description }}
+                        {{ prod?.oduSerialNo === "" || prod?.oduSerialNo == null ? "-" : prod?.oduSerialNo }}
                       </td>
+                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                        {{ prod?.type === "" || prod?.type == null ? "-" : prod?.type }}
+                      </td>
+                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                        {{ prod?.description === "" || prod?.description == null ? "-" : prod?.description }}
+                      </td>
+
                     </tr>
 
 
@@ -153,27 +131,6 @@
                   <ul class="details-title list-style mb-40">
                     <li class="fs-14 fw-semibold text-title lh-1">
                       DATE :<span class="ms-1 text-optional">{{ formatDate(consignmentDetail?.createdAt) }}</span>
-                    </li>
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      Accessory :<span class=" ms-1 text-optional fs-14">{{
-                        consignmentDetail?.accessories[0]?.name }}</span>
-                    </li>
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      Accessory Code :<span class="ms-1 text-optional">{{ consignmentDetail?.accessories[0]?.id
-                        }}</span>
-                    </li>
-
-                  </ul>
-                </div>
-                <div class="col-lg-4 ps-xxl-6">
-                  <ul class="details-title list-style mb-40">
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      Description :<span class="ms-1 text-optional">{{ consignmentDetail?.accessories[0]?.description
-                        }}</span>
-                    </li>
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      Unit Cost :<span class="ms-1 text-optional">{{ currncySymbol }}
-                        {{ consignmentDetail?.accessories[0]?.cost }}</span>
                     </li>
                   </ul>
                 </div>
@@ -195,7 +152,7 @@
                           Unit Price
                         </th>
                         <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                          Category
+                          Quantity
                         </th>
                         <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
                           Type
@@ -205,34 +162,24 @@
                     <tbody>
                       <tr v-for="(prod, index) in consignmentDetail?.accessories" :key="index" class="br-s-1">
                         <td class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1">
-                          {{ prod?.id }}
+                          {{ prod?.productId === "" || prod?.productId == null ? "-" : prod?.productId }}
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                          {{ prod?.name }}
+                          {{ prod?.product === "" || prod?.product == null ? "-" : prod?.product }}
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                          {{ prod?.description }}
+                          {{ prod?.description === "" || prod?.description == null ? "-" : prod?.description }}
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                          {{ prod?.cost }}
+                          {{ prod?.unitPrize === "" || prod?.unitPrize == null ? "-" : prod?.unitPrize }}
                         </td>
-                        <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                          <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
-                            type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ prod?.category?.name }}
-                          </button>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
-                              prod?.category?.id }}</li>
-                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
-                              prod?.category?.name }}</li>
-                            <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
-                              prod?.category?.description }}</li>
-                          </ul>
+                        <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                          {{ prod?.quantity === "" || prod?.quantity == null ? "-" : prod?.quantity }}
                         </td>
-                        <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                          <p>NA</p>
+                        <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                          {{ prod?.type === "" || prod?.type == null ? "-" : prod?.type }}
                         </td>
+
                       </tr>
 
 
@@ -253,26 +200,6 @@
                   <ul class="details-title list-style mb-40">
                     <li class="fs-14 fw-semibold text-title lh-1">
                       DATE :<span class="ms-1 text-optional">{{ formatDate(consignmentDetail?.createdAt) }}</span>
-                    </li>
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      Service :<span class="ms-1 text-optional">{{
-                        consignmentDetail?.services[0]?.name }}</span>
-                    </li>
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      Service Code :<span class="ms-1 text-optional">{{ consignmentDetail?.services[0]?.id }}</span>
-                    </li>
-
-                  </ul>
-                </div>
-                <div class="col-lg-4 ps-xxl-6">
-                  <ul class="details-title list-style mb-40">
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      Description :<span class="ms-1 text-optional">{{ consignmentDetail?.services[0]?.description
-                        }}</span>
-                    </li>
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      Unit Cost :<span class="ms-1 text-optional">{{ currncySymbol }}
-                        {{ consignmentDetail?.services[0]?.cost }}</span>
                     </li>
                   </ul>
                 </div>
@@ -295,7 +222,7 @@
                         Unit Price
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
-                        Category
+                        Quantity
                       </th>
                       <th scope="col" class="text-title fw-normal fs-14 lh-1 bg_mild">
                         Type
@@ -305,47 +232,24 @@
                   <tbody>
                     <tr v-for="(prod, index) in consignmentDetail?.services" :key="index" class="br-s-1">
                       <td class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1">
-                        {{ prod?.id }}
+                        {{ prod?.productId === "" || prod?.productId == null ? "-" : prod?.productId }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.name }}
+                        {{ prod?.product === "" || prod?.product == null ? "-" : prod?.product }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.description }}
+                        {{ prod?.description === "" || prod?.description == null ? "-" : prod?.description }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.cost }}
+                        {{ prod?.unitPrize === "" || prod?.unitPrize == null ? "-" : prod?.unitPrize }}
                       </td>
-                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
-                          type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                          {{ prod?.category?.name }}
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
-                            prod?.category?.id }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
-                            prod?.category?.name }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
-                            prod?.category?.description }}</li>
-                        </ul>
+                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                        {{ prod?.quantity === "" || prod?.quantity == null ? "-" : prod?.quantity }}
                       </td>
-                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph dropdown">
-                        <button class="btn dropdown-toggle shadow-none lh-1 fs-14 fw-normal text-paragraph"
-                          type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                          {{ prod?.serviceTier?.name }}
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">ID: {{
-                            prod?.serviceTier?.id }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Name: {{
-                            prod?.serviceTier?.name }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Description: {{
-                            prod?.serviceTier?.description }}</li>
-                          <li class="dropdown-item shadow-none lh-1 fs-14 fw-normal text-paragraph">Type: {{
-                            prod?.serviceTier?.type }}</li>
-                        </ul>
+                      <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+                        {{ prod?.type === "" || prod?.type == null ? "-" : prod?.type }}
                       </td>
+
                     </tr>
 
 

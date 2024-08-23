@@ -9,7 +9,7 @@
               <img class="logo-dark" src="../../assets/img/logo-white.webp" alt="Image" />
             </router-link>
             <button v-if="isWideScreen"
-              class="header-burger-menu transition position-relative lh-1 bg-transparent p-0 border-0"
+              class="header-burger-menu transition position-relative lh-1 bg-transparent p-0 border-0 ms-2"
               id="header-burger-menu" title="Hide/Show" @click="toggleBurgerMenu">
               <!-- The icon changes based on the isBurgerMenu state -->
               <i class="menu ri-menu-line" v-if="!isBurgerMenu"></i>

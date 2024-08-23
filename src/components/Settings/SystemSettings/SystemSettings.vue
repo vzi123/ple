@@ -90,7 +90,7 @@
             <input
               type="text"
               class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-title"
-              placeholder="PYLE - Inventory Management With POS"
+              placeholder="Freezy - Reducing Costs, Enhancing Efficiency"
             />
           </div>
         </div>
