@@ -2,7 +2,7 @@
   <FilterContent @update:searchTerm="updateSearchTerm" />
   <div class="card border-0 shadow-none rounded-1 mb-25">
     <div class="card-body p-xl-40">
-   
+
       <div class="table-responsive style-three">
         <table class="table text-nowrap align-middle mb-0">
           <thead>
@@ -31,9 +31,9 @@
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ userItem.address }}</td>
               <td class="shadow-none lh-1 text-end pe-0">
                 <div class="button-group d-flex flex-wrap align-items-center">
-                  <router-link to="/edit-purchase" title="Edit">
+                  <a href="javascript:void(0)" data-bs-target="#createModal" role="button" data-bs-toggle="modal">
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
-                  </router-link>
+                  </a>
                   <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
                     aria-controls="deletePopup">
                     <img src="../../../assets/img/icons/close.svg" alt="Image" />
@@ -93,7 +93,7 @@ import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
 import EventBus from '../../../events/event-bus';
 import FilterContent from './FilterContent.vue'; // Assuming the file is in the same directory
-import '@/assets/css/CustomSpinner.css'; 
+import '@/assets/css/CustomSpinner.css';
 
 export default defineComponent({
   name: "CustomerList",

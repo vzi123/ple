@@ -1,9 +1,7 @@
 <template>
   <MainHeader />
   <MainSidebar />
-  <div
-    class="main-content bg_gray d-flex flex-column transition overflow-hidden"
-  >
+  <div class="main-content bg_gray d-flex flex-column transition overflow-hidden">
     <BreadcrumbMenu pageTitle="Create Products" />
     <CreateProducts />
 
@@ -36,6 +34,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .chart-wrapper {
   margin: 0 -10px;
+
   .card {
     margin-left: 10px;
     margin-right: 10px;

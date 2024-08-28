@@ -9,6 +9,7 @@ interface StateStore {
   salesOrderDetails: any;
   productDetails: any;
   resetConsignmentDetails: any;
+  inWards:any;
 }
 
 const stateStore: StateStore = reactive({
@@ -16,6 +17,9 @@ const stateStore: StateStore = reactive({
   onChange() {
     stateStore.open = !stateStore.open
   },
+  
+  inWards:{},
+
   consignmentDetails: {
     "id": "",
     "inOut": "",
@@ -108,10 +112,37 @@ const stateStore: StateStore = reactive({
       }
     ]
   },
+
+  productDetails:{
+    "id": "",
+    "inventory": 0,
+    "product": {
+      "id": "",
+      "name": "",
+      "description": "",
+      "cost": 0,
+      "hsnNo": "",
+      "category": {
+        "id": "",
+        "name": "",
+        "description": ""
+      },
+      "brand": {
+        "id": "",
+        "name": "",
+        "description": ""
+      }
+    },
+    "uom": "",
+    "accessory": {},
+    "type": ""
+  },
+
   quotationDetails: {},
   salesOrderDetails: {},
   purchaseDetails:{},
-  productDetails:{},
+
+
 
   // For reset
 

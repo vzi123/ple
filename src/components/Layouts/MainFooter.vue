@@ -3,7 +3,7 @@
     <div class="row align-items-center">
       <div class="col-md-6">
         <div class="copyright-text">
-          <span class="text-white text-bold">&copy; Freazy</span> is proudly owned
+          <span class="text-white text-bold">&copy; Freezy</span> is proudly owned
           by
           <a
             href="https://hibootstrap.com/"
@@ -16,7 +16,7 @@
       </div>
       <div class="col-md-6">
         <p class="text-offwhite mb-0 text-md-end">
-          <span class="text-white text-bold">Freazy</span> - Ultimate Inventory
+          <span class="text-white text-bold">Freezy</span> - Ultimate Inventory
           Management Software
         </p>
       </div>

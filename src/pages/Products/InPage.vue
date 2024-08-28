@@ -145,7 +145,7 @@ import MainSidebar from "../../components/Layouts/MainSidebar.vue";
 import BreadcrumbMenu from "../../components/Common/BreadcrumbMenu.vue";
 import SelectedProducts from "../../components/Sales/CreateSales/SelectedProducts.vue";
 import SelectedAccessories from "../../components/Sales/CreateSales/SelectedAccessories.vue";
-import SelectedServices from "../../components/Sales/CreateSales/SelectedServices.vue";
+// import SelectedServices from "../../components/Sales/CreateSales/SelectedServices.vue";
 import SubmitPurchase from "../../components/Sales/CreateSales/SubmitPurchase.vue";
 import MainFooter from "../../components/Layouts/MainFooter.vue";
 import Typeahead from "../../components/Common/TypeAhead.vue";
@@ -161,11 +161,11 @@ interface Product {
   // Add other properties as necessary
 }
 
-interface Service {
-  productId: number;
-  product: string;
-  // Add other properties as necessary
-}
+// interface Service {
+//   productId: number;
+//   product: string;
+//   // Add other properties as necessary
+// }
 
 interface Accessory {
   productId: number;
@@ -182,7 +182,7 @@ export default defineComponent({
     BreadcrumbMenu,
     SelectedProducts,
     SelectedAccessories,
-    SelectedServices,
+    // SelectedServices,
     SubmitPurchase,
     MainFooter,
     Typeahead,
@@ -193,24 +193,24 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: "",
+        customer: "U0001",
         branch: "",
         project: "",
       },
       products: [] as Product[],
       accessories: [] as Accessory[],
-      services: [] as Service[],
+      // services: [] as Service[],
       detailedAccessories: [] as Accessory[],
       detailedProducts: [] as Product[],
-      detailedServices: [] as Service[],
+      // detailedServices: [] as Service[],
       allProducts: [] as Product[],
       allAccessories: [] as Accessory[],
-      allServices: [] as Service[],
+      // allServices: [] as Service[],
       customers: [],
       projects: [],
       filteredList: [] as Product[],
       filteredAccessoriesList: [] as Accessory[],
-      filteredServicesList: [] as Service[],
+      // filteredServicesList: [] as Service[],
       discount: 0,
       total: 0,
       status: "Packed",
@@ -250,6 +250,9 @@ export default defineComponent({
         if (!exists) {
           this.products.push(fullProduct); // Push the full product object if not a duplicate
           EventBus.emit('onUpdateProducts', this.products);
+          stateStore.inWards = this.products;
+          console.log(stateStore.inWards.value);
+          
         } else {
           console.log('Product already exists:', fullProduct.product);
         }
@@ -320,13 +323,14 @@ export default defineComponent({
         userPersona: 'customer',
         products: this.detailedProducts,
         accessories: this.detailedAccessories,
-        // services: this.detailedServices,
+        services: null,
         discount: submitData.discount,
         status: submitData.status,
         comments: submitData.notes,
         total: submitData.total,
       };
-      try {
+      try { 
+        // https://freezy-prod-frontend.fly.dev/$%7BBASE_URL%7D/freezy/v1/inventory/outward
         const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/inward`, requestData, {
           headers: {
             "Content-Type": "application/json",
@@ -358,6 +362,8 @@ export default defineComponent({
     EventBus.on('onFilteredProducts', (products: any) => {
       this.detailedProducts = products; // Capture detailed product data
       this.filteredList = products;
+      console.log(this.filteredList);
+      
     });
     EventBus.on('onAllAccessories', (accessories: any) => {
       this.allAccessories = accessories; // Update allProducts with the emitted value
@@ -366,13 +372,13 @@ export default defineComponent({
       this.detailedAccessories = accessories; // Capture detailed product data
       this.filteredAccessoriesList = accessories;
     });
-    EventBus.on('onAllServices', (services: any) => {
-      this.allServices = services; // Update allProducts with the emitted value
-    });
-    EventBus.on('onFilteredServices', (services: any) => {
-      this.detailedServices = services; // Capture detailed product data
-      this.filteredServicesList = services;
-    });
+    // EventBus.on('onAllServices', (services: any) => {
+    //   this.allServices = services; // Update allProducts with the emitted value
+    // });
+    // EventBus.on('onFilteredServices', (services: any) => {
+    //   this.detailedServices = services; // Capture detailed product data
+    //   this.filteredServicesList = services;
+    // });
     EventBus.emit('requestAllProducts');
     EventBus.emit('requestAllAccessories');
     EventBus.emit('requestAllServices');

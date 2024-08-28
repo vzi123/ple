@@ -24,7 +24,10 @@
           <tbody v-if="!loading">
             <tr v-for="item in filteredList" :key="item.id">
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ item.product?.id || item.accessory?.id }}
+                <a href="javascript:void(0)" title="View" data-bs-toggle="modal" data-bs-target="#productdetails"
+                    @click="onViewProduct(item)">
+                    {{ item.product?.id || item.accessory?.id }}
+                  </a>
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                 {{ item.product?.name || item.accessory?.name }}
@@ -141,8 +144,10 @@ export default defineComponent({
     getProjectName(project: { name: string }) {
       return project.name;
     },
-    onViewPurchase(stock: any) {
+    onViewProduct(stock: any) {
       stateStore.productDetails = stock;
+      console.log(stateStore.productDetails);
+      
     },
   },
 });

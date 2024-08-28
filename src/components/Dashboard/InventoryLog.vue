@@ -21,18 +21,18 @@
             </tr>
           </thead>
           <tbody v-if="!loading">
-            <tr v-for="(purchaseItem, index) in paginatedProducts" :key="index">
+          <tr v-for="(purchaseItem, index) in paginatedProducts.filter(item => item.type === 'PRODUCT')" :key="index">
               <td class="shadow-none fw-normal text-black title ps-0">
-                <span class="text-optional fs-14">{{ purchaseItem.productId }}</span>
+                <span class="text-optional fs-14">{{ purchaseItem?.inventory?.product?.id }}</span>
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ purchaseItem.productName }}
+                {{ purchaseItem?.inventory?.product?.name }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ purchaseItem.inOut }}
+                {{ purchaseItem?.inOut }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                {{ purchaseItem.comments }}
+                {{ purchaseItem?.comments }}
               </td>
             </tr>
           </tbody>
@@ -93,7 +93,7 @@ export default defineComponent({
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/freezy/dashboard/inventoryLog`
+          `${BASE_URL}/freezy/v1/dashboard/inventoryLog`
         );
         allProducts.value = response.data; // Assuming your API returns an array of products
         console.log("Products fetched:", allProducts.value);

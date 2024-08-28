@@ -144,7 +144,7 @@ export default defineComponent({
       gst: [
         { gstRate: "GST18P", gstValue: 0.18 },
         { gstRate: "GST28P", gstValue: 0.28 }
-      ]
+      ],
     };
   },
 
@@ -216,13 +216,14 @@ export default defineComponent({
       }
     };
 
-    const updateCost = (index: number, cost: number) => {
-      if (index >= 0 && index < filteredList.value.length) {
-        filteredList.value[index].cost = cost;
-        calculateSubtotal(index);
-        EventBus.emit('onFilteredProducts', filteredList.value); // Emit the updated product data
-      }
-    };
+    // const updateCost = (index: number, cost: number) => {
+    //   if (index >= 0 && index < filteredList.value.length) {
+    //     filteredList.value[index].cost = cost;
+    //     calculateSubtotal(index);
+    //     EventBus.emit('onFilteredProducts', filteredList.value); // Emit the updated product data
+    //     console.log(index, 'Finished successfully inside!');
+    //   }
+    // };
 
     const updateDiscount = (index: number, discount: number) => {
       if (index >= 0 && index < filteredList.value.length) {
@@ -256,31 +257,28 @@ export default defineComponent({
         // Calculate subtotal
         const quantity = product.quantity || 1;
         product.subTotal = (product.effectivePrice * quantity).toFixed(2);
+
       }
     };
 
-
-
-
-
-
-
-
     onMounted(async () => {
       await fetchProducts();
+      
       EventBus.on('onUpdateProducts', (products: any) => {
         searchTerm.value = products;
         EventBus.emit('onFilteredProducts', filteredList.value); // Emit the detailed product data
+        
       });
-
+      
       // Emit the allProducts list when the component is mounted
       EventBus.emit('onAllProducts', allProducts.value);
+
     });
+
     EventBus.on('requestAllProducts', () => {
       // Emit the allProducts list when a request is received
       EventBus.emit('onAllProducts', allProducts.value);
     });
-    console.log(allProducts.value);
 
 
     return {
@@ -289,7 +287,7 @@ export default defineComponent({
       filteredList,
       submitFilteredList,
       updateQuantity,
-      updateCost,
+      // updateCost,
       updateDiscount,
       calculateSubtotal,
     };

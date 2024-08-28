@@ -49,14 +49,14 @@
 
 
 
-      <div class="card border-0 rounded-1 mb-40">
+      <!-- <div class="card border-0 rounded-1 mb-40">
         <payables @loading-complete="onComponentLoaded" />
       </div>
 
 
       <div class="card border-0 rounded-1 mb-40">
         <receivables @loading-complete="onComponentLoaded" />
-      </div>
+      </div> -->
 
       <!--
       <div class="card border-0 shadow-none rounded-1 mb-20">
@@ -66,16 +66,16 @@
       -->
 
 
-    <div class="card border-0 shadow-none rounded-1 mb-40">
+    <!-- <div class="card border-0 shadow-none rounded-1 mb-40">
       <openQuotations @loading-complete="onComponentLoaded" />
-    </div>
+    </div> -->
     <div class="card border-0 shadow-none rounded-1 mb-40">
           <stock @loading-complete="onComponentLoaded" />
         </div>
 
-    <div class="card border-0 shadow-none rounded-1 mb-40">
+    <!-- <div class="card border-0 shadow-none rounded-1 mb-40">
               <fulfillment @loading-complete="onComponentLoaded" />
-         </div>
+         </div> -->
     <div class="flex-grow-1"></div>
     <MainFooter />
   </div>

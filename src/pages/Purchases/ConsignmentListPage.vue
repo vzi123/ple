@@ -1,9 +1,7 @@
 <template>
   <MainHeader />
   <MainSidebar />
-  <div
-    class="main-content bg_gray d-flex flex-column transition overflow-hidden"
-  >
+  <div class="main-content bg_gray d-flex flex-column transition overflow-hidden">
     <BreadcrumbMenu pageTitle="Consignments" />
     <FilterContent btnText="Purchase" btnLink="/create-purchase" />
     <ConsignmentList />
@@ -12,11 +10,7 @@
     <MainFooter />
   </div>
 
-  <div
-    class="delete-popup offcanvas offcanvas-end border-0"
-    tabindex="-1"
-    id="deletePopup"
-  >
+  <div class="delete-popup offcanvas offcanvas-end border-0" tabindex="-1" id="deletePopup">
     <div class="offcanvas-body p-0">
       <div class="delete-success">
         <img src="../../assets/img/icons/tick-circle.svg" alt="Image" />

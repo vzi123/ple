@@ -1,9 +1,7 @@
 <template>
   <MainHeader />
   <MainSidebar />
-  <div
-    class="main-content bg_gray d-flex flex-column transition overflow-hidden"
-  >
+  <div class="main-content bg_gray d-flex flex-column transition overflow-hidden">
     <BreadcrumbMenu pageTitle="Product & Stock Details" />
     <FilterContent btnText="Product" btnLink="/create-product" />
     <ProductsList />
@@ -11,6 +9,7 @@
     <div class="flex-grow-1"></div>
     <MainFooter />
   </div>
+  <ProductDetails />
 </template>
 
 <script lang="ts">
@@ -22,6 +21,7 @@ import BreadcrumbMenu from "../../components/Common/BreadcrumbMenu.vue";
 import FilterContent from "../../components/Common/FilterContent.vue";
 import ProductsList from "../../components/Products/ProductsList/ProductsList.vue";
 import MainFooter from "../../components/Layouts/MainFooter.vue";
+import ProductDetails from "../../components/Products/ProductDetails/ProductDetails.vue";
 
 export default defineComponent({
   name: "ProductsListPage",
@@ -32,6 +32,7 @@ export default defineComponent({
     FilterContent,
     ProductsList,
     MainFooter,
+    ProductDetails,
   },
 });
 </script>
@@ -39,6 +40,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .chart-wrapper {
   margin: 0 -10px;
+
   .card {
     margin-left: 10px;
     margin-right: 10px;

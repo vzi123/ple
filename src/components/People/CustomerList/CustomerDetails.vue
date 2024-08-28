@@ -1,29 +1,13 @@
 <template>
-  <div
-    class="modal fade"
-    id="detailsModal"
-    tabindex="-1"
-    aria-labelledby="detailsModalLabel"
-    aria-hidden="true"
-  >
-    <div
-      class="modal-dialog modal-rl modal-dialog-centered modal-dialog-scrollable"
-    >
+  <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-rl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-title" id="detailsModalLabel">
             Customer Details
           </h5>
-          <button
-            type="button"
-            class="btn-close p-0"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-            <img
-              src="../../../assets/img/icons/close-circle-2.svg"
-              alt="Image"
-            />
+          <button type="button" class="btn-close p-0" data-bs-dismiss="modal" aria-label="Close">
+            <img src="../../../assets/img/icons/close-circle-2.svg" alt="Image" />
           </button>
         </div>
         <div class="modal-body p-0">
@@ -55,10 +39,7 @@
           </ul>
         </div>
         <div class="modal-footer pt-20 pb-35">
-          <a
-            class="btn style-five upload-btn px-xxl-6 ms-auto"
-            onclick="window.print();"
-          >
+          <a class="btn style-five upload-btn px-xxl-6 ms-auto" onclick="window.print();">
             Print
             <img src="../../../assets/img/icons/download.svg" alt="Image" />
           </a>
