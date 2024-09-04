@@ -4,10 +4,10 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-title" id="createModalLabel">
-            Create customer
+            {{ form.id ? 'Edit Customer' : 'Create Customer' }}
           </h5>
           <button type="button" class="btn-close p-0" data-bs-dismiss="modal" aria-label="Close" id="closeBtn"
-            ref="myBtn">
+            ref="myBtn" @click="closeTab()">
             <img src="../../../assets/img/icons/close-circle-2.svg" alt="Image" />
           </button>
         </div>
@@ -33,7 +33,7 @@
               <div class="col-lg-6">
                 <div class="form-group mb-15">
                   <label class="d-block fs-14 text-black mb-10">Phone Number</label>
-                  <input type="number" v-model="form.phoneNumber"
+                  <input type="text" v-model="form.phoneNumber"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
                     placeholder="Enter Phone Number" />
                 </div>
@@ -78,7 +78,7 @@
               </div>
               <div class="col-12">
                 <button class="btn style-five w-100 d-block" id="submitButton" type="submit">
-                  Create
+                  {{ form.id ? 'Update' : 'Create' }}
                 </button>
               </div>
             </div>
@@ -97,6 +97,8 @@ import axios from "axios";
 
 import EventBus from '@/events/event-bus';
 import { BASE_URL } from "@/utils/utils";
+import stateStore from "@/utils/store";
+
 export default defineComponent({
   name: "CreateCustomerForm",
   components: {
@@ -106,6 +108,7 @@ export default defineComponent({
   data() {
     return {
       form: {
+        id: "",
         name: "",
         email: "",
         phoneNumber: "",
@@ -120,6 +123,29 @@ export default defineComponent({
       loading: false,
     }
   },
+  computed: {
+    customerDetail() {
+      return stateStore.customerList;
+    }
+  },
+  watch: {
+    customerDetail: {
+      handler(newVal) {
+        if (newVal) {
+          this.form.id = newVal.id || '';
+          this.form.name = newVal.first_name || '';
+          this.form.email = newVal.email || '';
+          this.form.phoneNumber = newVal.phone_number || '';
+          this.form.address = newVal.address || '';
+          this.form.city = newVal.city || '';
+          this.form.gstId = newVal.gstId || '';
+          this.form.pincode = newVal.pincode || '';
+        }
+      },
+      immediate: true,
+      deep: true
+    }
+  },
   methods: {
 
     async submitFilteredList(submitData: any) {
@@ -129,6 +155,7 @@ export default defineComponent({
         (submitButtonElement as any).disabled = true;
       }
       const requestData = {
+        id: this.form.id,
         name: this.form.name,
         email: this.form.email,
         phoneNumber: this.form.phoneNumber,
@@ -138,12 +165,21 @@ export default defineComponent({
         gstId: this.form.gstId
       };
       try {
-        const response = await axios.post(`${BASE_URL}/freezy/v1/users/customer`, requestData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log("Response:", response.data);
+        if (requestData.id) {
+          const response = await axios.post(`${BASE_URL}/freezy/v1/users/customer/${requestData.id}`, requestData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("Response:", response.data);
+        } else {
+          const response = await axios.post(`${BASE_URL}/freezy/v1/users/customer`, requestData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("Response:", response.data);
+        }
       } catch (error) {
         console.error("Error submitting the list:", error);
       } finally {
@@ -158,14 +194,12 @@ export default defineComponent({
           if (elem) {
             elem.click();
           }
-
-
-        }, 3000);
+        }, 1000);
       }
-
-
     },
-
+    closeTab() {
+      stateStore.customerList = stateStore.resetCustomerList;
+    }
   },
   mounted() {
 

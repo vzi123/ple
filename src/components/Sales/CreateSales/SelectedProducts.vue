@@ -157,18 +157,26 @@ export default defineComponent({
         const response = await axios.get(`${BASE_URL}/freezy/v1/products/all`);
 
         allProducts.value = response.data.map((product: any) => ({
-          productId: product.id || '',
+          productId:  product.id || '',
           product: product.name || '',
           description: product.description || '',
           quantity: 1,
-          cost: product.cost || 0,
-          unitPrice: product.cost || 0,
+          unitPrice: 0,
           discountAmount: 0,
-          subTotal: (product.cost || 0) * 1,
-          effectivePrice: (product.cost || 0) * 1,
+          subTotal: 0,
+          effectivePrice: 0,
+          gstValue: {
+            gstRate: "",
+            gstValue: 0
+          },
           iduSerialNo: "",
           oduSerialNo: "",
-          gstValue: 0
+          type: "PRODUCT",
+          accessoryId: "",
+          accessory: "",
+          serviceId: "",
+          service: "",
+          gstPercent: 0
         }));
 
         EventBus.emit('onAllProducts', allProducts.value);
@@ -263,13 +271,13 @@ export default defineComponent({
 
     onMounted(async () => {
       await fetchProducts();
-      
+
       EventBus.on('onUpdateProducts', (products: any) => {
         searchTerm.value = products;
         EventBus.emit('onFilteredProducts', filteredList.value); // Emit the detailed product data
-        
+
       });
-      
+
       // Emit the allProducts list when the component is mounted
       EventBus.emit('onAllProducts', allProducts.value);
 

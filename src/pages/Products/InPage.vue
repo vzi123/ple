@@ -49,7 +49,7 @@
           <label class="d-block fs-14 text-black mb-2">Choose Accessory</label>
           <div class="search-area style-two position-relative w-100">
             <Typeahead @update:modelValue="onUpdateAccessories" :minInputLength="0" :requestDelay="0"
-              placeholder="Search by Accessory" :items="allAccessories.map(accessory => accessory.product)" />
+              placeholder="Search by Accessory" :items="allAccessories.map(accessory => accessory.accessory)" />
 
             <div class="mt-2" v-show="accessories.length > 0">
               <span :class="{
@@ -58,7 +58,7 @@
                 'bg-dark': true,
                 'ms-2': index > 0
               }" style="font-size:inherit" v-for="(accessory, index) in accessories" :key="index">
-                {{ accessory.description }}
+                {{ accessory.accessory }}
               </span>
             </div>
 
@@ -168,8 +168,8 @@ interface Product {
 // }
 
 interface Accessory {
-  productId: number;
-  product: string;
+  accessoryId: number;
+  accessory: string;
   // Add other properties as necessary
 }
 
@@ -193,7 +193,7 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: "U0001",
+        customer: "",      //U0001
         branch: "",
         project: "",
       },
@@ -266,17 +266,17 @@ export default defineComponent({
     },
     onUpdateAccessories(accessoryName: string) {
       // Find the full accessory details using the accessory name
-      const fullAccessory = this.allAccessories.find(accessory => accessory.product === accessoryName);
+      const fullAccessory = this.allAccessories.find(accessory => accessory.accessory === accessoryName);
 
       if (fullAccessory) {
         // Check if the accessory is already in the accessories array
-        const exists = this.accessories.some(a => a.product === fullAccessory.product); // Adjust based on unique property
+        const exists = this.accessories.some(a => a.accessory === fullAccessory.accessory); // Adjust based on unique property
 
         if (!exists) {
           this.accessories.push(fullAccessory); // Push the full accessory object if not a duplicate
           EventBus.emit('onUpdateAccessories', this.accessories);
         } else {
-          console.log('Accessory already exists:', fullAccessory.product);
+          console.log('Accessory already exists:', fullAccessory.accessory);
         }
       } else {
         console.error('Accessory not found:', accessoryName);
@@ -318,6 +318,7 @@ export default defineComponent({
 
     async submitFilteredList(submitData: any) {
       const requestData = {
+        consignmentId: stateStore.consignmentDetails.id,
         userId: this.form.customer,
         projectId: this.form.project,
         userPersona: 'customer',
@@ -330,13 +331,22 @@ export default defineComponent({
         total: submitData.total,
       };
       try { 
-        // https://freezy-prod-frontend.fly.dev/$%7BBASE_URL%7D/freezy/v1/inventory/outward
+       if (requestData.consignmentId) {
+        const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/inward/${requestData.consignmentId}`, requestData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("Response:", response.data);
+       } else {
         const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/inward`, requestData, {
           headers: {
             "Content-Type": "application/json",
           },
         });
         console.log("Response:", response.data);
+       }
+       
       } catch (error) {
         console.error("Error submitting the list:", error);
       } finally {
@@ -348,7 +358,7 @@ export default defineComponent({
             elem.click();
           }
           setTimeout(() => {
-            this.$router.push({ name: 'ProductsListPage' });
+            this.$router.push({ name: 'ConsignmentListPage' });
           }, 1500);
         }
       }

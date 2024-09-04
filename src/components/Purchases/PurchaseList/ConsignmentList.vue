@@ -192,7 +192,7 @@ export default defineComponent({
 
     const filteredList = computed(() => {
       return consignmentListData.value.filter((consignmentItem: any) => {
-        const userName = consignmentItem?.createdFor.first_name + " " + consignmentItem?.createdFor.last_name;
+        const userName = consignmentItem?.createdFor?.first_name + " " + consignmentItem?.createdFor?.last_name;
         return userName.toLowerCase().includes(searchTerm.value.toLowerCase());
       });
     });
@@ -214,7 +214,7 @@ export default defineComponent({
   methods: {
     formatDate,
     getUserName(user: any) {
-      return user.first_name;
+      return user? user.first_name : '';
     },
 
     onViewPurchase(consignmentItem: any) {

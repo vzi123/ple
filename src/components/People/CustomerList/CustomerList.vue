@@ -30,8 +30,8 @@
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ userItem.pincode }}</td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ userItem.address }}</td>
               <td class="shadow-none lh-1 text-end pe-0">
-                <div class="button-group d-flex flex-wrap align-items-center">
-                  <a href="javascript:void(0)" data-bs-target="#createModal" role="button" data-bs-toggle="modal">
+                <div class="button-group d-flex flex-wrap align-items-center w-100">
+                  <a href="javascript:void(0)" data-bs-target="#createModal" data-bs-toggle="modal" @click="onEditCustomer(userItem)" >
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
                   </a>
                   <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
@@ -169,6 +169,12 @@ export default defineComponent({
     },
     onViewPurchase(purchaseItem: any) {
       stateStore.purchaseDetails = purchaseItem;
+    },
+    onEditCustomer(userItem: any) {
+      stateStore.customerList = userItem;
+      console.log(stateStore.customerList);
+      // Emit an event with the consignment details
+      EventBus.emit('customerSelected', userItem);
     },
   },
 });

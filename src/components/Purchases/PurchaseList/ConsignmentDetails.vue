@@ -162,10 +162,10 @@
                     <tbody>
                       <tr v-for="(prod, index) in consignmentDetail?.accessories" :key="index" class="br-s-1">
                         <td class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1">
-                          {{ prod?.productId === "" || prod?.productId == null ? "-" : prod?.productId }}
+                          {{ prod?.accessoryId === "" || prod?.accessoryId == null ? "-" : prod?.accessoryId }}
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                          {{ prod?.product === "" || prod?.product == null ? "-" : prod?.product }}
+                          {{ prod?.accessory === "" || prod?.accessory == null ? "-" : prod?.accessory }}
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                           {{ prod?.description === "" || prod?.description == null ? "-" : prod?.description }}
@@ -232,10 +232,10 @@
                   <tbody>
                     <tr v-for="(prod, index) in consignmentDetail?.services" :key="index" class="br-s-1">
                       <td class="shadow-none lh-1 fs-14 fw-semibold text-paragraph br-s-1">
-                        {{ prod?.productId === "" || prod?.productId == null ? "-" : prod?.productId }}
+                        {{ prod?.serviceId === "" || prod?.serviceId == null ? "-" : prod?.serviceId }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.product === "" || prod?.product == null ? "-" : prod?.product }}
+                        {{ prod?.service === "" || prod?.service == null ? "-" : prod?.service }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                         {{ prod?.description === "" || prod?.description == null ? "-" : prod?.description }}

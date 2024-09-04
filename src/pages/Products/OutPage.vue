@@ -49,7 +49,7 @@
           <label class="d-block fs-14 text-black mb-2">Choose Accessory</label>
           <div class="search-area style-two position-relative w-100">
             <Typeahead @update:modelValue="onUpdateAccessories" :minInputLength="0" :requestDelay="0"
-              placeholder="Search by Accessory" :items="allAccessories.map(accessory => accessory.product)" />
+              placeholder="Search by Accessory" :items="allAccessories.map(accessory => accessory.accessory)" />
             <div class="mt-2" v-show="accessories.length > 0">
               <span :class="{
                 badge: true,
@@ -57,7 +57,7 @@
                 'bg-dark': true,
                 'ms-2': index > 0
               }" style="font-size:inherit" v-for="(accessory, index) in accessories" :key="index">
-                {{ accessory.product }}
+                {{ accessory.accessory }}
               </span>
             </div>
 
@@ -77,7 +77,7 @@
           <label class="d-block fs-14 text-black mb-2">Choose Services</label>
           <div class="search-area style-two position-relative w-100">
             <Typeahead @update:modelValue="onUpdateServices" :minInputLength="0" :requestDelay="0"
-              placeholder="Search by Service" :items="allServices.map(service => service.product)" />
+              placeholder="Search by Service" :items="allServices.map(service => service.service)" />
             <div class="mt-2" v-show="services.length > 0">
               <span :class="{
                 badge: true,
@@ -85,7 +85,7 @@
                 'bg-dark': true,
                 'ms-2': index > 0
               }" style="font-size:inherit" v-for="(service, index) in services" :key="index">
-                {{ service.product }}
+                {{ service.service }}
               </span>
             </div>
             <!-- <input
@@ -148,6 +148,7 @@ import EventBus from '@/events/event-bus';
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import stateStore from "@/utils/store";
+import { BASE_URL } from "@/utils/utils";
 
 interface Product {
   productId: number;
@@ -156,14 +157,14 @@ interface Product {
 }
 
 interface Service {
-  productId: number;
-  product: string;
+  serviceId: number;
+  service: string;
   // Add other properties as necessary
 }
 
 interface Accessory {
-  productId: number;
-  product: string;
+  accessoryId: number;
+  accessory: string;
   // Add other properties as necessary
 }
 
@@ -256,11 +257,11 @@ export default defineComponent({
     },
     onUpdateServices(serviceName: string) {
       // Assuming you have access to the full service details, e.g., via a lookup
-      const fullService = this.allServices.find(service => service.product === serviceName);
+      const fullService = this.allServices.find(service => service.service === serviceName);
 
       if (fullService) {
         // Check if the service is already in the list
-        const isServiceExists = this.services.some(existingService => existingService.productId === fullService.productId);
+        const isServiceExists = this.services.some(existingService => existingService.serviceId === fullService.serviceId);
 
         if (!isServiceExists) {
           // Only push if the service is not already present in the list
@@ -277,17 +278,17 @@ export default defineComponent({
     },
     onUpdateAccessories(accessoryName: string) {
       // Find the full accessory details using the accessory name
-      const fullAccessory = this.allAccessories.find(accessory => accessory.product === accessoryName);
+      const fullAccessory = this.allAccessories.find(accessory => accessory.accessory === accessoryName);
 
       if (fullAccessory) {
         // Check if the accessory is already in the accessories array
-        const exists = this.accessories.some(a => a.product === fullAccessory.product); // Adjust based on unique property
+        const exists = this.accessories.some(a => a.accessory === fullAccessory.accessory); // Adjust based on unique property
 
         if (!exists) {
           this.accessories.push(fullAccessory); // Push the full accessory object if not a duplicate
           EventBus.emit('onUpdateAccessories', this.accessories);
         } else {
-          console.log('Accessory already exists:', fullAccessory.product);
+          console.log('Accessory already exists:', fullAccessory.accessory);
         }
       } else {
         console.error('Accessory not found:', accessoryName);
@@ -299,7 +300,7 @@ export default defineComponent({
     },
     async fetchCustomers() {
       try {
-        const response = await axios.get("${BASE_URL}/freezy/v1/users/filter?type=customer");
+        const response = await axios.get(`${BASE_URL}/freezy/v1/users/filter?type=customer`);
 
         this.customers = response.data.map((customer: any) => ({
           code: customer.id,
@@ -313,7 +314,7 @@ export default defineComponent({
     },
     async fetchProjects() {
       try {
-        const response = await axios.get("${BASE_URL}/freezy/projects/all");
+        const response = await axios.get(`${BASE_URL}/freezy/projects/all`);
 
         this.projects = response.data.map((project: any) => ({
           code: project.id,
@@ -367,46 +368,28 @@ export default defineComponent({
         total: submitData.total,
       };
       try {
-        const response = await axios.post("${BASE_URL}/freezy/v1/inventory/outward", requestData, {
-          responseType: 'blob',
+        const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward`, requestData, {
           headers: {
             'Content-Type': 'application/json',
           },
         });
+        console.log("Response:", response.data);
 
-        const blob = response.data;
-        const url = window.URL.createObjectURL(blob);
-
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = url;
-
-        document.body.appendChild(iframe);
-
-        iframe.onload = () => {
-          if (iframe.contentWindow) {
-            console.log("My response:");
-
-            iframe.contentWindow.print();
-
-            this.$router.push({ name: 'ProductsListPage' });
-
-            iframe.contentWindow.onafterprint = () => {
-              document.body.removeChild(iframe); // Clean up the iframe
-              console.log("My iframe:");
-              this.$router.push({ name: 'ProductsListPage' }); // Navigate to the desired page
-            };
-
-
-          } else {
-            console.error('Error: iframe.contentWindow is null');
-          }
-        }
-
+  
       } catch (error) {
         console.error("Error submitting the list:", error);
       } finally {
-
+        const loadingPopupElement = document.getElementById('loadingPopup');
+        if (loadingPopupElement) {
+          (loadingPopupElement as any).press = true;
+          const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+          if (elem) {
+            elem.click();
+          }
+          setTimeout(() => {
+            this.$router.push({ name: 'ConsignmentListPage' });
+          }, 1500);
+        }
 
       }
     }

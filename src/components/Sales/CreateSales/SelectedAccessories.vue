@@ -37,12 +37,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(accessory, index) in filteredAccessoriesList" :key="accessory.productId">
+          <tr v-for="(accessory, index) in filteredAccessoriesList" :key="accessory.accessoryId">
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
-              {{ accessory.product }}
+              {{ accessory.accessory }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{ accessory.productId }}
+              {{ accessory.accessoryId }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
               <input type="number" v-model.number="accessory.unitPrice" @input="calculateAccessoriesSubtotal(index)"
@@ -93,8 +93,8 @@ import "vue-select/dist/vue-select.css";
 import { BASE_URL } from "@/utils/utils";
 
 interface Accessory {
-  productId: string;
-  product: string;
+  accessoryId: string;
+  accessory: string;
   description: string;
   quantity: number;
   cost: number | null;
@@ -150,17 +150,26 @@ export default defineComponent({
         const response = await axios.get(`${BASE_URL}/freezy/v1/accessories/all`);
         // Transform the response data
         allAccessories.value = response.data.map((accessory: any) => ({
-          productId: accessory.id,
-          product: accessory.name, // Change 'name' to 'accessory'
-          description: accessory.description,
-          quantity: 1, // Default quantity
-          cost: accessory.cost,
-          unitPrice: accessory.cost,
+          accessoryId:  accessory.id || '',
+          accessory: accessory.name || '',
+          description: accessory.description || '',
+          quantity: 1,
+          unitPrice: 0,
           discountAmount: 0,
-          subTotal: (accessory.cost - 0) * 1,
-          effectivePrice: (accessory.cost - 0) * 1,
-          serialNo: "",
-          gstValue: 0
+          subTotal: 0,
+          effectivePrice: 0,
+          gstValue: {
+            gstRate: "",
+            gstValue: 0
+          },
+          iduSerialNo: "",
+          oduSerialNo: "",
+          type: "ACCESSORY",
+          productId: "",
+          product: "",
+          serviceId: "",
+          service: "",
+          gstPercent: 0
         }));
         EventBus.emit('onAllAccessories', allAccessories.value);
       } catch (error) {
@@ -188,8 +197,8 @@ export default defineComponent({
       // Ensure that 'accessories' is not null or undefined
       if (!props.accessories) return [];
 
-      // Filter accessories based on the presence of 'product' and 'productId'
-      return props.accessories.filter(p => p.product && p.productId);
+      // Filter accessories based on the presence of 'accessory' and 'accessoryId'
+      return props.accessories.filter(p => p.accessory && p.accessoryId);
     });
 
 

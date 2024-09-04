@@ -36,12 +36,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(service, index) in filteredServiceList" :key="service.productId">
+          <tr v-for="(service, index) in filteredServiceList" :key="service.serviceId">
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
-              {{ service.product }}
+              {{ service.service }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              {{ service.productId }}
+              {{ service.serviceId }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
               <input type="number" v-model.number="service.cost" @input="calculateServicesSubtotal(index)"
@@ -95,8 +95,8 @@ import { BASE_URL } from "@/utils/utils";
 
 
 interface Service {
-  productId: string;
-  product: string;
+  serviceId: string;
+  service: string;
   description: string;
   quantity: number;
   cost: number | null;
@@ -153,17 +153,26 @@ export default defineComponent({
         const response = await axios.get(`${BASE_URL}/freezy/v1/services/all`);
         // Transform the response data
         allServices.value = response.data.map((service: any) => ({
-          productId: service.id,
-          product: service.name, // Change 'name' to 'service'
-          description: service.description,
-          quantity: 1, // Default quantity
-          cost: service.cost,
-          unitPrice: service.cost,
+          serviceId: service.id || '',
+          service: service.name || '',
+          description: service.description || '',
+          quantity: 1,
+          unitPrice: 0,
           discountAmount: 0,
-          subTotal: (service.cost - 0) * 1,
-          effectivePrice: (service.cost - 0) * 1,
-          serialNo: "",
-          gstValue: 0
+          subTotal: 0,
+          effectivePrice: 0,
+          gstValue: {
+            gstRate: "",
+            gstValue: 0
+          },
+          iduSerialNo: "",
+          oduSerialNo: "",
+          type: "SERVICE",
+          accessoryId: "",
+          accessory: "",
+          productId: "",
+          product: "",
+          gstPercent: 0
         }));
         EventBus.emit('onAllServices', allServices.value);
       } catch (error) {
@@ -191,8 +200,8 @@ export default defineComponent({
       // Ensure that 'services' is not null or undefined
       if (!props.services) return [];
 
-      // Filter services based on the presence of 'product' and 'productId'
-      return props.services.filter(p => p.product && p.productId);
+      // Filter services based on the presence of 'service' and 'serviceId'
+      return props.services.filter(p => p.service && p.serviceId);
     });
 
     const updateServicesQuantity = ({ index, quantity }: { index: number, quantity: number }) => {

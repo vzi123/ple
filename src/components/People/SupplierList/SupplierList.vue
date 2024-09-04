@@ -74,9 +74,10 @@
                   <!--                >-->
                   <!--                  <img src="../../../assets/img/icons/eye.svg" alt="Image" />-->
                   <!--                </a>-->
-                  <router-link to="/edit-purchase" title="Edit">
+                  <a href="javascript:void(0)" data-bs-target="#createModal" role="button" data-bs-toggle="modal"
+                  @click="onEditSupplier(userItem)">
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
-                  </router-link>
+                  </a>
                   <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
                     aria-controls="deletePopup">
                     <img src="../../../assets/img/icons/close.svg" alt="Image" />
@@ -137,7 +138,7 @@ import stateStore from "../../../utils/store";
 import { formatDate, BASE_URL } from '@/utils/utils';
 import EventBus from '../../../events/event-bus';
 import FilterContent from './FilterContent.vue';
-import '@/assets/css/CustomSpinner.css'; 
+import '@/assets/css/CustomSpinner.css';
 
 export default defineComponent({
   name: "SupplierList",
@@ -150,7 +151,7 @@ export default defineComponent({
       currncySymbol: "₹",
     };
   },
-  
+
   setup() {
     const loading = ref(false);
     const searchTerm = ref('');
@@ -220,6 +221,12 @@ export default defineComponent({
     },
     onViewPurchase(purchaseItem: any) {
       stateStore.purchaseDetails = purchaseItem;
+    },
+    onEditSupplier(userItem: any) {
+      stateStore.supplierList = userItem;
+      console.log(stateStore.supplierList);
+      // Emit an event with the consignment details
+      EventBus.emit('customerSelected', userItem);
     },
   },
 });

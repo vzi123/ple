@@ -9,7 +9,11 @@ interface StateStore {
   salesOrderDetails: any;
   productDetails: any;
   resetConsignmentDetails: any;
-  inWards:any;
+  inWards: any;
+  customerList: any;
+  resetCustomerList: any;
+  supplierList: any;
+  resetSupplierList: any;
 }
 
 const stateStore: StateStore = reactive({
@@ -17,8 +21,8 @@ const stateStore: StateStore = reactive({
   onChange() {
     stateStore.open = !stateStore.open
   },
-  
-  inWards:{},
+
+  inWards: {},
 
   consignmentDetails: {
     "id": "",
@@ -39,81 +43,77 @@ const stateStore: StateStore = reactive({
       "gstId": "",
       "pincode": ""
     },
-    "products": [
-      {
-        "productId": "",
-        "product": "",
-        "description": "",
-        "quantity": 0,
-        "unitPrice": 0,
-        "discountAmount": "",
-        "subTotal": "",
-        "effectivePrice": "",
-        "gstValue": {
-          "gstRate": "",
-          "gstValue": ""
-        },
-        "iduSerialNo": "",
-        "oduSerialNo": "",
-        "type": "",
-        "accessoryId": "",
-        "accessory": "",
-        "serviceId": "",
-        "service": "",
-        "gstPercent": ""
-      }
-    ],
-    "accessories": [
-      {
-        "productId": "",
-        "product": "",
-        "description": "",
-        "quantity": 0,
-        "unitPrice": 0,
-        "discountAmount": "",
-        "subTotal": "",
-        "effectivePrice": "",
-        "gstValue": {
-          "gstRate": "",
-          "gstValue": ""
-        },
-        "iduSerialNo": "",
-        "oduSerialNo": "",
-        "type": "",
-        "accessoryId": "",
-        "accessory": "",
-        "serviceId": "",
-        "service": "",
-        "gstPercent": ""
-      }
-    ],
-    "services": [
-      {
-        "productId": "",
-        "product": "",
-        "description": "",
-        "quantity": 0,
-        "unitPrice": 0,
-        "discountAmount": "",
-        "subTotal": "",
-        "effectivePrice": "",
-        "gstValue": {
-          "gstRate": "",
-          "gstValue": ""
-        },
-        "iduSerialNo": "",
-        "oduSerialNo": "",
-        "type": "",
-        "accessoryId": "",
-        "accessory": "",
-        "serviceId": "",
-        "service": "",
-        "gstPercent": ""
-      }
-    ]
+    "products": [{
+      "productId": "",
+      "product": "",
+      "description": "",
+      "quantity": 0,
+      "unitPrice": 0,
+      "discountAmount": 0,
+      "subTotal": 0,
+      "effectivePrice": 0,
+      "gstValue": {
+        "gstRate": "",
+        "gstValue": 0.0
+      },
+      "iduSerialNo": "",
+      "oduSerialNo": "",
+      "type": "",
+      "accessoryId": "",
+      "accessory": "",
+      "serviceId": "",
+      "service": "",
+      "gstPercent": 0
+    }],
+    "accessories": [{
+      "productId": "",
+      "product": "",
+      "description": "",
+      "quantity": 0,
+      "unitPrice": 0,
+      "discountAmount": 0,
+      "subTotal": 0,
+      "effectivePrice": 0,
+      "gstValue": {
+        "gstRate": "",
+        "gstValue": 0.0
+      },
+      "iduSerialNo": "",
+      "oduSerialNo": "",
+      "type": "",
+      "accessoryId": "",
+      "accessory": "",
+      "serviceId": "",
+      "service": "",
+      "gstPercent": 0
+    }],
+    "services": [{
+      "productId": "",
+      "product": "",
+      "description": "",
+      "quantity": 0,
+      "unitPrice": 0,
+      "discountAmount": 0,
+      "subTotal": 0,
+      "effectivePrice": 0,
+      "gstValue": {
+        "gstRate": "",
+        "gstValue": 0.0
+      },
+      "iduSerialNo": "",
+      "oduSerialNo": "",
+      "type": "",
+      "accessoryId": "",
+      "accessory": "",
+      "serviceId": "",
+      "service": "",
+      "gstPercent": 0
+    }]
   },
 
-  productDetails:{
+ 
+
+  productDetails: {
     "id": "",
     "inventory": 0,
     "product": {
@@ -140,11 +140,62 @@ const stateStore: StateStore = reactive({
 
   quotationDetails: {},
   salesOrderDetails: {},
-  purchaseDetails:{},
+  purchaseDetails: {},
 
+  customerList: {
+    "id": "",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "phone_number": "",
+    "role": "",
+    "address": "",
+    "city": "",
+    "gstId": "",
+    "pincode": ""
+  },
+
+  supplierList: {
+    "id": "",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "phone_number": "",
+    "role": "",
+    "address": "",
+    "city": "",
+    "gstId": "",
+    "pincode": ""
+  },
 
 
   // For reset
+
+  resetCustomerList: {
+    "id": "",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "phone_number": "",
+    "role": "",
+    "address": "",
+    "city": "",
+    "gstId": "",
+    "pincode": ""
+  },
+
+  resetSupplierList: {
+    "id": "",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "phone_number": "",
+    "role": "",
+    "address": "",
+    "city": "",
+    "gstId": "",
+    "pincode": ""
+  },
 
   resetConsignmentDetails: {
     "id": "",
@@ -165,77 +216,72 @@ const stateStore: StateStore = reactive({
       "gstId": "",
       "pincode": ""
     },
-    "products": [
-      {
-        "productId": "",
-        "product": "",
-        "description": "",
-        "quantity": 0,
-        "unitPrice": 0,
-        "discountAmount": "",
-        "subTotal": "",
-        "effectivePrice": "",
-        "gstValue": {
-          "gstRate": "",
-          "gstValue": ""
-        },
-        "iduSerialNo": "",
-        "oduSerialNo": "",
-        "type": "",
-        "accessoryId": "",
-        "accessory": "",
-        "serviceId": "",
-        "service": "",
-        "gstPercent": ""
-      }
-    ],
-    "accessories": [
-      {
-        "productId": "",
-        "product": "",
-        "description": "",
-        "quantity": 0,
-        "unitPrice": 0,
-        "discountAmount": "",
-        "subTotal": "",
-        "effectivePrice": "",
-        "gstValue": {
-          "gstRate": "",
-          "gstValue": ""
-        },
-        "iduSerialNo": "",
-        "oduSerialNo": "",
-        "type": "",
-        "accessoryId": "",
-        "accessory": "",
-        "serviceId": "",
-        "service": "",
-        "gstPercent": ""
-      }
-    ],
-    "services": [
-      {
-        "productId": "",
-        "product": "",
-        "description": "",
-        "quantity": 0,
-        "unitPrice": 0,
-        "discountAmount": "",
-        "subTotal": "",
-        "effectivePrice": "",
-        "gstValue": {
-          "gstRate": "",
-          "gstValue": ""
-        },
-        "iduSerialNo": "",
-        "oduSerialNo": "",
-        "type": "",
-        "accessoryId": "",
-        "accessory": "",
-        "serviceId": "",
-        "service": "",
-        "gstPercent": ""
-      }
+    "products": [{
+      "productId": "",
+      "product": "",
+      "description": "",
+      "quantity": 0,
+      "unitPrice": 0,
+      "discountAmount": 0,
+      "subTotal": 0,
+      "effectivePrice": 0,
+      "gstValue": {
+        "gstRate": "",
+        "gstValue": 0.0
+      },
+      "iduSerialNo": "",
+      "oduSerialNo": "",
+      "type": "",
+      "accessoryId": "",
+      "accessory": "",
+      "serviceId": "",
+      "service": "",
+      "gstPercent": 0
+    }],
+    "accessories": [{
+      "productId": "",
+      "product": "",
+      "description": "",
+      "quantity": 0,
+      "unitPrice": 0,
+      "discountAmount": 0,
+      "subTotal": 0,
+      "effectivePrice": 0,
+      "gstValue": {
+        "gstRate": "",
+        "gstValue": 0.0
+      },
+      "iduSerialNo": "",
+      "oduSerialNo": "",
+      "type": "",
+      "accessoryId": "",
+      "accessory": "",
+      "serviceId": "",
+      "service": "",
+      "gstPercent": 0
+    }],
+    "services": [{
+      "productId": "",
+      "product": "",
+      "description": "",
+      "quantity": 0,
+      "unitPrice": 0,
+      "discountAmount": 0,
+      "subTotal": 0,
+      "effectivePrice": 0,
+      "gstValue": {
+        "gstRate": "",
+        "gstValue": 0.0
+      },
+      "iduSerialNo": "",
+      "oduSerialNo": "",
+      "type": "",
+      "accessoryId": "",
+      "accessory": "",
+      "serviceId": "",
+      "service": "",
+      "gstPercent": 0
+    }
     ]
   },
 })

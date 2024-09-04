@@ -1,29 +1,14 @@
 <template>
-  <div
-    class="modal fade"
-    id="createModal"
-    tabindex="-1"
-    aria-labelledby="createModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-xl modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-title" id="createModalLabel">
-            Create Supplier
+            {{ form.id ? 'Edit Supplier' : 'Create Supplier' }}
           </h5>
-          <button
-            type="button"
-            class="btn-close p-0"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            id="closeBtn"
-            ref="myBtn"
-          >
-            <img
-              src="../../../assets/img/icons/close-circle-2.svg"
-              alt="Image"
-            />
+          <button type="button" class="btn-close p-0" data-bs-dismiss="modal" aria-label="Close" id="closeBtn"
+            ref="myBtn" @click="closeTab()">
+            <img src="../../../assets/img/icons/close-circle-2.svg" alt="Image" />
           </button>
         </div>
         <div class="modal-body">
@@ -31,90 +16,67 @@
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group mb-15">
-                  <label class="d-block fs-14 text-black mb-10"
-                    >Supplier Name</label
-                  >
-                  <input
-                    type="text" v-model="form.name"
+                  <label class="d-block fs-14 text-black mb-10">Supplier Name</label>
+                  <input type="text" v-model="form.name"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
-                    placeholder="Enter Supplier Name"
-                  />
+                    placeholder="Enter Supplier Name" />
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group mb-15">
                   <label class="d-block fs-14 text-black mb-10">Email</label>
-                  <input
-                    type="email" v-model="form.email"
+                  <input type="email" v-model="form.email"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
-                    placeholder="Enter Email"
-                  />
+                    placeholder="Enter Email" />
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group mb-15">
-                  <label class="d-block fs-14 text-black mb-10"
-                    >Phone Number</label
-                  >
-                  <input
-                    type="number" v-model="form.phoneNumber"
+                  <label class="d-block fs-14 text-black mb-10">Phone Number</label>
+                  <input type="text" v-model="form.phoneNumber"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
-                    placeholder="Enter Phone Number"
-                  />
+                    placeholder="Enter Phone Number" />
                 </div>
               </div>
 
               <div class="col-lg-6">
                 <div class="form-group mb-15">
                   <label class="d-block fs-14 text-black mb-10">City</label>
-                  <input
-                    type="text" v-model="form.city"
+                  <input type="text" v-model="form.city"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
-                    placeholder="Enter City"
-                  />
+                    placeholder="Enter City" />
                 </div>
               </div>
 
               <div class="col-lg-6">
-                              <div class="form-group mb-15">
-                                <label class="d-block fs-14 text-black mb-10"
-                                  >GST Number</label
-                                >
-                                <input
-                                  type="number" v-model="form.gstId"
-                                  class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
-                                  placeholder="Enter GST Number"
-                                />
-                              </div>
-                            </div>
+                <div class="form-group mb-15">
+                  <label class="d-block fs-14 text-black mb-10">GST Number</label>
+                  <input type="text" v-model="form.gstId"
+                    class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
+                    placeholder="Enter GST Number" />
+                </div>
+              </div>
 
-                            <div class="col-lg-6">
-                              <div class="form-group mb-15">
-                                <label class="d-block fs-14 text-black mb-10">PinCode</label>
-                                <input
-                                  type="text" v-model="form.pincode"
-                                  class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
-                                  placeholder="Enter PinCode"
-                                />
-                              </div>
-                            </div>
+              <div class="col-lg-6">
+                <div class="form-group mb-15">
+                  <label class="d-block fs-14 text-black mb-10">PinCode</label>
+                  <input type="text" v-model="form.pincode"
+                    class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
+                    placeholder="Enter PinCode" />
+                </div>
+              </div>
 
               <div class="col-12">
                 <div class="form-group mb-15">
                   <label class="d-block fs-14 text-black mb-10">Address</label>
-                  <textarea v-model="form.address"
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="10"
+                  <textarea v-model="form.address" name="" id="" cols="30" rows="10"
                     class="w-100 d-block shadow-none fs-14 bg_ash rounded-1 text-black border-0 placeholder-1"
-                    placeholder="Address"
-                  ></textarea>
+                    placeholder="Address"></textarea>
                 </div>
               </div>
               <div class="col-12">
-                <button  class="btn style-five w-100 d-block" id="submitButton" type="submit">
-                  Create
+                <button class="btn style-five w-100 d-block" id="submitButton" type="submit">
+                  {{ form.id ? 'Update' : 'Create' }}
                 </button>
               </div>
             </div>
@@ -133,80 +95,117 @@ import axios from "axios";
 
 import EventBus from '@/events/event-bus';
 import { BASE_URL } from "@/utils/utils";
+import stateStore from "@/utils/store";
 export default defineComponent({
   name: "CreateSupplierForm",
-   components: {
+  components: {
+
+
+  },
+  data() {
+    return {
+      form: {
+        id: "",
+        name: "",
+        email: "",
+        phoneNumber: "",
+        address: "",
+        city: "",
+        gstId: "",
+        pincode: "",
+
+
+      },
+
+
+
+      loading: false,
+    }
+  },
+  computed: {
+    supplierDetail() {
+      return stateStore.supplierList;
+    }
+  },
+  watch: {
+    supplierDetail: {
+      handler(newVal) {
+        if (newVal) {
+          this.form.id = newVal.id || '';
+          this.form.name = newVal.first_name || '';
+          this.form.email = newVal.email || '';
+          this.form.phoneNumber = newVal.phone_number || '';
+          this.form.address = newVal.address || '';
+          this.form.city = newVal.city || '';
+          this.form.gstId = newVal.gstId || '';
+          this.form.pincode = newVal.pincode || '';
+        }
+      },
+      immediate: true,
+      deep: true
+    }
+  },
+  methods: {
+
+    async submitFilteredList(submitData: any) {
+
+      // const submitButtonElement = document.getElementById('submitButton');
+      // if (submitButtonElement) {
+      //   (submitButtonElement as any).disabled = true;
+      // }
+      const requestData = {
+        id: this.form.id,
+        name: this.form.name,
+        email: this.form.email,
+        phoneNumber: this.form.phoneNumber,
+        address: this.form.address,
+        city: this.form.city,
+        gstId: this.form.gstId,
+        pincode: this.form.pincode,
+      };
+      try {
+        if (requestData.id) {
+          const response = await axios.post(`${BASE_URL}/freezy/v1/users/supplier/${requestData.id}`, requestData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("Response:", response.data);
+        } else {
+          const response = await axios.post(`${BASE_URL}/freezy/v1/users/supplier`, requestData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("Response:", response.data);
+        }
+      } catch (error) {
+        console.error("Error submitting the list:", error);
+      } finally {
+        EventBus.emit('supplierCreated');
+        setTimeout(() => {
+
+          const loadingPopupElement = document.getElementById('closeBtn');
+          if (loadingPopupElement) {
+            (loadingPopupElement as any).clicked = true;
+          }
+          const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+          if (elem) {
+            elem.click();
+          }
+
+
+        }, 1000);
+      }
 
 
     },
-    data() {
-        return {
-          form: {
-                   name:"",
-                   email: "",
-                   phoneNumber: "",
-                   address:"",
-                   city:"",
-                   gstId:"",
-                   pincode:"",
+    closeTab() {
+      stateStore.supplierList = stateStore.resetSupplierList;
+    }
+  },
+  mounted() {
 
-
-          },
-
-
-
-                loading: false,
-        }
-      },
-      methods: {
-
-             async submitFilteredList(submitData: any) {
-
-                 const submitButtonElement = document.getElementById('submitButton');
-                                       if (submitButtonElement) {
-                                         (submitButtonElement as any).disabled = true;
-                                         }
-                  const requestData = {
-                    name:this.form.name,
-                                       email: this.form.email,
-                                       phoneNumber: this.form.phoneNumber,
-                                       address:this.form.address,
-                                       city:this.form.city,
-                                       gstId:this.form.gstId,
-                                       pincode:this.form.pincode,
-                  };
-                  try {
-                    const response = await axios.post(`${BASE_URL}/freezy/v1/users/supplier`, requestData, {
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                    });
-                    console.log("Response:", response.data);
-                  } catch (error) {
-                    console.error("Error submitting the list:", error);
-                  } finally {
-                    EventBus.emit('supplierCreated');
-                           setTimeout(() => {
-
-                             const loadingPopupElement = document.getElementById('closeBtn');
-                                                  if (loadingPopupElement) {
-                                                    (loadingPopupElement as any).clicked = true;
-                                                    }
-                                                     const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
-                                                                             if (elem) {
-                                                                               elem.click();
-                                                                             }
-
-
-                                 }, 3000);
-                               }
-
-
-                },
-
-        },
-        mounted() {
-
-        }
+  }
 });
 </script>
