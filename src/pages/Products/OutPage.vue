@@ -187,7 +187,7 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: "",
+        customer: "U0001",
         branch: "",
         project: "",
       },
@@ -299,7 +299,7 @@ export default defineComponent({
       EventBus.emit('onUpdateAccessories', this.accessories);
     },
     async fetchCustomers() {
-      try {
+      try { //https://freezy-prod-frontend.fly.dev/$%7BBASE_URL%7D/freezy/v1/users/filter?type=customer
         const response = await axios.get(`${BASE_URL}/freezy/v1/users/filter?type=customer`);
 
         this.customers = response.data.map((customer: any) => ({

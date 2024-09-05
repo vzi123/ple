@@ -150,10 +150,10 @@ export default defineComponent({
 
     async submitFilteredList(submitData: any) {
 
-      const submitButtonElement = document.getElementById('submitButton');
-      if (submitButtonElement) {
-        (submitButtonElement as any).disabled = true;
-      }
+      // const submitButtonElement = document.getElementById('submitButton');
+      // if (submitButtonElement) {
+      //   (submitButtonElement as any).disabled = true;
+      // }
       const requestData = {
         id: this.form.id,
         name: this.form.name,

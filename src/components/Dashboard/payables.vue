@@ -84,15 +84,28 @@ import axios from "axios";
 import { formatDate, BASE_URL } from "@/utils/utils";
 import '@/assets/css/CustomSpinner.css'; 
 
+interface Product {
+  type: string;
+  inventory?: {
+    product?: {
+      id?: string;
+      name?: string;
+    };
+  };
+  inOut?: string;
+  comments?: string;
+}
+
 export default defineComponent({
   name: "ProductsList",
   data() {
     return {
       currncySymbol: "₹",
+      loading: true,
     };
   },
   setup(props, { emit }) {
-    const allProducts = ref([]); // Use ref to make it reactive
+    const allProducts = ref<Product[]>([]); // Use the defined interface
     const loading = ref(false);
     const currentPage = ref(1);
     const itemsPerPage = ref(10);
@@ -100,6 +113,7 @@ export default defineComponent({
     // Function to fetch products using Axios
     const fetchProducts = async () => {
       try {
+        loading.value = true; // Set loading to true before request
         const response = await axios.get(
           `${BASE_URL}/freezy/dashboard/payables`
         );
@@ -109,6 +123,7 @@ export default defineComponent({
         console.error("Error fetching products:", error);
       } finally {
         emit('loading-complete'); // Emit event when loading is complete
+        loading.value = false; // Set loading to false after request
       }
     };
 
@@ -117,16 +132,23 @@ export default defineComponent({
       await fetchProducts();
     });
 
-    // Computed properties for pagination
-    const totalPages = computed(() => {
-      return Math.ceil(allProducts.value.length / itemsPerPage.value);
+    // Computed property to get filtered products first
+    const filteredProducts = computed(() => {
+      return allProducts.value.filter(item => item.type === 'PRODUCT');
     });
 
+    // Computed property to calculate total pages after filtering
+    const totalPages = computed(() => {
+      return Math.ceil(filteredProducts.value.length / itemsPerPage.value);
+    });
+
+    // Computed property to get paginated items after filtering
     const paginatedProducts = computed(() => {
       const start = (currentPage.value - 1) * itemsPerPage.value;
       const end = start + itemsPerPage.value;
-      return allProducts.value.slice(start, end);
+      return filteredProducts.value.slice(start, end);
     });
+
 
     // Function to calculate visible page numbers
     const pageNumbers = computed(() => {

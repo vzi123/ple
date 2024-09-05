@@ -193,7 +193,7 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: "",      //U0001
+        customer: "U0001",      //U0001
         branch: "",
         project: "",
       },
@@ -225,7 +225,7 @@ export default defineComponent({
   watch: {
     prods: {
       handler(newVal) {
-        this.selectedCustomer = newVal?.createdFor?.first_name || null;
+        // this.selectedCustomer = newVal?.createdFor?.first_name || null;
         this.products = newVal?.products || [];
         this.accessories = newVal?.accessories || [];
       },
@@ -252,7 +252,7 @@ export default defineComponent({
           EventBus.emit('onUpdateProducts', this.products);
           stateStore.inWards = this.products;
           console.log(stateStore.inWards.value);
-          
+
         } else {
           console.log('Product already exists:', fullProduct.product);
         }
@@ -287,7 +287,7 @@ export default defineComponent({
       EventBus.emit('onUpdateAccessories', this.accessories);
     },
     async fetchCustomers() {
-      try {
+      try {   //https://freezy-prod-frontend.fly.dev/$%7BBASE_URL%7D/freezy/v1/users/filter?type=supplier
         const response = await axios.get(`${BASE_URL}/freezy/v1/users/filter?type=supplier`);
 
         this.customers = response.data.map((customer: any) => ({
@@ -328,25 +328,25 @@ export default defineComponent({
         discount: submitData.discount,
         status: submitData.status,
         comments: submitData.notes,
-        total: submitData.total,
+        totalAmount: Number(submitData.total),
       };
-      try { 
-       if (requestData.consignmentId) {
-        const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/inward/${requestData.consignmentId}`, requestData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log("Response:", response.data);
-       } else {
-        const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/inward`, requestData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log("Response:", response.data);
-       }
-       
+      try {
+        if (requestData.consignmentId) {
+          const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/inward/${requestData.consignmentId}`, requestData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("Response:", response.data);
+        } else {
+          const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/inward`, requestData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("Response:", response.data);
+        }
+
       } catch (error) {
         console.error("Error submitting the list:", error);
       } finally {
@@ -367,13 +367,13 @@ export default defineComponent({
   mounted() {
     EventBus.on('onAllProducts', (products: any) => {
       this.allProducts = products; // Update allProducts with the emitted value
-      
+
     });
     EventBus.on('onFilteredProducts', (products: any) => {
       this.detailedProducts = products; // Capture detailed product data
       this.filteredList = products;
       console.log(this.filteredList);
-      
+
     });
     EventBus.on('onAllAccessories', (accessories: any) => {
       this.allAccessories = accessories; // Update allProducts with the emitted value

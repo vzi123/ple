@@ -98,7 +98,7 @@
                         {{ prod?.product === "" || prod?.product == null ? "-" : prod?.product }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.unitPrize === "" || prod?.unitPrize == null ? "-" : prod?.unitPrize }}
+                        {{ prod?.unitPrice === "" || prod?.unitPrice == null ? "-" : prod?.unitPrice }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                         {{ prod?.iduSerialNo === "" || prod?.iduSerialNo == null ? "-" : prod?.iduSerialNo }}
@@ -171,7 +171,7 @@
                           {{ prod?.description === "" || prod?.description == null ? "-" : prod?.description }}
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                          {{ prod?.unitPrize === "" || prod?.unitPrize == null ? "-" : prod?.unitPrize }}
+                          {{ prod?.unitPrice === "" || prod?.unitPrice == null ? "-" : prod?.unitPrice }}
                         </td>
                         <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                           {{ prod?.quantity === "" || prod?.quantity == null ? "-" : prod?.quantity }}
@@ -241,7 +241,7 @@
                         {{ prod?.description === "" || prod?.description == null ? "-" : prod?.description }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-                        {{ prod?.unitPrize === "" || prod?.unitPrize == null ? "-" : prod?.unitPrize }}
+                        {{ prod?.unitPrice === "" || prod?.unitPrice == null ? "-" : prod?.unitPrice }}
                       </td>
                       <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
                         {{ prod?.quantity === "" || prod?.quantity == null ? "-" : prod?.quantity }}
