@@ -4,11 +4,22 @@
   <div class="main-content bg_gray d-flex flex-column transition overflow-hidden">
     <BreadcrumbMenu pageTitle="Outward Inventory Details" />
     <div class="row mb-40">
-      <div class="col-lg-4">
+      <div class="col-lg-4" v-if="prods.id !== ''">
         <div class="form-group mb-25">
-          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Customer</h6>
+          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
+          <label class="bg-white border-0 rounded-1 fs-14 text-optional p-4 w-50">{{ prods.createdFor.first_name
+            }}</label>
+        </div>
+        <div class="form-group mb-25">
+          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Consignment ID</h6>
+          <label class="bg-white border-0 rounded-1 fs-14 text-optional p-4 w-50">{{ prods.id }}</label>
+        </div>
+      </div>
+      <div class="col-lg-4" v-else>
+        <div class="form-group mb-25">
+          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
           <v-select v-model="selectedCustomer" :options="customers" :reduce="customer => customer.code" label="name"
-            class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Customer" />
+            class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Supplier" />
         </div>
       </div>
       <div class="col-lg-4">
@@ -223,6 +234,9 @@ export default defineComponent({
         this.products = newVal?.products || [];
         this.accessories = newVal?.accessories || [];
         this.services = newVal?.services || [];
+        this.detailedProducts = newVal.products || [];
+        this.detailedAccessories = newVal.accessories || [];
+        this.detailedServices = newVal.services || [];
       },
       immediate: true,
       deep: true
@@ -356,6 +370,7 @@ export default defineComponent({
 
     async submitFilteredList(submitData: any) {
       const requestData = {
+        consignmentId: stateStore.consignmentDetails.id,
         userId: this.form.customer,
         projectId: this.form.project,
         userPersona: 'customer',
@@ -368,29 +383,65 @@ export default defineComponent({
         total: submitData.total,
       };
       try {
-        const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward`, requestData, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        console.log("Response:", response.data);
-
-  
-      } catch (error) {
-        console.error("Error submitting the list:", error);
-      } finally {
-        const loadingPopupElement = document.getElementById('loadingPopup');
-        if (loadingPopupElement) {
-          (loadingPopupElement as any).press = true;
-          const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
-          if (elem) {
-            elem.click();
+        if (requestData.consignmentId) {
+          const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward/${requestData.consignmentId}`, requestData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("Response:", response.data);
+          const loadingPopupElement = document.getElementById('loadingPopup');
+          if (loadingPopupElement) {
+            (loadingPopupElement as any).press = true;
+            const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+            if (elem) {
+              elem.click();
+            }
+            setTimeout(() => {
+              this.$router.push({ name: 'ConsignmentListPage' });
+            }, 1500);
           }
-          setTimeout(() => {
-            this.$router.push({ name: 'ConsignmentListPage' });
-          }, 1500);
+        } else {
+          const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward`, requestData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("Response:", response.data);
+          const loadingPopupElement = document.getElementById('loadingPopup');
+          if (loadingPopupElement) {
+            (loadingPopupElement as any).press = true;
+            const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+            if (elem) {
+              elem.click();
+            }
+            setTimeout(() => {
+              this.$router.push({ name: 'ConsignmentListPage' });
+            }, 1500);
+          }
         }
 
+      } catch (error: any) {
+        let errorMessage = 'An unknown error occurred. Please try again.';
+
+        // Check if it's an Axios error with a response property
+        if (error.response && error.response.data) {
+          errorMessage = error.response.data;
+        } else if (error instanceof Error) {
+          // If it's a general error, use the error message
+          errorMessage = error.message;
+        }
+
+        // Display a user-friendly error message
+        window.alert(`Error: ${errorMessage}`);
+        EventBus.emit('loadingCompleted');
+
+        // Log the error to the console for debugging
+        console.error("Error submitting the list:", error);
+        
+      }
+
+      finally {
       }
     }
   },

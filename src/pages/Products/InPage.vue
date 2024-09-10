@@ -4,7 +4,18 @@
   <div class="main-content bg_gray d-flex flex-column transition overflow-hidden">
     <BreadcrumbMenu pageTitle="Inward Inventory Details" />
     <div class="row mb-40">
-      <div class="col-lg-4">
+      <div class="col-lg-4" v-if="prods.id !== ''">
+        <div class="form-group mb-25">
+          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
+          <label class="bg-white border-0 rounded-1 fs-14 text-optional p-4 w-50">{{ prods.createdFor.first_name
+            }}</label>
+        </div>
+        <div class="form-group mb-25">
+          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Consignment ID</h6>
+          <label class="bg-white border-0 rounded-1 fs-14 text-optional p-4 w-50">{{ prods.id }}</label>
+        </div>
+      </div>
+      <div class="col-lg-4" v-else>
         <div class="form-group mb-25">
           <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
           <v-select v-model="selectedCustomer" :options="customers" :reduce="customer => customer.code" label="name"
@@ -220,14 +231,17 @@ export default defineComponent({
   computed: {
     prods() {
       return stateStore.consignmentDetails;
-    }
+    },
   },
   watch: {
     prods: {
       handler(newVal) {
-        // this.selectedCustomer = newVal?.createdFor?.first_name || null;
+        this.selectedCustomer = newVal?.createdFor?.first_name || null;
         this.products = newVal?.products || [];
         this.accessories = newVal?.accessories || [];
+        this.detailedProducts = newVal.products || [];
+        this.detailedAccessories = newVal.accessories || [];
+        
       },
       immediate: true,
       deep: true
@@ -338,6 +352,17 @@ export default defineComponent({
             },
           });
           console.log("Response:", response.data);
+          const loadingPopupElement = document.getElementById('loadingPopup');
+          if (loadingPopupElement) {
+            (loadingPopupElement as any).press = true;
+            const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+            if (elem) {
+              elem.click();
+            }
+            setTimeout(() => {
+              this.$router.push({ name: 'ConsignmentListPage' });
+            }, 1500);
+          }
         } else {
           const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/inward`, requestData, {
             headers: {
@@ -345,22 +370,40 @@ export default defineComponent({
             },
           });
           console.log("Response:", response.data);
+          const loadingPopupElement = document.getElementById('loadingPopup');
+          if (loadingPopupElement) {
+            (loadingPopupElement as any).press = true;
+            const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+            if (elem) {
+              elem.click();
+            }
+            setTimeout(() => {
+              this.$router.push({ name: 'ConsignmentListPage' });
+            }, 1500);
+          }
         }
 
-      } catch (error) {
-        console.error("Error submitting the list:", error);
-      } finally {
-        const loadingPopupElement = document.getElementById('loadingPopup');
-        if (loadingPopupElement) {
-          (loadingPopupElement as any).press = true;
-          const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
-          if (elem) {
-            elem.click();
-          }
-          setTimeout(() => {
-            this.$router.push({ name: 'ConsignmentListPage' });
-          }, 1500);
+      } catch (error: any) {
+        let errorMessage = 'An unknown error occurred. Please try again.';
+
+        // Check if it's an Axios error with a response property
+        if (error.response && error.response.data) {
+          errorMessage = error.response.data;
+        } else if (error instanceof Error) {
+          // If it's a general error, use the error message
+          errorMessage = error.message;
         }
+
+        // Display a user-friendly error message
+        window.alert(`Error: ${errorMessage}`);
+        EventBus.emit('loadingCompleted');
+
+        // Log the error to the console for debugging
+        console.error("Error submitting the list:", error);
+        
+      }
+      finally {
+
       }
     }
   },

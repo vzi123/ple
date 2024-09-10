@@ -73,10 +73,11 @@
 </template>
 
 <script>
-import { defineComponent, onMounted } from "vue";
+import { computed, defineComponent, onMounted } from "vue";
 import EventBus from '@/events/event-bus';
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import stateStore from "@/utils/store";
 
 export default {
   name: "SubmitPurchase",
@@ -107,7 +108,7 @@ export default {
       discount: 0,
       total: 0,
       status: "Packed",
-      notes: "",
+      notes: stateStore?.consignmentDetails?.comments || "",
       currncySymbol: "₹",
       loading: false,
     };
@@ -163,7 +164,6 @@ export default {
   },
   methods: {
     submit() {
-      document.getElementById('submitButton').disabled = true;
       this.loading = true;
       this.$emit("submit", {
         discount: this.discount,
@@ -171,14 +171,15 @@ export default {
         notes: this.notes,
         total: this.total,
       });
-
+      setTimeout(() => {
+        this.loading = false;
+      }, 3000);
     },
     mounted() {
       EventBus.on('loadingCompleted', () => {
         this.loading = false; // Update allProducts with the emitted value
         console.log("emiiteed Loading:");
       });
-
     },
   },
 };

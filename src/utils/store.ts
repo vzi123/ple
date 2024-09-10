@@ -111,8 +111,6 @@ const stateStore: StateStore = reactive({
     }]
   },
 
- 
-
   productDetails: {
     "id": "",
     "inventory": 0,
