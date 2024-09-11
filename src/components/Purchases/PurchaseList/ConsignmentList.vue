@@ -1,4 +1,16 @@
 <template>
+  <ul class="nav nav-tabs" id="detailsTab" role="tablist">
+      <li class="nav-item w-25 text-center" role="presentation">
+        <a :class="{ 'nav-link': true, active: currentTab === 'IN' }" id="Product-tab" data-bs-toggle="tab"
+        role="tab" aria-controls="Product" aria-selected="false"
+          @click="currentTab = 'IN'">IN</a>
+      </li>
+      <li class="nav-item w-25 text-center" role="presentation">
+        <a :class="{ 'nav-link': true, active: currentTab === 'OUT' }" id="accessories-tab"
+          data-bs-toggle="tab" role="tab" aria-controls="accessories" aria-selected="false"
+          @click="currentTab = 'OUT'">OUT</a>
+      </li>
+    </ul>
   <div class="card border-0 shadow-none rounded-1 mb-25">
     <div class="card-body p-xl-40">
       <div class="table-responsive style-three">
@@ -58,7 +70,7 @@
           </thead>
 
           <tbody v-if="!loading">
-            <tr v-for="(consignmentItem, index) in filteredList" :key="index">
+            <tr v-for="(consignmentItem, index) in filteredList.filter((i)=>i.inOut=== currentTab)" :key="index">
               <!-- <td class="shadow-none fw-normal text-black title ps-0">
                 <div class="d-flex align-items-center">
                   <div class="form-check checkbox style-three">
@@ -169,6 +181,7 @@ export default defineComponent({
     return {
       currncySymbol: "₹",
       loading: true,
+      currentTab: 'IN',
     };
   },
   setup() {

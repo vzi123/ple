@@ -32,7 +32,7 @@
           </ul>
           <div class="tab-content" id="detailsTabContent">
 
-            <div class="tab-pane fade active  pt-2"
+            <div class="tab-pane fade active pt-2"
               :class="{ show: currentTab === 'Product', active: currentTab === 'Product' }" id="Product" role="tabpanel"
               aria-labelledby="Product-tab" v-show="currentTab === 'Product'">
               <!-- Product Details Content Here -->

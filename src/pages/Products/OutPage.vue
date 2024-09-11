@@ -234,9 +234,11 @@ export default defineComponent({
         this.products = newVal?.products || [];
         this.accessories = newVal?.accessories || [];
         this.services = newVal?.services || [];
-        this.detailedProducts = newVal.products || [];
-        this.detailedAccessories = newVal.accessories || [];
-        this.detailedServices = newVal.services || [];
+        if (this.prods.id !== "") {
+          this.detailedProducts = newVal.products || [];
+          this.detailedAccessories = newVal.accessories || [];
+          this.detailedServices = newVal.services || [];
+        }
       },
       immediate: true,
       deep: true
@@ -438,7 +440,7 @@ export default defineComponent({
 
         // Log the error to the console for debugging
         console.error("Error submitting the list:", error);
-        
+
       }
 
       finally {

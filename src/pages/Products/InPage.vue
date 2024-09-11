@@ -239,8 +239,10 @@ export default defineComponent({
         this.selectedCustomer = newVal?.createdFor?.first_name || null;
         this.products = newVal?.products || [];
         this.accessories = newVal?.accessories || [];
-        this.detailedProducts = newVal.products || [];
-        this.detailedAccessories = newVal.accessories || [];
+        if (this.prods.id !== "") {   
+          this.detailedProducts = newVal?.products || [];
+          this.detailedAccessories = newVal?.accessories || [];
+        }
         
       },
       immediate: true,
@@ -345,7 +347,7 @@ export default defineComponent({
         totalAmount: Number(submitData.total),
       };
       try {
-        if (requestData.consignmentId) {
+        if (requestData.consignmentId !== "") {
           const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/inward/${requestData.consignmentId}`, requestData, {
             headers: {
               "Content-Type": "application/json",
@@ -439,6 +441,7 @@ export default defineComponent({
     this.fetchProjects();
   }
 });
+
 </script>
 
 <style lang="scss">
