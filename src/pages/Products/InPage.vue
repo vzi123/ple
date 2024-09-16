@@ -18,7 +18,7 @@
       <div class="col-lg-4" v-else>
         <div class="form-group mb-25">
           <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
-          <v-select v-model="selectedCustomer" :options="customers" :reduce="customer => customer.code" label="name"
+          <v-select v-model="form.customer" :options="customers" :reduce="customer => customer.code" label="name"
             class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Supplier" />
         </div>
       </div>
@@ -204,7 +204,7 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: "U0001",      //U0001
+        customer: "",      //U0001
         branch: "",
         project: "",
       },
@@ -239,11 +239,14 @@ export default defineComponent({
         this.selectedCustomer = newVal?.createdFor?.first_name || null;
         this.products = newVal?.products || [];
         this.accessories = newVal?.accessories || [];
-        if (this.prods.id !== "") {   
+        if (this.prods.id !== "") {
           this.detailedProducts = newVal?.products || [];
           this.detailedAccessories = newVal?.accessories || [];
+          
+          this.filteredList = newVal?.products || [];
+          this.filteredAccessoriesList = newVal?.accessories || [];
         }
-        
+
       },
       immediate: true,
       deep: true
@@ -362,6 +365,8 @@ export default defineComponent({
               elem.click();
             }
             setTimeout(() => {
+              // Reset the state and redirect
+              stateStore.consignmentDetails = stateStore.resetConsignmentDetails;
               this.$router.push({ name: 'ConsignmentListPage' });
             }, 1500);
           }
@@ -380,6 +385,8 @@ export default defineComponent({
               elem.click();
             }
             setTimeout(() => {
+              // Reset the state and redirect
+              stateStore.consignmentDetails = stateStore.resetConsignmentDetails;
               this.$router.push({ name: 'ConsignmentListPage' });
             }, 1500);
           }
@@ -402,7 +409,7 @@ export default defineComponent({
 
         // Log the error to the console for debugging
         console.error("Error submitting the list:", error);
-        
+
       }
       finally {
 

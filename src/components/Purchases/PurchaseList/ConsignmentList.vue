@@ -3,12 +3,12 @@
       <li class="nav-item w-25 text-center" role="presentation">
         <a :class="{ 'nav-link': true, active: currentTab === 'IN' }" id="Product-tab" data-bs-toggle="tab"
         role="tab" aria-controls="Product" aria-selected="false"
-          @click="currentTab = 'IN'">IN</a>
+          @click="currentTab = 'IN'">Inward</a>
       </li>
       <li class="nav-item w-25 text-center" role="presentation">
         <a :class="{ 'nav-link': true, active: currentTab === 'OUT' }" id="accessories-tab"
           data-bs-toggle="tab" role="tab" aria-controls="accessories" aria-selected="false"
-          @click="currentTab = 'OUT'">OUT</a>
+          @click="currentTab = 'OUT'">Outward</a>
       </li>
     </ul>
   <div class="card border-0 shadow-none rounded-1 mb-25">

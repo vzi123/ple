@@ -20,7 +20,7 @@
             <tr v-for="log in filteredList" :key="log.id">
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ formatDate(log?.createdAt) }}</td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.id }}</td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.consignment.createdFor.first_name }}
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.consignment?.createdFor?.first_name }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.inventory?.accessory?.category?.name
                 || log?.inventory?.product?.category?.name || log?.inventory?.service?.category?.name}}</td>

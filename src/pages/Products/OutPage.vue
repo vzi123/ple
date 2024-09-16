@@ -18,7 +18,7 @@
       <div class="col-lg-4" v-else>
         <div class="form-group mb-25">
           <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
-          <v-select v-model="selectedCustomer" :options="customers" :reduce="customer => customer.code" label="name"
+          <v-select v-model="form.customer" :options="customers" :reduce="customer => customer.code" label="name"
             class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Supplier" />
         </div>
       </div>
@@ -198,7 +198,7 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: "U0001",
+        customer: "",
         branch: "",
         project: "",
       },
@@ -382,70 +382,57 @@ export default defineComponent({
         discount: submitData.discount,
         status: submitData.status,
         comments: submitData.notes,
-        total: submitData.total,
+        totalAmount: Number(submitData.total),
       };
+
       try {
+        let response;
         if (requestData.consignmentId) {
-          const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward/${requestData.consignmentId}`, requestData, {
+          response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward/${requestData.consignmentId}`, requestData, {
             headers: {
               "Content-Type": "application/json",
             },
+            responseType: 'blob', // Expect a PDF blob response
           });
-          console.log("Response:", response.data);
-          const loadingPopupElement = document.getElementById('loadingPopup');
-          if (loadingPopupElement) {
-            (loadingPopupElement as any).press = true;
-            const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
-            if (elem) {
-              elem.click();
-            }
-            setTimeout(() => {
-              this.$router.push({ name: 'ConsignmentListPage' });
-            }, 1500);
-          }
         } else {
-          const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward`, requestData, {
+          response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward`, requestData, {
             headers: {
               "Content-Type": "application/json",
             },
+            responseType: 'blob', // Expect a PDF blob response
           });
-          console.log("Response:", response.data);
-          const loadingPopupElement = document.getElementById('loadingPopup');
-          if (loadingPopupElement) {
-            (loadingPopupElement as any).press = true;
-            const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
-            if (elem) {
-              elem.click();
-            }
-            setTimeout(() => {
-              this.$router.push({ name: 'ConsignmentListPage' });
-            }, 1500);
-          }
+        }
+
+        console.log("Response:", response.data);
+
+        // After successful data submission, handle the PDF
+        if (response && response.data) {
+          // Redirect to the Consignment List page after showing the PDF
+          setTimeout(() => {
+            stateStore.consignmentDetails = stateStore.resetConsignmentDetails;
+            this.$router.push({ name: 'ConsignmentListPage' });
+          }, 1500);
+          
+          // Call the printPdf function to display the PDF
+          await this.printPdf(response);
+
         }
 
       } catch (error: any) {
         let errorMessage = 'An unknown error occurred. Please try again.';
 
-        // Check if it's an Axios error with a response property
         if (error.response && error.response.data) {
           errorMessage = error.response.data;
         } else if (error instanceof Error) {
-          // If it's a general error, use the error message
           errorMessage = error.message;
         }
 
-        // Display a user-friendly error message
         window.alert(`Error: ${errorMessage}`);
         EventBus.emit('loadingCompleted');
-
-        // Log the error to the console for debugging
         console.error("Error submitting the list:", error);
-
-      }
-
-      finally {
       }
     }
+
   },
   mounted() {
     EventBus.on('onAllProducts', (products: any) => {

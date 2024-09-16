@@ -44,7 +44,7 @@
               {{ service.serviceId }}
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
-              <input type="number" v-model.number="service.cost" @input="calculateServicesSubtotal(index)"
+              <input type="number" v-model.number="service.unitPrice" @input="calculateServicesSubtotal(index)"
                 class="form-control" />
             </td>
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
@@ -99,11 +99,11 @@ interface Service {
   service: string;
   description: string;
   quantity: number;
-  cost: number | null;
+  cost: number;
   unitPrice: number;
   discountAmount: number;
   discount: number;
-  subTotal: string;
+  subTotal: number;
   effectivePrice: number;
   iduSerialNo: string;
   oduSerialNo: string;
@@ -236,7 +236,7 @@ export default defineComponent({
         const service = filteredServiceList.value[index];
 
         // Ensure cost, discountAmount, and quantity are valid numbers
-        const cost = parseFloat(service.cost?.toString() || '0');
+        const cost = parseFloat(service.unitPrice?.toString() || '0');
         const discountAmount = parseFloat(service.discountAmount?.toString() || '0');
         const quantity = parseFloat(service.quantity?.toString() || '1');
 
@@ -253,7 +253,7 @@ export default defineComponent({
         }
 
         // Calculate subtotal
-        service.subTotal = (effectivePrice * quantity).toFixed(2);
+        service.subTotal = parseFloat((effectivePrice * quantity).toFixed(2));
         service.effectivePrice = effectivePrice;
         service.unitPrice = cost; // Ensure this is updated correctly
       }

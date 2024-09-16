@@ -48,7 +48,7 @@
               <input type="number" v-model.number="accessory.unitPrice" @input="calculateAccessoriesSubtotal(index)"
                 class="form-control" />
             </td>
-            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
+            <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">  
               <QuantityCounter :initialQuantity="accessory.quantity ?? 1" :index="index"
                 @quantity-change="updateAccessoriesQuantity" @input="calculateAccessoriesSubtotal(index)" />
             </td>
@@ -97,11 +97,11 @@ interface Accessory {
   accessory: string;
   description: string;
   quantity: number;
-  cost: number | null;
+  cost: number;
   unitPrice: number;
   discountAmount: number; // Update to reflect the correct property
   discount: number; // Update to reflect the correct property
-  subTotal: string | null;
+  subTotal: number;
   effectivePrice: number;
   iduSerialNo: string;
   oduSerialNo: string;
@@ -251,7 +251,7 @@ export default defineComponent({
         }
 
         // Calculate subtotal
-        accessory.subTotal = (effectivePrice * quantity).toFixed(2);
+        accessory.subTotal = parseFloat((effectivePrice * quantity).toFixed(2));
         accessory.effectivePrice = effectivePrice;
         accessory.unitPrice = cost; // Ensure this is updated correctly
       }

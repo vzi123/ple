@@ -112,7 +112,7 @@ interface Product {
   cost: number | null;
   unitPrice: number;
   discountAmount: number;
-  subTotal: string | null;
+  subTotal: number;
   effectivePrice: number;
   iduSerialNo: string;
   oduSerialNo: string;
@@ -264,7 +264,7 @@ export default defineComponent({
 
         // Calculate subtotal
         const quantity = product.quantity || 1;
-        product.subTotal = (product.effectivePrice * quantity).toFixed(2);
+        product.subTotal = parseFloat((product.effectivePrice * quantity).toFixed(2));
 
       }
     };

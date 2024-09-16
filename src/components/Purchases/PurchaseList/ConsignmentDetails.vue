@@ -43,21 +43,12 @@
                     <li class="fs-14 fw-semibold text-title lh-1">
                       DATE :<span class="text-optional ms-1">{{ formatDate(consignmentDetail?.createdAt) }}</span>
                     </li>
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      STATUS :<span class="text-optional ms-1">{{
-                        consignmentDetail?.inOut }}</span>
-                    </li>
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      ID :<span class="text-optional ms-1">{{ consignmentDetail?.products[0]?.productId }}</span>
-                    </li>
-
                   </ul>
                 </div>
                 <div class="col-lg-4 ps-xxl-6">
                   <ul class="details-title list-style mb-40">
                     <li class="fs-14 fw-semibold text-title lh-1">
-                      BUDGET :<span class="text-optional ms-1">{{ currncySymbol }}
-                        {{ consignmentDetail?.totalAmount }}</span>
+                      STATUS :<span class="text-optional ms-1">{{ consignmentDetail?.inOut }}</span>
                     </li>
                   </ul>
                 </div>
@@ -134,7 +125,13 @@
                     </li>
                   </ul>
                 </div>
-
+                <div class="col-lg-4 ps-xxl-6">
+                  <ul class="details-title list-style mb-40">
+                    <li class="fs-14 fw-semibold text-title lh-1">
+                      STATUS :<span class="text-optional ms-1">{{ consignmentDetail?.inOut }}</span>
+                    </li>
+                  </ul>
+                </div>
                 <div class="table-responsive pb-75">
                   <table class="table text-nowrap table-bordered table-hover align-middle mb-0">
                     <thead>
@@ -181,8 +178,6 @@
                         </td>
 
                       </tr>
-
-
                     </tbody>
                   </table>
                 </div>
@@ -203,7 +198,13 @@
                     </li>
                   </ul>
                 </div>
-
+                <div class="col-lg-4 ps-xxl-6">
+                  <ul class="details-title list-style mb-40">
+                    <li class="fs-14 fw-semibold text-title lh-1">
+                      STATUS :<span class="text-optional ms-1">{{ consignmentDetail?.inOut }}</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="table-responsive pb-75">
                 <table class="table text-nowrap table-bordered table-hover align-middle mb-0">
