@@ -37,7 +37,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(accessory, index) in filteredAccessoriesList" :key="accessory.accessoryId">
+          <!-- <tr v-for="(accessory, index) in filteredAccessoriesList" :key="accessory.accessoryId"> -->
+            <tr v-for="(accessory, index) in filteredAccessoriesList" :key="accessory.accessoryId + '-' + index">
+            
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
               {{ accessory.accessory }}
             </td>

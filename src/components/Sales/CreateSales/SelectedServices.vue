@@ -36,7 +36,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(service, index) in filteredServiceList" :key="service.serviceId">
+          <!-- <tr v-for="(service, index) in filteredServiceList" :key="service.serviceId"> -->
+            <tr v-for="(service, index) in filteredServiceList" :key="service.serviceId + '-' + index">
+
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
               {{ service.service }}
             </td>

@@ -254,15 +254,13 @@ export default defineComponent({
       const fullProduct = this.allProducts.find(product => product.product === productName);
 
       if (fullProduct) {
-        // Check if the product is already in the products array
-        const exists = this.products.some(p => p.productId === fullProduct.productId); // Adjust the comparison based on the unique property
+        // Clone the product object to avoid duplicating the same reference
+        // const newProduct = { ...fullProduct };
 
-        if (!exists) {
-          this.products.push(fullProduct); // Push the full product object if not a duplicate
-          EventBus.emit('onUpdateProducts', this.products);
-        } else {
-          console.log('Product already exists:', fullProduct.product);
-        }
+        this.products.push({...fullProduct}); // Push the cloned product object
+        EventBus.emit('onUpdateProducts', this.products);
+        stateStore.inWards = this.products;
+        console.log(stateStore.inWards.value);
       } else {
         console.error('Product not found:', productName);
       }
@@ -276,14 +274,9 @@ export default defineComponent({
       const fullService = this.allServices.find(service => service.service === serviceName);
 
       if (fullService) {
-        // Check if the service is already in the list
-        const isServiceExists = this.services.some(existingService => existingService.serviceId === fullService.serviceId);
-
-        if (!isServiceExists) {
-          // Only push if the service is not already present in the list
-          this.services.push(fullService);
-          EventBus.emit('onUpdateServices', this.services);
-        }
+        // Push the full service object without checking for duplicates
+        this.services.push({ ...fullService }); // Clone the service object to avoid reference duplication
+        EventBus.emit('onUpdateServices', this.services);
       } else {
         console.error('Service not found:', serviceName);
       }
@@ -297,15 +290,9 @@ export default defineComponent({
       const fullAccessory = this.allAccessories.find(accessory => accessory.accessory === accessoryName);
 
       if (fullAccessory) {
-        // Check if the accessory is already in the accessories array
-        const exists = this.accessories.some(a => a.accessory === fullAccessory.accessory); // Adjust based on unique property
-
-        if (!exists) {
-          this.accessories.push(fullAccessory); // Push the full accessory object if not a duplicate
-          EventBus.emit('onUpdateAccessories', this.accessories);
-        } else {
-          console.log('Accessory already exists:', fullAccessory.accessory);
-        }
+        // Push the full accessory object without checking for duplicates
+        this.accessories.push({ ...fullAccessory }); // Clone the accessory object to avoid reference duplication
+        EventBus.emit('onUpdateAccessories', this.accessories);
       } else {
         console.error('Accessory not found:', accessoryName);
       }
@@ -412,7 +399,7 @@ export default defineComponent({
             stateStore.consignmentDetails = stateStore.resetConsignmentDetails;
             this.$router.push({ name: 'ConsignmentListPage' });
           }, 1500);
-          
+
           // Call the printPdf function to display the PDF
           await this.printPdf(response);
 

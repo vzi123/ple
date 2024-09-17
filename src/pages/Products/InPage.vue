@@ -242,7 +242,7 @@ export default defineComponent({
         if (this.prods.id !== "") {
           this.detailedProducts = newVal?.products || [];
           this.detailedAccessories = newVal?.accessories || [];
-          
+
           this.filteredList = newVal?.products || [];
           this.filteredAccessoriesList = newVal?.accessories || [];
         }
@@ -258,27 +258,39 @@ export default defineComponent({
   },
   methods: {
 
+    // onUpdateProducts(productName: string) {
+    //   // Find the full product details using the product name
+    //   const fullProduct = this.allProducts.find(product => product.product === productName);
+
+    //   if (fullProduct) {
+    //     // Push the full product object without checking for duplicates
+    //     this.products.push(fullProduct);
+    //     EventBus.emit('onUpdateProducts', this.products);
+    //     stateStore.inWards = this.products;
+    //     console.log(stateStore.inWards.value);
+    //   } else {
+    //     console.error('Product not found:', productName);
+    //   }
+    // },
+
     onUpdateProducts(productName: string) {
       // Find the full product details using the product name
       const fullProduct = this.allProducts.find(product => product.product === productName);
 
       if (fullProduct) {
-        // Check if the product is already in the products array
-        const exists = this.products.some(p => p.productId === fullProduct.productId); // Adjust the comparison based on the unique property
+        // Clone the product object to avoid duplicating the same reference
+        // const newProduct = { ...fullProduct };
 
-        if (!exists) {
-          this.products.push(fullProduct); // Push the full product object if not a duplicate
-          EventBus.emit('onUpdateProducts', this.products);
-          stateStore.inWards = this.products;
-          console.log(stateStore.inWards.value);
-
-        } else {
-          console.log('Product already exists:', fullProduct.product);
-        }
+        this.products.push({...fullProduct}); // Push the cloned product object
+        EventBus.emit('onUpdateProducts', this.products);
+        stateStore.inWards = this.products;
+        console.log(stateStore.inWards.value);
       } else {
         console.error('Product not found:', productName);
       }
     },
+
+
     removeProduct(index: number) {
       this.products.splice(index, 1);
       EventBus.emit('onUpdateProducts', this.products);
@@ -288,15 +300,9 @@ export default defineComponent({
       const fullAccessory = this.allAccessories.find(accessory => accessory.accessory === accessoryName);
 
       if (fullAccessory) {
-        // Check if the accessory is already in the accessories array
-        const exists = this.accessories.some(a => a.accessory === fullAccessory.accessory); // Adjust based on unique property
-
-        if (!exists) {
-          this.accessories.push(fullAccessory); // Push the full accessory object if not a duplicate
-          EventBus.emit('onUpdateAccessories', this.accessories);
-        } else {
-          console.log('Accessory already exists:', fullAccessory.accessory);
-        }
+        // Push the full accessory object without checking for duplicates
+        this.accessories.push({ ...fullAccessory }); // Clone the accessory object to avoid reference duplication
+        EventBus.emit('onUpdateAccessories', this.accessories);
       } else {
         console.error('Accessory not found:', accessoryName);
       }

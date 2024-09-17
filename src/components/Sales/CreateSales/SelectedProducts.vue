@@ -42,7 +42,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(product, index) in filteredList" :key="filteredList.productId">
+          <!-- <tr v-for="(product, index) in filteredList" :key="filteredList.productId"> -->
+            <tr v-for="(product, index) in filteredList" :key="product.productId + '-' + index">
+
             <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph ps-0">
               {{ product.product }}
             </td>
@@ -65,10 +67,6 @@
                 v-on:input="calculateSubtotal(index)" v-on:select="calculateSubtotal(index)"
                 v-on:search="calculateSubtotal(index)" class="bg-white border-0 rounded-1 fs-14 text-optional"
                 placeholder="Select gstRate" @update:modelValue="calculateSubtotal(index)" />
-
-
-
-
             </td>
             <td v-if="showDiscounts" class="shadow-none lh-1 fs-14 fw-normal text-paragraph">
               <input type="number" v-model.number="product.discountAmount" @input="calculateSubtotal(index)"
