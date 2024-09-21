@@ -8,8 +8,8 @@
         <div class="form-group mb-25">
           <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
           <v-select v-model="prods.createdFor.first_name" :options="customers" :reduce="customer => customer.code"
-          label="name" class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Customer" 
-          :disabled="true" />
+            label="name" class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Customer"
+            :disabled="true" />
 
         </div>
         <div class="form-group mb-25">
@@ -206,7 +206,7 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: `prods.id ? prods.createdFor.id : ""`,     
+        customer: "",
         branch: "",
         project: "",
       },
@@ -230,10 +230,20 @@ export default defineComponent({
       notes: "",
     }
   },
+  created() {
+    // Set the customer after the component is created
+    this.form.customer = this.prodID ? this.prodCFID : "";
+  },
   computed: {
     prods() {
       return stateStore.consignmentDetails;
     },
+    prodID() {
+      return stateStore.consignmentDetails.id;
+    },
+    prodCFID() {
+      return stateStore.consignmentDetails.createdFor.id;
+    }
   },
   watch: {
     prods: {
@@ -283,7 +293,7 @@ export default defineComponent({
         // Clone the product object to avoid duplicating the same reference
         // const newProduct = { ...fullProduct };
 
-        this.products.push({...fullProduct}); // Push the cloned product object
+        this.products.push({ ...fullProduct }); // Push the cloned product object
         EventBus.emit('onUpdateProducts', this.products);
         stateStore.inWards = this.products;
         console.log(stateStore.inWards.value);

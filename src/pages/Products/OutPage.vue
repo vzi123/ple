@@ -200,7 +200,7 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: `prods.id ? prods.createdFor.id : ""`,     
+        customer: "",
         branch: "",
         project: "",
       },
@@ -224,9 +224,19 @@ export default defineComponent({
       notes: "",
     }
   },
+  created() {
+    // Set the customer after the component is created
+    this.form.customer = this.prodID ? this.prodCFID : "";
+  },
   computed: {
     prods() {
       return stateStore.consignmentDetails;
+    },
+    prodID() {
+      return stateStore.consignmentDetails.id;
+    },
+    prodCFID() {
+      return stateStore.consignmentDetails.createdFor.id;
     }
   },
   watch: {
