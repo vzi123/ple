@@ -6,9 +6,11 @@
     <div class="row mb-40">
       <div class="col-lg-4" v-if="prods.id !== ''">
         <div class="form-group mb-25">
-          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
-          <label class="bg-white border-0 rounded-1 fs-14 text-optional p-4 w-50">{{ prods.createdFor.first_name
-            }}</label>
+          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Customer</h6>
+          <v-select v-model="prods.createdFor.first_name" :options="customers" :reduce="customer => customer.code"
+            label="name" class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Customer"
+            :disabled="true" />
+
         </div>
         <div class="form-group mb-25">
           <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Consignment ID</h6>
@@ -17,9 +19,9 @@
       </div>
       <div class="col-lg-4" v-else>
         <div class="form-group mb-25">
-          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
+          <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Customer</h6>
           <v-select v-model="form.customer" :options="customers" :reduce="customer => customer.code" label="name"
-            class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Supplier" />
+            class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Customer" />
         </div>
       </div>
       <div class="col-lg-4">
@@ -198,7 +200,7 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: "",
+        customer: `prods.id ? prods.createdFor.id : ""`,     
         branch: "",
         project: "",
       },
@@ -238,6 +240,10 @@ export default defineComponent({
           this.detailedProducts = newVal.products || [];
           this.detailedAccessories = newVal.accessories || [];
           this.detailedServices = newVal.services || [];
+
+          this.filteredList = newVal?.products || [];
+          this.filteredAccessoriesList = newVal?.accessories || [];
+          this.filteredServicesList = newVal?.services || [];
         }
       },
       immediate: true,
@@ -257,7 +263,7 @@ export default defineComponent({
         // Clone the product object to avoid duplicating the same reference
         // const newProduct = { ...fullProduct };
 
-        this.products.push({...fullProduct}); // Push the cloned product object
+        this.products.push({ ...fullProduct }); // Push the cloned product object
         EventBus.emit('onUpdateProducts', this.products);
         stateStore.inWards = this.products;
         console.log(stateStore.inWards.value);
@@ -274,9 +280,14 @@ export default defineComponent({
       const fullService = this.allServices.find(service => service.service === serviceName);
 
       if (fullService) {
-        // Push the full service object without checking for duplicates
-        this.services.push({ ...fullService }); // Clone the service object to avoid reference duplication
-        EventBus.emit('onUpdateServices', this.services);
+        // Check if the service is already in the list
+        const isServiceExists = this.services.some(existingService => existingService.serviceId === fullService.serviceId);
+
+        if (!isServiceExists) {
+          // Only push if the service is not already present in the list
+          this.services.push(fullService);
+          EventBus.emit('onUpdateServices', this.services);
+        }
       } else {
         console.error('Service not found:', serviceName);
       }
@@ -290,9 +301,15 @@ export default defineComponent({
       const fullAccessory = this.allAccessories.find(accessory => accessory.accessory === accessoryName);
 
       if (fullAccessory) {
-        // Push the full accessory object without checking for duplicates
-        this.accessories.push({ ...fullAccessory }); // Clone the accessory object to avoid reference duplication
-        EventBus.emit('onUpdateAccessories', this.accessories);
+        // Check if the accessory is already in the accessories array
+        const exists = this.accessories.some(a => a.accessory === fullAccessory.accessory); // Adjust based on unique property
+
+        if (!exists) {
+          this.accessories.push(fullAccessory); // Push the full accessory object if not a duplicate
+          EventBus.emit('onUpdateAccessories', this.accessories);
+        } else {
+          console.log('Accessory already exists:', fullAccessory.accessory);
+        }
       } else {
         console.error('Accessory not found:', accessoryName);
       }
@@ -374,27 +391,25 @@ export default defineComponent({
 
       try {
         let response;
-        if (requestData.consignmentId) {
-          response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward/${requestData.consignmentId}`, requestData, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            responseType: 'blob', // Expect a PDF blob response
-          });
-        } else {
-          response = await axios.post(`${BASE_URL}/freezy/v1/inventory/outward`, requestData, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            responseType: 'blob', // Expect a PDF blob response
-          });
-        }
 
-        console.log("Response:", response.data);
+        // Check whether to update an existing consignment or create a new one
+        const url = requestData.consignmentId
+          ? `${BASE_URL}/freezy/v1/inventory/outward/${requestData.consignmentId}`
+          : `${BASE_URL}/freezy/v1/inventory/outward`;
+
+        // Send the request and expect a PDF blob response
+        response = await axios.post(url, requestData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          responseType: 'blob', // Expect a PDF blob response
+        });
+
+        console.log("Response:", url, requestData.userId, response.data);
 
         // After successful data submission, handle the PDF
         if (response && response.data) {
-          // Redirect to the Consignment List page after showing the PDF
+          // Reset consignment details and redirect after showing the PDF
           setTimeout(() => {
             stateStore.consignmentDetails = stateStore.resetConsignmentDetails;
             this.$router.push({ name: 'ConsignmentListPage' });
@@ -402,7 +417,6 @@ export default defineComponent({
 
           // Call the printPdf function to display the PDF
           await this.printPdf(response);
-
         }
 
       } catch (error: any) {
@@ -419,6 +433,7 @@ export default defineComponent({
         console.error("Error submitting the list:", error);
       }
     }
+
 
   },
   mounted() {

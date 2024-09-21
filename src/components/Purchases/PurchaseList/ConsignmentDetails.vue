@@ -10,6 +10,31 @@
             <img src="../../../assets/img/icons/close-circle-2.svg" alt="Image" />
           </button>
         </div>
+        <!-- Product Details Content Here -->
+        <div class="row ms-5">
+          <div class="row mb-20"></div>
+          <div class="col">
+            <ul class="details-title list-style mb-2">
+              <li class="fs-14 fw-semibold text-title lh-1">
+                DATE :<span class="text-optional ms-1">{{ formatDate(consignmentDetail?.createdAt) }}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col">
+            <ul class="details-title list-style mb-2">
+              <li class="fs-14 fw-semibold text-title lh-1">
+                STATUS :<span class="text-optional ms-1">{{ consignmentDetail?.inOut }}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col">
+            <ul class="details-title list-style mb-2">
+              <li class="fs-14 fw-semibold text-title lh-1">
+                TOTAL AMOUNT :<span class="text-optional ms-1"> ₹ {{ consignmentDetail?.totalAmount }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
         <div class="modal-body pb-40">
           <ul class="nav nav-tabs" id="detailsTab" role="tablist">
             <li class="nav-item" role="presentation" v-if="showProductDetailsTab">
@@ -35,24 +60,7 @@
             <div class="tab-pane fade active pt-2"
               :class="{ show: currentTab === 'Product', active: currentTab === 'Product' }" id="Product" role="tabpanel"
               aria-labelledby="Product-tab" v-show="currentTab === 'Product'">
-              <!-- Product Details Content Here -->
-              <div class="row ps-2">
-                <div class="row mb-20"></div>
-                <div class="col-lg-6">
-                  <ul class="details-title list-style mb-40">
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      DATE :<span class="text-optional ms-1">{{ formatDate(consignmentDetail?.createdAt) }}</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-lg-4 ps-xxl-6">
-                  <ul class="details-title list-style mb-40">
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      STATUS :<span class="text-optional ms-1">{{ consignmentDetail?.inOut }}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+
               <div class="table-responsive pb-75">
                 <table class="table table-bordered table-hover text-nowrap align-middle mb-0">
                   <thead>
@@ -117,21 +125,7 @@
               role="tabpanel" aria-labelledby="accessories-tab" v-show="currentTab === 'accessories'">
               <!-- accessories Details Content Here -->
               <div class="row ps-2">
-                <div class="row mb-20"></div>
-                <div class="col-lg-6">
-                  <ul class="details-title list-style mb-40">
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      DATE :<span class="ms-1 text-optional">{{ formatDate(consignmentDetail?.createdAt) }}</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-lg-4 ps-xxl-6">
-                  <ul class="details-title list-style mb-40">
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      STATUS :<span class="text-optional ms-1">{{ consignmentDetail?.inOut }}</span>
-                    </li>
-                  </ul>
-                </div>
+
                 <div class="table-responsive pb-75">
                   <table class="table text-nowrap table-bordered table-hover align-middle mb-0">
                     <thead>
@@ -188,24 +182,6 @@
               :class="{ show: currentTab === 'Service', active: currentTab === 'Service' }" id="Service" role="tabpanel"
               aria-labelledby="Service-tab" v-show="currentTab === 'Service'">
               <!-- Service Details Content Here -->
-
-              <div class="row ps-2">
-                <div class="row mb-20"></div>
-                <div class="col-lg-6">
-                  <ul class="details-title list-style mb-40">
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      DATE :<span class="ms-1 text-optional">{{ formatDate(consignmentDetail?.createdAt) }}</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-lg-4 ps-xxl-6">
-                  <ul class="details-title list-style mb-40">
-                    <li class="fs-14 fw-semibold text-title lh-1">
-                      STATUS :<span class="text-optional ms-1">{{ consignmentDetail?.inOut }}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
               <div class="table-responsive pb-75">
                 <table class="table text-nowrap table-bordered table-hover align-middle mb-0">
                   <thead>

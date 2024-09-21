@@ -7,8 +7,10 @@
       <div class="col-lg-4" v-if="prods.id !== ''">
         <div class="form-group mb-25">
           <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Supplier</h6>
-          <label class="bg-white border-0 rounded-1 fs-14 text-optional p-4 w-50">{{ prods.createdFor.first_name
-            }}</label>
+          <v-select v-model="prods.createdFor.first_name" :options="customers" :reduce="customer => customer.code"
+          label="name" class="bg-white border-0 rounded-1 fs-14 text-optional" placeholder="Select Customer" 
+          :disabled="true" />
+
         </div>
         <div class="form-group mb-25">
           <h6 class="fs-18 mb-35 text-title fw-semibold aligned:left">Consignment ID</h6>
@@ -204,7 +206,7 @@ export default defineComponent({
       selectedCustomer: null,
       form: {
         date: "",
-        customer: "",      //U0001
+        customer: `prods.id ? prods.createdFor.id : ""`,     
         branch: "",
         project: "",
       },
@@ -300,9 +302,15 @@ export default defineComponent({
       const fullAccessory = this.allAccessories.find(accessory => accessory.accessory === accessoryName);
 
       if (fullAccessory) {
-        // Push the full accessory object without checking for duplicates
-        this.accessories.push({ ...fullAccessory }); // Clone the accessory object to avoid reference duplication
-        EventBus.emit('onUpdateAccessories', this.accessories);
+        // Check if the accessory is already in the accessories array
+        const exists = this.accessories.some(a => a.accessory === fullAccessory.accessory); // Adjust based on unique property
+
+        if (!exists) {
+          this.accessories.push(fullAccessory); // Push the full accessory object if not a duplicate
+          EventBus.emit('onUpdateAccessories', this.accessories);
+        } else {
+          console.log('Accessory already exists:', fullAccessory.accessory);
+        }
       } else {
         console.error('Accessory not found:', accessoryName);
       }
@@ -362,7 +370,7 @@ export default defineComponent({
               "Content-Type": "application/json",
             },
           });
-          console.log("Response:", response.data);
+          console.log("Response:", requestData.userId, response.data);
           const loadingPopupElement = document.getElementById('loadingPopup');
           if (loadingPopupElement) {
             (loadingPopupElement as any).press = true;

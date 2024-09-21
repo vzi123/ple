@@ -1,16 +1,14 @@
 <template>
   <ul class="nav nav-tabs" id="detailsTab" role="tablist">
-      <li class="nav-item w-25 text-center" role="presentation">
-        <a :class="{ 'nav-link': true, active: currentTab === 'IN' }" id="Product-tab" data-bs-toggle="tab"
-        role="tab" aria-controls="Product" aria-selected="false"
-          @click="currentTab = 'IN'">Inward</a>
-      </li>
-      <li class="nav-item w-25 text-center" role="presentation">
-        <a :class="{ 'nav-link': true, active: currentTab === 'OUT' }" id="accessories-tab"
-          data-bs-toggle="tab" role="tab" aria-controls="accessories" aria-selected="false"
-          @click="currentTab = 'OUT'">Outward</a>
-      </li>
-    </ul>
+    <li class="nav-item w-25 text-center" role="presentation">
+      <a :class="{ 'nav-link': true, active: currentTab === 'IN' }" id="Product-tab" data-bs-toggle="tab" role="tab"
+        aria-controls="Product" aria-selected="false" @click="currentTab = 'IN'">Inward</a>
+    </li>
+    <li class="nav-item w-25 text-center" role="presentation">
+      <a :class="{ 'nav-link': true, active: currentTab === 'OUT' }" id="accessories-tab" data-bs-toggle="tab"
+        role="tab" aria-controls="accessories" aria-selected="false" @click="currentTab = 'OUT'">Outward</a>
+    </li>
+  </ul>
   <div class="card border-0 shadow-none rounded-1 mb-25">
     <div class="card-body p-xl-40">
       <div class="table-responsive style-three">
@@ -70,7 +68,7 @@
           </thead>
 
           <tbody v-if="!loading">
-            <tr v-for="(consignmentItem, index) in filteredList.filter((i)=>i.inOut=== currentTab)" :key="index">
+            <tr v-for="(consignmentItem, index) in filteredList.filter((i) => i.inOut === currentTab)" :key="index">
               <!-- <td class="shadow-none fw-normal text-black title ps-0">
                 <div class="d-flex align-items-center">
                   <div class="form-check checkbox style-three">
@@ -114,6 +112,11 @@
                     @click="onViewPurchase(consignmentItem)">
                     <img src="../../../assets/img/icons/edit.svg" alt="Image" />
                   </router-link>
+
+                  <!-- <a v-if="consignmentItem.inOut === 'OUT'" href="javascript:void(0)"
+                    @click="onDownloadPdf(consignmentItem.id)" class="bg-primary p-1 rounded">
+                    <img src="../../../assets/img/icons/download.svg" alt="Image" />
+                  </a> -->
 
                   <a class="delete-btn" data-bs-toggle="offcanvas" href="#deletePopup" role="button"
                     aria-controls="deletePopup">
@@ -203,6 +206,33 @@ export default defineComponent({
       }
     };
 
+    // Function to download PDF
+    const onDownloadPdf = async (id: string | number) => {
+      console.log("Downloading PDF for ID:", id);
+
+      try {
+        const response = await axios.post(`${BASE_URL}/freezy/v1/inventory/dc/${id}`, {}, {
+          headers: {
+            "Content-Type": "application/json",  // Ensure correct headers are set if necessary
+          },
+          responseType: 'blob',  // Expect PDF blob response
+        });
+
+        // Create a Blob from the response and download the PDF
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `consignment_${id}.pdf`;  // Name the downloaded file
+        link.click();  // Trigger the download
+
+        console.log("PDF downloaded successfully");
+
+      } catch (error) {
+        console.error("Error downloading the PDF:", error);
+      }
+    };
+
+
     const filteredList = computed(() => {
       return consignmentListData.value.filter((consignmentItem: any) => {
         const userName = consignmentItem?.createdFor?.first_name + " " + consignmentItem?.createdFor?.last_name;
@@ -222,12 +252,13 @@ export default defineComponent({
       consignmentListData,
       filteredList,
       loading,
+      onDownloadPdf,
     };
   },
   methods: {
     formatDate,
     getUserName(user: any) {
-      return user? user.first_name : '';
+      return user ? user.first_name : '';
     },
 
     onViewPurchase(consignmentItem: any) {
@@ -236,6 +267,7 @@ export default defineComponent({
       // Emit an event with the consignment details
       EventBus.emit('consignmentSelected', consignmentItem);
     },
+
   },
 });
 </script>

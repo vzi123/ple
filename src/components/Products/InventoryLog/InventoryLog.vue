@@ -6,7 +6,7 @@
           <thead>
             <tr>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">Date</th>
-              <th scope="col" class="text-title fw-normal fs-14 pt-0">ID</th>
+              <th scope="col" class="text-title fw-normal fs-14 pt-0">Name</th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">Customer</th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">Category</th>
               <th scope="col" class="text-title fw-normal fs-14 pt-0">IN/OUT</th>
@@ -19,7 +19,7 @@
           <tbody v-if="!loading">
             <tr v-for="log in filteredList" :key="log.id">
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ formatDate(log?.createdAt) }}</td>
-              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.id }}</td>
+              <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.inventory?.product?.name || log?.inventory?.accessory?.name || log?.inventory?.service?.name }}</td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.consignment?.createdFor?.first_name }}
               </td>
               <td class="shadow-none lh-1 fs-14 fw-normal text-paragraph">{{ log?.inventory?.accessory?.category?.name
