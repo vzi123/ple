@@ -208,22 +208,24 @@ export default defineComponent({
           }, 1000);
         }
       } catch (error: any) {
-        let errorMessage = 'An unknown error occurred. Please try again.';
+        window.alert(`Error: Please fill all the details`);
 
-        // Check if it's an Axios error with a response property
-        if (error.response && error.response.data) {
-          errorMessage = error.response.data;
-        } else if (error instanceof Error) {
-          // If it's a general error, use the error message
-          errorMessage = error.message;
-        }
+        //  let errorMessage = 'An unknown error occurred. Please try again.';
 
-        // Display a user-friendly error message
-        window.alert(`Error: ${errorMessage}`);
-        EventBus.emit('loadingCompleted');
+        //    // Check if it's an Axios error with a response property
+        //   if (error.response && error.response.data) {
+        //     errorMessage = error.response.data;
+        //   } else if (error instanceof Error) {
+        //     // If it's a general error, use the error message
+        //   errorMessage = error.message;
+        //  }
 
-        // Log the error to the console for debugging
-        console.error("Error submitting the list:", error);
+        //   // Display a user-friendly error message
+        //   window.alert(`Error: ${errorMessage}`);
+        //   EventBus.emit('loadingCompleted');
+
+        //   // Log the error to the console for debugging
+        //   console.error("Error submitting the list:", error);
       } finally {
 
       }
