@@ -172,6 +172,18 @@ export default defineComponent({
             },
           });
           console.log("Response:", response.data);
+          EventBus.emit('customerCreated');
+          setTimeout(() => {
+
+            const loadingPopupElement = document.getElementById('closeBtn');
+            if (loadingPopupElement) {
+              (loadingPopupElement as any).clicked = true;
+            }
+            const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+            if (elem) {
+              elem.click();
+            }
+          }, 1000);
         } else {
           const response = await axios.post(`${BASE_URL}/freezy/v1/users/customer`, requestData, {
             headers: {
@@ -179,22 +191,38 @@ export default defineComponent({
             },
           });
           console.log("Response:", response.data);
+          EventBus.emit('customerCreated');
+          setTimeout(() => {
+
+            const loadingPopupElement = document.getElementById('closeBtn');
+            if (loadingPopupElement) {
+              (loadingPopupElement as any).clicked = true;
+            }
+            const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
+            if (elem) {
+              elem.click();
+            }
+          }, 1000);
         }
-      } catch (error) {
+      } catch (error: any) {
+        let errorMessage = 'An unknown error occurred. Please try again.';
+
+        // Check if it's an Axios error with a response property
+        if (error.response && error.response.data) {
+          errorMessage = error.response.data;
+        } else if (error instanceof Error) {
+          // If it's a general error, use the error message
+          errorMessage = error.message;
+        }
+
+        // Display a user-friendly error message
+        window.alert(`Error: ${errorMessage}`);
+        EventBus.emit('loadingCompleted');
+
+        // Log the error to the console for debugging
         console.error("Error submitting the list:", error);
       } finally {
-        EventBus.emit('customerCreated');
-        setTimeout(() => {
 
-          const loadingPopupElement = document.getElementById('closeBtn');
-          if (loadingPopupElement) {
-            (loadingPopupElement as any).clicked = true;
-          }
-          const elem = this.$refs.myBtn as HTMLAnchorElement | undefined;
-          if (elem) {
-            elem.click();
-          }
-        }, 1000);
       }
     },
     closeTab() {
